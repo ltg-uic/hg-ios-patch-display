@@ -3,6 +3,9 @@ ios foraging client app. This app will display a representation of health being 
 
 This project is based off of xmppBase.
 
+Check out the wiki:
+
 <br/>
 **[Wiki](https://github.com/ltg-uic/ios-xmppBase/wiki)**<br/>
+
 
