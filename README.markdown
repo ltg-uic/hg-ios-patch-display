@@ -1,6 +1,7 @@
-An iOS project preconfigured with xmppFrameworks dependencies and libraries.  Enables the use of xmpp out of the box without having to start from scratch.
+ios foraging client app. This app will display a representation of health being added to their life. 
 
-To use this project for your own. Just fork it. 
+
+This project is based off of xmppBase.
 
 <br/>
 **[Wiki](https://github.com/ltg-uic/ios-xmppBase/wiki)**<br/>
