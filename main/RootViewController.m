@@ -7,7 +7,7 @@
 //
 
 #import "RootViewController.h"
-
+#import "LoginViewController.h"
 @interface RootViewController ()
 
 @end
@@ -24,6 +24,13 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (IBAction)showLogin:(id)sender {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPad"
+                                                             bundle: nil];
+
+    LoginViewController *controller = (LoginViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"loginController"];
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 @end

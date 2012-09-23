@@ -148,6 +148,16 @@
 		70879017160BB0570099DD5D /* XMPPDateTimeProfiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 70879013160BB0510099DD5D /* XMPPDateTimeProfiles.m */; };
 		70879019160BB0A50099DD5D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70879018160BB0A50099DD5D /* CoreData.framework */; };
 		70897C52160F80FE0058F06C /* XMPPFramework.h in Sources */ = {isa = PBXBuildFile; fileRef = 70897C51160F80FE0058F06C /* XMPPFramework.h */; };
+		70897C68160F856B0058F06C /* ECCommon.h in Sources */ = {isa = PBXBuildFile; fileRef = 70897C5E160F85580058F06C /* ECCommon.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		70897C69160F856B0058F06C /* ECCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 70897C5F160F85580058F06C /* ECCommon.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		70897C6A160F856B0058F06C /* ECGraph.h in Sources */ = {isa = PBXBuildFile; fileRef = 70897C60160F85580058F06C /* ECGraph.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		70897C6B160F856B0058F06C /* ECGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 70897C61160F85580058F06C /* ECGraph.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		70897C6C160F856B0058F06C /* ECGraphItem.h in Sources */ = {isa = PBXBuildFile; fileRef = 70897C62160F85580058F06C /* ECGraphItem.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		70897C6D160F856B0058F06C /* ECGraphItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 70897C63160F85580058F06C /* ECGraphItem.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		70897C6E160F856B0058F06C /* ECGraphLine.h in Sources */ = {isa = PBXBuildFile; fileRef = 70897C64160F85580058F06C /* ECGraphLine.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		70897C6F160F856B0058F06C /* ECGraphLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 70897C65160F85580058F06C /* ECGraphLine.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		70897C70160F856B0058F06C /* ECGraphPoint.h in Sources */ = {isa = PBXBuildFile; fileRef = 70897C66160F85580058F06C /* ECGraphPoint.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		70897C71160F856B0058F06C /* ECGraphPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 70897C67160F85580058F06C /* ECGraphPoint.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -298,6 +308,16 @@
 		70879013160BB0510099DD5D /* XMPPDateTimeProfiles.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMPPDateTimeProfiles.m; sourceTree = "<group>"; };
 		70879018160BB0A50099DD5D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		70897C51160F80FE0058F06C /* XMPPFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XMPPFramework.h; path = main/XMPPFramework.h; sourceTree = "<group>"; };
+		70897C5E160F85580058F06C /* ECCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ECCommon.h; sourceTree = "<group>"; };
+		70897C5F160F85580058F06C /* ECCommon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ECCommon.m; sourceTree = "<group>"; };
+		70897C60160F85580058F06C /* ECGraph.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ECGraph.h; sourceTree = "<group>"; };
+		70897C61160F85580058F06C /* ECGraph.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ECGraph.m; sourceTree = "<group>"; };
+		70897C62160F85580058F06C /* ECGraphItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ECGraphItem.h; sourceTree = "<group>"; };
+		70897C63160F85580058F06C /* ECGraphItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ECGraphItem.m; sourceTree = "<group>"; };
+		70897C64160F85580058F06C /* ECGraphLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ECGraphLine.h; sourceTree = "<group>"; };
+		70897C65160F85580058F06C /* ECGraphLine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ECGraphLine.m; sourceTree = "<group>"; };
+		70897C66160F85580058F06C /* ECGraphPoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ECGraphPoint.h; sourceTree = "<group>"; };
+		70897C67160F85580058F06C /* ECGraphPoint.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ECGraphPoint.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -324,6 +344,7 @@
 		700C3A42160427DA005A9E34 = {
 			isa = PBXGroup;
 			children = (
+				70897C5C160F85580058F06C /* graph */,
 				70897C4C160F7ECB0058F06C /* xmpp */,
 				700C3A57160427DA005A9E34 /* main */,
 				700C3A50160427DA005A9E34 /* Frameworks */,
@@ -750,6 +771,32 @@
 			name = xmpp;
 			sourceTree = "<group>";
 		};
+		70897C5C160F85580058F06C /* graph */ = {
+			isa = PBXGroup;
+			children = (
+				70897C5D160F85580058F06C /* ECGraph */,
+			);
+			name = graph;
+			path = main/Graph;
+			sourceTree = "<group>";
+		};
+		70897C5D160F85580058F06C /* ECGraph */ = {
+			isa = PBXGroup;
+			children = (
+				70897C5E160F85580058F06C /* ECCommon.h */,
+				70897C5F160F85580058F06C /* ECCommon.m */,
+				70897C60160F85580058F06C /* ECGraph.h */,
+				70897C61160F85580058F06C /* ECGraph.m */,
+				70897C62160F85580058F06C /* ECGraphItem.h */,
+				70897C63160F85580058F06C /* ECGraphItem.m */,
+				70897C64160F85580058F06C /* ECGraphLine.h */,
+				70897C65160F85580058F06C /* ECGraphLine.m */,
+				70897C66160F85580058F06C /* ECGraphPoint.h */,
+				70897C67160F85580058F06C /* ECGraphPoint.m */,
+			);
+			path = ECGraph;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -817,6 +864,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70897C68160F856B0058F06C /* ECCommon.h in Sources */,
+				70897C69160F856B0058F06C /* ECCommon.m in Sources */,
+				70897C6A160F856B0058F06C /* ECGraph.h in Sources */,
+				70897C6B160F856B0058F06C /* ECGraph.m in Sources */,
+				70897C6C160F856B0058F06C /* ECGraphItem.h in Sources */,
+				70897C6D160F856B0058F06C /* ECGraphItem.m in Sources */,
+				70897C6E160F856B0058F06C /* ECGraphLine.h in Sources */,
+				70897C6F160F856B0058F06C /* ECGraphLine.m in Sources */,
+				70897C70160F856B0058F06C /* ECGraphPoint.h in Sources */,
+				70897C71160F856B0058F06C /* ECGraphPoint.m in Sources */,
 				70897C52160F80FE0058F06C /* XMPPFramework.h in Sources */,
 				70879014160BB0570099DD5D /* NSDate+XMPPDateTimeProfiles.h in Sources */,
 				70879015160BB0570099DD5D /* NSDate+XMPPDateTimeProfiles.m in Sources */,
