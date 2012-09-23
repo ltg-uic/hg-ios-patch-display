@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "700C3A4C160427DA005A9E34"
-               BuildableName = "ios-xmppBase.app"
-               BlueprintName = "ios-xmppBase"
-               ReferencedContainer = "container:ios-xmppBase.xcodeproj">
+               BuildableName = "foraging-patch-ios-client.app"
+               BlueprintName = "foraging-patch-ios-client"
+               ReferencedContainer = "container:foraging-patch-ios-client.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "700C3A4C160427DA005A9E34"
-            BuildableName = "ios-xmppBase.app"
-            BlueprintName = "ios-xmppBase"
-            ReferencedContainer = "container:ios-xmppBase.xcodeproj">
+            BuildableName = "foraging-patch-ios-client.app"
+            BlueprintName = "foraging-patch-ios-client"
+            ReferencedContainer = "container:foraging-patch-ios-client.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -52,9 +52,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "700C3A4C160427DA005A9E34"
-            BuildableName = "ios-xmppBase.app"
-            BlueprintName = "ios-xmppBase"
-            ReferencedContainer = "container:ios-xmppBase.xcodeproj">
+            BuildableName = "foraging-patch-ios-client.app"
+            BlueprintName = "foraging-patch-ios-client"
+            ReferencedContainer = "container:foraging-patch-ios-client.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -70,9 +70,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "700C3A4C160427DA005A9E34"
-            BuildableName = "ios-xmppBase.app"
-            BlueprintName = "ios-xmppBase"
-            ReferencedContainer = "container:ios-xmppBase.xcodeproj">
+            BuildableName = "foraging-patch-ios-client.app"
+            BlueprintName = "foraging-patch-ios-client"
+            ReferencedContainer = "container:foraging-patch-ios-client.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
