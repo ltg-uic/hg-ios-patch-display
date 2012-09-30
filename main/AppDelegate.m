@@ -21,6 +21,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 
 @synthesize xmppStream;
 @synthesize xmppReconnect;
+@synthesize xmppBaseNewMessageDelegate;
 
 NSString *const kXMPPmyJID = @"kXMPPmyJID";
 NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
@@ -30,8 +31,8 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
     
     //only have this we are hardcoding the username
     
-    //[[NSUserDefaults standardUserDefaults] setObject:@"@phenomena.evl.uic.edu" forKey:kXMPPmyJID];
-    //[[NSUserDefaults standardUserDefaults] setObject:@"password" forKey:kXMPPmyPassword];
+    [[NSUserDefaults standardUserDefaults] setObject:@"@phenomena.evl.uic.edu" forKey:kXMPPmyJID];
+    [[NSUserDefaults standardUserDefaults] setObject:@"password" forKey:kXMPPmyPassword];
     
     // Configure logging framework
 	
@@ -419,6 +420,17 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
 		//NSString *body = [[message elementForName:@"body"] stringValue];
 		//NSString *displayName = [user displayName];
         
+        
+        NSString *msg = [[message elementForName:@"body"] stringValue];
+        
+        
+        NSString *from = [[message attributeForName:@"from"] stringValue];
+        
+        lastMessageDict = [[NSMutableDictionary alloc] init];
+        [lastMessageDict setObject:msg forKey:@"msg"];
+        [lastMessageDict setObject:from forKey:@"sender"];
+        
+        
         NSString *displayName = @"Hello";
         
         
@@ -440,6 +452,7 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
             
 			[[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
 		}
+        [xmppBaseNewMessageDelegate newMessageReceived:lastMessageDict];
 	}
 }
 
