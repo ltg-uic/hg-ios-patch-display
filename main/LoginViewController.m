@@ -6,27 +6,30 @@
 //  Copyright (c) 2012 Learning Technologies Group. All rights reserved.
 //
 
-#import "LoginViewController.h"
 #import "AppDelegate.h"
 
+@interface LoginViewController : UIViewController {
+    
+    __weak IBOutlet UITextField *loginTextField;
+    __weak IBOutlet UITextField *passTextField;
+}
+- (IBAction)done:(id)sender;
+
+
+@end
 
 @implementation LoginViewController
 
 
-- (void)viewDidLoad
-{
+#pragma mark - UIViewController lifecycle methods
+
+- (void)viewDidLoad {
     [super viewDidLoad];
 }
 
-- (AppDelegate *)appDelegate
-{
+- (AppDelegate *)appDelegate {
 	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark View lifecycle
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -47,9 +50,7 @@
     } else {
          passTextField.text = @"password";
     }
-    
-    
-    
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -58,9 +59,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Input methods
 
-- (void)setField:(UITextField *)field forKey:(NSString *)key
-{
+- (void)setField:(UITextField *)field forKey:(NSString *)key {
     if (field.text != nil)
     {
         [[NSUserDefaults standardUserDefaults] setObject:field.text forKey:key];

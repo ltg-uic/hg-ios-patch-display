@@ -6,35 +6,67 @@
 //  Copyright (c) 2012 Learning Technologies Group. All rights reserved.
 //
 
-#import "RootViewController.h"
+
 #import "LoginViewController.h"
-#import "CorePlot-CocoaTouch.h"
+#import "AppDelegate.h"
 #import "DataStore.h"
+#import "CorePlot-CocoaTouch.h"
+#import "XMPPBaseNewMessageDelegate.h"
+
+@interface RootViewController : UIViewController <CPTBarPlotDataSource, CPTBarPlotDelegate, XMPPBaseNewMessageDelegate> {
+    
+    __weak IBOutlet UILabel *stopWatchLabel;
+    __weak IBOutlet UILabel *timeIntervalLabel;
+    NSTimer *intervalTimer;
+    NSTimer *stopWatchTimer;
+    NSDate *startDate;
+        
+    CPTGraph *graph;
+    CPTXYPlotSpace *plotSpace;
+
+}
+
+@property (nonatomic, strong) IBOutlet CPTGraphHostingView *hostView;
+@property (nonatomic, strong) CPTBarPlot *aaplPlot;
+@property (nonatomic, strong) CPTPlotSpaceAnnotation *priceAnnotation;
+
+-(void)initPlot;
+-(void)configureGraph;
+-(void)configurePlots;
+-(void)configureAxes;
+- (AppDelegate *)appDelegate;
+
+
+- (IBAction)increaseIntervalTime:(id)sender;
+- (IBAction)decreaseIntervalTime:(id)sender;
+- (IBAction)startAndStop:(id)sender;
+- (IBAction)decrease:(id)sender;
+
+@end
+
 
 @implementation RootViewController
 
 CGFloat const CPDBarWidth = 1.0f;
 CGFloat const CPDBarInitialX = 0.5f;
 NSString *  const newFoodDynamicPlot = @"newFoodDynamicPlot";
-NSTimer *intervalTimer;
-NSTimer *stopWatchTimer; 
-NSDate *startDate;
-
-
-CPTGraph *graph;
-CPTXYPlotSpace *plotSpace;
-
 
 @synthesize hostView    = hostView_;
 @synthesize aaplPlot    = aaplPlot_;
-
 @synthesize priceAnnotation = priceAnnotation_;
 
+- (AppDelegate *)appDelegate {
+	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+}
 
 
 #pragma mark - UIViewController lifecycle methods
+
 -(void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.appDelegate.xmppBaseNewMessageDelegate = self;
+    
     [self initPlot];
 }
 
@@ -43,6 +75,9 @@ CPTXYPlotSpace *plotSpace;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - Login method
+
 - (IBAction)showLogin:(id)sender {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPad"
                                                              bundle: nil];
@@ -51,17 +86,8 @@ CPTXYPlotSpace *plotSpace;
     [self presentViewController:controller animated:YES completion:nil];
 }
 
-
-#pragma mark - Chart behavior
--(void)initPlot {
-    //hostView_.allowPinchScaling = NO;
-    [self configureGraph];
-    [self configurePlots];
-    [self configureAxes];
-    [self.aaplPlot setHidden:NO];
-}
-
 #pragma mark - CPTPlotDataSource methods
+
 -(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot {
 	return [[DataStore sharedInstance] animalCount];
 }
@@ -79,6 +105,7 @@ CPTXYPlotSpace *plotSpace;
 }
 
 #pragma mark - CPTBarPlotDelegate methods
+
 -(void)barPlot:(CPTBarPlot *)plot barWasSelectedAtRecordIndex:(NSUInteger)index {
     // 1 - Is the plot hidden?
     if (plot.isHidden == YES) {
@@ -125,6 +152,16 @@ CPTXYPlotSpace *plotSpace;
     [plot.graph.plotAreaFrame.plotArea addAnnotation:self.priceAnnotation];
 }
 
+#pragma mark - Chart behavior
+
+-(void)initPlot {
+    //hostView_.allowPinchScaling = NO;
+    [self configureGraph];
+    [self configurePlots];
+    [self configureAxes];
+    [self.aaplPlot setHidden:NO];
+}
+
 -(void)configureGraph {
     // 1 - Create the graph
     graph = [[CPTXYGraph alloc] initWithFrame:self.hostView.bounds];
@@ -169,7 +206,7 @@ CPTXYPlotSpace *plotSpace;
     barLineStyle.lineColor = [CPTColor lightGrayColor];
     barLineStyle.lineWidth = 0.1;
     // 3 - Add plots to graph
-    CPTGraph *graph = self.hostView.hostedGraph;
+    graph = self.hostView.hostedGraph;
     CGFloat barX = CPDBarInitialX;
     NSArray *plots = [NSArray arrayWithObjects:self.aaplPlot, nil];
     for (CPTBarPlot *plot in plots) {
@@ -216,6 +253,7 @@ CPTXYPlotSpace *plotSpace;
     [graph reloadData];
 }
 
+#pragma mark - Actions
 
 - (IBAction)increase:(id)sender {
     
@@ -306,10 +344,9 @@ CPTXYPlotSpace *plotSpace;
     
    }
 
+#pragma mark - Timer methods
 
-
-- (void)updateTimer
-{
+- (void)updateTimer {
     NSDate *currentDate = [NSDate date];
     NSTimeInterval timeInterval = [currentDate timeIntervalSinceDate:startDate];
     NSDate *timerDate = [NSDate dateWithTimeIntervalSince1970:timeInterval];
@@ -318,6 +355,16 @@ CPTXYPlotSpace *plotSpace;
     [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0.0]];
     NSString *timeString=[dateFormatter stringFromDate:timerDate];
     stopWatchLabel.text = timeString;
+}
+
+#pragma mark - XMPP delegate methods
+
+- (void)newMessageReceived:(NSDictionary *)messageContent{
+    NSLog(@"GOOOOT------------");
+}
+
+- (void)replyMessageTo:(NSString *)from {
+    
 }
 
 

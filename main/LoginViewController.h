@@ -10,10 +10,7 @@
 
 @interface LoginViewController : UIViewController {
     
-    __weak IBOutlet UITextField *loginTextField;
-    __weak IBOutlet UITextField *passTextField;
+    
 }
-- (IBAction)done:(id)sender;
-
 
 @end
