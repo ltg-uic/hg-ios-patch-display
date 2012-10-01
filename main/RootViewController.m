@@ -360,7 +360,17 @@ NSString *  const newFoodDynamicPlot = @"newFoodDynamicPlot";
 #pragma mark - XMPP delegate methods
 
 - (void)newMessageReceived:(NSDictionary *)messageContent{
-    NSLog(@"GOOOOT------------");
+    
+    NSString *msg = [messageContent objectForKey:@"msg"];
+    
+    if( [msg isEqualToString:@"add"]) {
+        [self increase:nil];
+    } else if( [msg isEqualToString:@"subtract"]) {
+        [self decrease:nil];
+    }
+    NSLog(@"message %@", msg);
+    
+    
 }
 
 - (void)replyMessageTo:(NSString *)from {

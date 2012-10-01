@@ -32,8 +32,8 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
     
     //only have this we are hardcoding the username
     
-    [[NSUserDefaults standardUserDefaults] setObject:@"@phenomena.evl.uic.edu" forKey:kXMPPmyJID];
-    [[NSUserDefaults standardUserDefaults] setObject:@"password" forKey:kXMPPmyPassword];
+    [[NSUserDefaults standardUserDefaults] setObject:@"notetaker@phenomena.evl.uic.edu" forKey:kXMPPmyJID];
+    [[NSUserDefaults standardUserDefaults] setObject:@"agentspassword" forKey:kXMPPmyPassword];
     
     // Configure logging framework
 	
@@ -435,24 +435,24 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
         NSString *displayName = @"Hello";
         
         
-		if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
-		{
-			UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:displayName
-                                                                message:@"hye"
-                                                               delegate:nil
-                                                      cancelButtonTitle:@"Ok"
-                                                      otherButtonTitles:nil];
-			[alertView show];
-		}
-		else
-		{
-			// We are not active, so use a local notification instead
-			UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-			localNotification.alertAction = @"Ok";
-			//localNotification.alertBody = [NSString stringWithFormat:@"From: %@\n\n%@",displayName,body];
-            
-			[[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
-		}
+//		if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
+//		{
+//			UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:displayName
+//                                                                message:@"hye"
+//                                                               delegate:nil
+//                                                      cancelButtonTitle:@"Ok"
+//                                                      otherButtonTitles:nil];
+//			[alertView show];
+//		}
+//		else
+//		{
+//			// We are not active, so use a local notification instead
+//			UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+//			localNotification.alertAction = @"Ok";
+//			//localNotification.alertBody = [NSString stringWithFormat:@"From: %@\n\n%@",displayName,body];
+//            
+//			[[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+//		}
         [xmppBaseNewMessageDelegate newMessageReceived:lastMessageDict];
 	}
 }
