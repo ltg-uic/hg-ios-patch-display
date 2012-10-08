@@ -17,6 +17,7 @@
     
     __weak IBOutlet UILabel *stopWatchLabel;
     __weak IBOutlet UILabel *timeIntervalLabel;
+    __weak IBOutlet UIButton *startButton;
     NSTimer *intervalTimer;
     NSTimer *stopWatchTimer;
     NSDate *startDate;
@@ -89,13 +90,13 @@ NSString *  const newFoodDynamicPlot = @"newFoodDynamicPlot";
 #pragma mark - CPTPlotDataSource methods
 
 -(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot {
-	return [[DataStore sharedInstance] animalCount];
+	return [[DataStore sharedInstance] playerCount];
 }
 
 -(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index {
-	if ((fieldEnum == CPTBarPlotFieldBarTip) && (index < [[DataStore sharedInstance] animalCount])) {
+	if ((fieldEnum == CPTBarPlotFieldBarTip) && (index < [[DataStore sharedInstance] playerCount])) {
 		if ([plot.identifier isEqual:newFoodDynamicPlot]) {
-            return [[DataStore sharedInstance] animalFoodForKey:index];
+            return [[DataStore sharedInstance] scoreForKey:index];
             
             
 			//return [[[DataStore sharedInstance] weeklyPrices:newFoodDynamicPlot] objectAtIndex:index];
@@ -188,7 +189,7 @@ NSString *  const newFoodDynamicPlot = @"newFoodDynamicPlot";
 //    graph.titleDisplacement = CGPointMake(0.0f, -16.0f);
     // 5 - Set up plot space
     CGFloat xMin = 0.0f;
-    CGFloat xMax = [[DataStore sharedInstance] animalCount];
+    CGFloat xMax = [[DataStore sharedInstance] playerCount];
     CGFloat yMin = 0.0f;
     CGFloat yMax = 800.0f;  // should determine dynamically based on max price
     plotSpace = (CPTXYPlotSpace *) graph.defaultPlotSpace;
@@ -306,12 +307,12 @@ NSString *  const newFoodDynamicPlot = @"newFoodDynamicPlot";
 - (IBAction)startAndStop:(id)sender {
     
     
-    UIButton *button = (UIButton *)sender;
-    NSString *title = [button currentTitle];
+    
+    NSString *title = [startButton currentTitle];
     
     if( [title isEqualToString:@"start"] ){
         startDate = [[NSDate date]init];
-       [button setTitle: @"stop" forState: UIControlStateNormal];
+       [startButton setTitle: @"stop" forState: UIControlStateNormal];
         
         
         stopWatchTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/10.0
@@ -327,12 +328,12 @@ NSString *  const newFoodDynamicPlot = @"newFoodDynamicPlot";
                                                        userInfo:nil
                                                         repeats:YES];
         
-        [self increase:nil];
+        //[self increase:nil];
 
         
         
     } else {
-        [button setTitle: @"start" forState: UIControlStateNormal];
+        [startButton setTitle: @"start" forState: UIControlStateNormal];
         [stopWatchTimer invalidate];
         [intervalTimer invalidate];
         [[DataStore sharedInstance] resetAnimalCount];
@@ -364,6 +365,11 @@ NSString *  const newFoodDynamicPlot = @"newFoodDynamicPlot";
     NSString *msg = [messageContent objectForKey:@"msg"];
     
     if( [msg isEqualToString:@"add"]) {
+        
+        if([startButton.currentTitle isEqualToString:@"start"]) {
+            [self startAndStop:nil];
+        }
+        
         [self increase:nil];
     } else if( [msg isEqualToString:@"subtract"]) {
         [self decrease:nil];

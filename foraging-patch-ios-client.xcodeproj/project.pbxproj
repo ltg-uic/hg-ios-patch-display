@@ -61,6 +61,8 @@
 		700C3B3116042EB9005A9E34 /* libidn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 700C3AB716042A07005A9E34 /* libidn.a */; };
 		700C3B3816042FEE005A9E34 /* XMPPReconnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 700C3B3616042FE5005A9E34 /* XMPPReconnect.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		700C3B3A160430DA005A9E34 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700C3B39160430DA005A9E34 /* SystemConfiguration.framework */; };
+		702CE04D162256310038EC73 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 702CE04C162256310038EC73 /* Player.m */; };
+		70383F9A161A1A850045F5E1 /* temp57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = 70383F99161A1A850045F5E1 /* temp57x57.png */; };
 		707C2C3916080C6A00A09AB8 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 707C2C3816080C6A00A09AB8 /* LoginViewController.m */; };
 		70878FE2160BAF6F0099DD5D /* XMPPRoom.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 70878FC0160BAF620099DD5D /* XMPPRoom.xcdatamodeld */; settings = {COMPILER_FLAGS = "-w"; }; };
 		70878FE4160BAF6F0099DD5D /* XMPPRoomCoreDataStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 70878FC3160BAF620099DD5D /* XMPPRoomCoreDataStorage.m */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -192,6 +194,9 @@
 		700C3B3516042FE5005A9E34 /* XMPPReconnect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMPPReconnect.h; sourceTree = "<group>"; };
 		700C3B3616042FE5005A9E34 /* XMPPReconnect.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMPPReconnect.m; sourceTree = "<group>"; };
 		700C3B39160430DA005A9E34 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		702CE04B162256310038EC73 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		702CE04C162256310038EC73 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
+		70383F99161A1A850045F5E1 /* temp57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = temp57x57.png; path = ../temp57x57.png; sourceTree = "<group>"; };
 		703B95F1160FEDF20012EE57 /* DataStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataStore.h; sourceTree = "<group>"; };
 		703B95F2160FEDF20012EE57 /* DataStore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataStore.m; sourceTree = "<group>"; };
 		7077CDD41618EE5500BFA216 /* XMPPBaseNewMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPBaseNewMessageDelegate.h; sourceTree = "<group>"; };
@@ -387,6 +392,8 @@
 		700C3A57160427DA005A9E34 /* main */ = {
 			isa = PBXGroup;
 			children = (
+				702CE04B162256310038EC73 /* Player.h */,
+				702CE04C162256310038EC73 /* Player.m */,
 				703B95F1160FEDF20012EE57 /* DataStore.h */,
 				703B95F2160FEDF20012EE57 /* DataStore.m */,
 				707C2C3716080C6A00A09AB8 /* LoginViewController.h */,
@@ -405,6 +412,7 @@
 		700C3A58160427DA005A9E34 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				70383F99161A1A850045F5E1 /* temp57x57.png */,
 				700C3A69160427DA005A9E34 /* MainStoryboard_iPhone.storyboard */,
 				700C3A59160427DA005A9E34 /* foraging-patch-ios-client-Info.plist */,
 				700C3A5A160427DA005A9E34 /* InfoPlist.strings */,
@@ -942,6 +950,7 @@
 				700C3A68160427DA005A9E34 /* Default-568h@2x.png in Resources */,
 				700C3A6B160427DA005A9E34 /* MainStoryboard_iPhone.storyboard in Resources */,
 				700C3A6E160427DA005A9E34 /* MainStoryboard_iPad.storyboard in Resources */,
+				70383F9A161A1A850045F5E1 /* temp57x57.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1011,6 +1020,7 @@
 				700C3A62160427DA005A9E34 /* AppDelegate.m in Sources */,
 				700C3A71160427DA005A9E34 /* RootViewController.m in Sources */,
 				707C2C3916080C6A00A09AB8 /* LoginViewController.m in Sources */,
+				702CE04D162256310038EC73 /* Player.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1074,6 +1084,7 @@
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = armv7;
 			};
 			name = Debug;
 		};
@@ -1102,6 +1113,7 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = armv7;
 			};
 			name = Release;
 		};
@@ -1117,6 +1129,7 @@
 					"\"$(SRCROOT)/main/Graph/CorePlot\"",
 				);
 				PRODUCT_NAME = "foraging-patch-ios-client";
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1133,6 +1146,7 @@
 					"\"$(SRCROOT)/main/Graph/CorePlot\"",
 				);
 				PRODUCT_NAME = "foraging-patch-ios-client";
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

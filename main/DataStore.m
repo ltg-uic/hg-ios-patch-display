@@ -3,11 +3,13 @@
 //  Copyright (c) 2012 Learning Technologies Group. All rights reserved.
 //
 
+#import "Player.h"
 #import "DataStore.h"
 
 @implementation DataStore
 
 static NSMutableDictionary *dataPoints;
+static NSMutableArray *players;
 
 #pragma mark - Class methods
 
@@ -34,16 +36,57 @@ static NSMutableDictionary *dataPoints;
 
 -(void)initDatapoints {
      dataPoints = [NSMutableDictionary dictionary];
-    //[dataPoints setObject: [NSNumber numberWithInt:320]  forKey: [NSNumber numberWithInt:0]];
-    //[dataPoints setObject: [NSNumber numberWithInt:450]  forKey: [NSNumber numberWithInt:1]];
+    players = [NSMutableArray array];
+    
+    
+    [players addObject:[[Player alloc] initWithRFID:@"1234" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
+    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
+    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
+    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
+    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
+    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
+    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
+    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
+    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
+    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
+    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
+    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
+    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
+    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
+    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
+    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
+    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
+    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
+    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
+    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
     
 }
 
 #pragma mark - data access methods
 
+-(void)resetPlayerCount {
+    [players removeAllObjects];
+}
+
+- (int)playerCount {
+    return [players count];
+}
+
+- (void)addScore:(NSNumber *)score withKey: (NSNumber *)key {
+    Player *p = [players objectAtIndex:[key integerValue]];
+    p.score = [NSNumber numberWithDouble:[p.score doubleValue] + [score doubleValue]];
+}
+
+-(NSNumber *)scoreForKey: (NSUInteger)key {
+    Player *player = [players objectAtIndex:key];
+    return player.score;
+}
+
+
 -(void)resetAnimalCount {
     [dataPoints removeAllObjects];
 }
+
 - (int)animalCount {
     return [dataPoints count];
 }

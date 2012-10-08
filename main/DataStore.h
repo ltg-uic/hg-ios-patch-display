@@ -16,5 +16,11 @@
 - (void)addFood:(NSNumber *)food withKey: (NSNumber *)key;
 - (void)addFood:(int)food;
 - (void)resetAnimalCount;
--(void)removeAnimal;
+- (void)removeAnimal;
+
+
+- (void)resetPlayerCount;
+- (int)playerCount;
+- (void)addScore:(NSNumber *)score withKey: (NSNumber *)key;
+- (NSNumber *)scoreForKey: (NSUInteger)key;
 @end

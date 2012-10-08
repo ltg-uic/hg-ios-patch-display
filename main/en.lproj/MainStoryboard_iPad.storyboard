@@ -139,6 +139,7 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <outlet property="hostView" destination="RUv-0X-tu3" id="fsj-Pp-eDg"/>
+                        <outlet property="startButton" destination="WvN-I5-qSb" id="ktu-Di-ecb"/>
                         <outlet property="stopWatchLabel" destination="dFm-km-vsY" id="58h-GI-dts"/>
                         <outlet property="timeIntervalLabel" destination="6Vt-Q5-Aok" id="CRP-Eu-dll"/>
                     </connections>

@@ -32,8 +32,8 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
     
     //only have this we are hardcoding the username
     
-    [[NSUserDefaults standardUserDefaults] setObject:@"@phenomena.evl.uic.edu" forKey:kXMPPmyJID];
-    [[NSUserDefaults standardUserDefaults] setObject:@"password" forKey:kXMPPmyPassword];
+    [[NSUserDefaults standardUserDefaults] setObject:@"notetaker@phenomena.evl.uic.edu" forKey:kXMPPmyJID];
+    [[NSUserDefaults standardUserDefaults] setObject:@"agentspassword" forKey:kXMPPmyPassword];
     
     // Configure logging framework
 	
