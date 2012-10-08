@@ -23,4 +23,7 @@
 - (int)playerCount;
 - (void)addScore:(NSNumber *)score withKey: (NSNumber *)key;
 - (NSNumber *)scoreForKey: (NSUInteger)key;
+- (void)addScore:(NSNumber *)score withRFID: (NSString *)rfid;
+- (void)resetScoreWithRFID:rfid;
+
 @end

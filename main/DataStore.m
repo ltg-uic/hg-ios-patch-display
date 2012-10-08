@@ -39,26 +39,26 @@ static NSMutableArray *players;
     players = [NSMutableArray array];
     
     
-    [players addObject:[[Player alloc] initWithRFID:@"1234" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
-    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
-    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
-    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
-    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
-    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
-    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
-    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
-    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
-    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
-    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
-    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
-    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
-    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
-    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
-    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
-    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
-    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
-    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
-    [players addObject:[[Player alloc] initWithRFID:@"10034" AndName:@"tony" AndScore:[NSNumber numberWithInt:100]]];
+    [players addObject:[[Player alloc] initWithRFID:@"1612507" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"1623454" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"1623819" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"1623972" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
     
 }
 
@@ -72,9 +72,32 @@ static NSMutableArray *players;
     return [players count];
 }
 
+
+- (void)addScore:(NSNumber *)score withRFID: (NSString *)rfid {
+    
+    for (int i = 0; i < [players count]; i++) {
+        Player *p = [players objectAtIndex: i];
+        if([p.rfid isEqualToString:rfid]){
+            p.score = [NSNumber numberWithDouble:[p.score doubleValue] + [score doubleValue]];
+            break;
+        }
+    }
+}
+
+
 - (void)addScore:(NSNumber *)score withKey: (NSNumber *)key {
     Player *p = [players objectAtIndex:[key integerValue]];
     p.score = [NSNumber numberWithDouble:[p.score doubleValue] + [score doubleValue]];
+}
+
+-(void)resetScoreWithRFID:rfid {
+    for (int i = 0; i < [players count]; i++) {
+        Player *p = [players objectAtIndex: i];
+        if([p.rfid isEqualToString:rfid]){
+            p.score = 0;
+            break;
+        }
+    }
 }
 
 -(NSNumber *)scoreForKey: (NSUInteger)key {

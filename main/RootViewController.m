@@ -21,6 +21,7 @@
     NSTimer *intervalTimer;
     NSTimer *stopWatchTimer;
     NSDate *startDate;
+    NSMutableArray *currentRFIDS;
         
     CPTGraph *graph;
     CPTXYPlotSpace *plotSpace;
@@ -41,7 +42,6 @@
 - (IBAction)increaseIntervalTime:(id)sender;
 - (IBAction)decreaseIntervalTime:(id)sender;
 - (IBAction)startAndStop:(id)sender;
-- (IBAction)decrease:(id)sender;
 
 @end
 
@@ -50,6 +50,8 @@
 
 CGFloat const CPDBarWidth = 1.0f;
 CGFloat const CPDBarInitialX = 0.5f;
+int scoreIncrease = 5;
+
 NSString *  const newFoodDynamicPlot = @"newFoodDynamicPlot";
 
 @synthesize hostView    = hostView_;
@@ -67,7 +69,7 @@ NSString *  const newFoodDynamicPlot = @"newFoodDynamicPlot";
     [super viewDidLoad];
     
     self.appDelegate.xmppBaseNewMessageDelegate = self;
-    
+    currentRFIDS = [NSMutableArray array];
     [self initPlot];
 }
 
@@ -250,23 +252,27 @@ NSString *  const newFoodDynamicPlot = @"newFoodDynamicPlot";
 }
 
 -(void)updateGraph {
-    [[DataStore sharedInstance] addFood:10];
+    
+    for( NSString *rfid in currentRFIDS) {
+        [[DataStore sharedInstance] addScore:[NSNumber numberWithInt:scoreIncrease] withRFID:rfid];
+    }
+    
+    
     [graph reloadData];
 }
 
 #pragma mark - Actions
 
-- (IBAction)increase:(id)sender {
+
+- (void)increaseByRFID:(NSString *)rfid {
     
-    int key = [[DataStore sharedInstance]animalCount];
-    [[DataStore sharedInstance] addFood:[NSNumber numberWithInt:0] withKey:[NSNumber numberWithInt:key]];
-    plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0) length:CPTDecimalFromFloat([[DataStore sharedInstance]animalCount])];
-    [graph reloadData];
+    [[DataStore sharedInstance] addScore:[NSNumber numberWithInt:scoreIncrease] withRFID:rfid];
+      [graph reloadData];
 }
 
-- (IBAction)decrease:(id)sender {
-    [[DataStore sharedInstance] removeAnimal];
-     plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0) length:CPTDecimalFromFloat([[DataStore sharedInstance]animalCount])];
+- (void)decreaseByRFID:(NSString *)rfid {
+    
+    [[DataStore sharedInstance] resetScoreWithRFID:rfid];
     [graph reloadData];
 }
 
@@ -322,7 +328,7 @@ NSString *  const newFoodDynamicPlot = @"newFoodDynamicPlot";
                                                          repeats:YES];
         
         
-        intervalTimer = [NSTimer scheduledTimerWithTimeInterval:[timeIntervalLabel.text intValue]
+        intervalTimer = [NSTimer scheduledTimerWithTimeInterval:2.0
                                                          target:self
                                                        selector:@selector(updateGraph)
                                                        userInfo:nil
@@ -336,7 +342,7 @@ NSString *  const newFoodDynamicPlot = @"newFoodDynamicPlot";
         [startButton setTitle: @"start" forState: UIControlStateNormal];
         [stopWatchTimer invalidate];
         [intervalTimer invalidate];
-        [[DataStore sharedInstance] resetAnimalCount];
+        [[DataStore sharedInstance] resetPlayerCount];
         [graph reloadData];
         stopWatchTimer = nil;
         [self updateTimer];
@@ -364,19 +370,40 @@ NSString *  const newFoodDynamicPlot = @"newFoodDynamicPlot";
     
     NSString *msg = [messageContent objectForKey:@"msg"];
     
-    if( [msg isEqualToString:@"add"]) {
+    
+    NSArray *wordsAndEmptyStrings = [msg componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSArray *words = [wordsAndEmptyStrings filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"length > 0"]];
+    
+    
+    if( [words[0] isEqualToString:@"add"]) {
         
         if([startButton.currentTitle isEqualToString:@"start"]) {
             [self startAndStop:nil];
         }
         
-        [self increase:nil];
-    } else if( [msg isEqualToString:@"subtract"]) {
-        [self decrease:nil];
+        [self addRFID:words[1]];
+        [self increaseByRFID: words[1]];
+    } else if( [words[0] isEqualToString:@"subtract"]) {
+        
+       
+        [self decreaseByRFID: words[1]];
+        [currentRFIDS removeObject:words[1]];
+        
+       
     }
     NSLog(@"message %@", msg);
     
     
+}
+
+-(void)addRFID: (NSString *)newRFID {
+    for( NSString *rfid in currentRFIDS) {
+        if( [rfid isEqualToString:newRFID]){
+            return;
+        }
+    }
+    [currentRFIDS addObject:newRFID];
+
 }
 
 - (void)replyMessageTo:(NSString *)from {
