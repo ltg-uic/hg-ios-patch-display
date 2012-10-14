@@ -164,7 +164,9 @@
             <relationships>
                 <relationship kind="action" name="decreaseIntervalTime:"/>
                 <relationship kind="action" name="increaseIntervalTime:"/>
+                <relationship kind="action" name="showLogin:"/>
                 <relationship kind="action" name="startAndStop:"/>
+                <relationship kind="action" name="test:"/>
                 <relationship kind="outlet" name="hostView" candidateClass="CPTGraphHostingView"/>
                 <relationship kind="outlet" name="startButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="stopWatchLabel" candidateClass="UILabel"/>

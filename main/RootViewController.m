@@ -12,6 +12,7 @@
 #import "DataStore.h"
 #import "CorePlot-CocoaTouch.h"
 #import "XMPPBaseNewMessageDelegate.h"
+#import "SBJson.h"
 
 @interface RootViewController : UIViewController <CPTBarPlotDataSource, CPTBarPlotDelegate, XMPPBaseNewMessageDelegate> {
     
@@ -370,27 +371,45 @@ NSString *  const newFoodDynamicPlot = @"newFoodDynamicPlot";
     
     NSString *msg = [messageContent objectForKey:@"msg"];
     
+  
+    SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
+    NSError *error = nil;
+    NSDictionary *jsonObjects = [jsonParser objectWithString:msg error:&error];
     
-    NSArray *wordsAndEmptyStrings = [msg componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    NSArray *words = [wordsAndEmptyStrings filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"length > 0"]];
+    NSArray *arrivals = [jsonObjects objectForKey:@"arrivals"];
+    NSArray *departures = [jsonObjects objectForKey:@"departures"];
     
     
-    if( [words[0] isEqualToString:@"add"]) {
-        
-        if([startButton.currentTitle isEqualToString:@"start"]) {
-            [self startAndStop:nil];
-        }
-        
-        [self addRFID:words[1]];
-        [self increaseByRFID: words[1]];
-    } else if( [words[0] isEqualToString:@"subtract"]) {
-        
-       
-        [self decreaseByRFID: words[1]];
-        [currentRFIDS removeObject:words[1]];
-        
-       
+    for (NSString *rfid in arrivals) {
+        [self addRFID:rfid];
+        [self increaseByRFID: rfid];
     }
+    
+    for (NSString *rfid in departures) {
+        [self decreaseByRFID: rfid];
+        [self removeRFID:rfid];
+    }
+    
+//    NSArray *wordsAndEmptyStrings = [msg componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+//    NSArray *words = [wordsAndEmptyStrings filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"length > 0"]];
+//    
+//    
+//    if( [words[0] isEqualToString:@"add"]) {
+//        
+//        if([startButton.currentTitle isEqualToString:@"start"]) {
+//            [self startAndStop:nil];
+//        }
+//        
+//        [self addRFID:words[1]];
+//        [self increaseByRFID: words[1]];
+//    } else if( [words[0] isEqualToString:@"subtract"]) {
+//        
+//       
+//        [self decreaseByRFID: words[1]];
+//        [currentRFIDS removeObject:words[1]];
+//        
+//       
+//    }
     NSLog(@"message %@", msg);
     
     
@@ -406,7 +425,24 @@ NSString *  const newFoodDynamicPlot = @"newFoodDynamicPlot";
 
 }
 
+-(void)removeRFID: (NSString *)rfid {
+    if( [currentRFIDS containsObject:rfid])
+        [currentRFIDS removeObject:rfid];
+}
+
 - (void)replyMessageTo:(NSString *)from {
+    
+}
+- (IBAction)test:(id)sender {
+    NSString *msg = @"{ \"arrivals\" : [\"student-1\",\"student-5\"],\"departures\" : []}";
+    
+    SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
+    NSError *error = nil;
+    NSDictionary *jsonObjects = [jsonParser objectWithString:msg error:&error];
+    
+    NSArray *arrivals = [jsonObjects objectForKey:@"arrivals"];
+    NSArray *departures = [jsonObjects objectForKey:@"departures"];
+    
     
 }
 
