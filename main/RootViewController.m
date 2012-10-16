@@ -369,47 +369,46 @@ NSString *  const newFoodDynamicPlot = @"newFoodDynamicPlot";
 
 - (void)newMessageReceived:(NSDictionary *)messageContent{
     
+    //NSString *msg = @"{\"patch\": \"fg-patch-1\", \"arrivals\" : [\"student-1\"],\"departures\" : []}";
+
     NSString *msg = [messageContent objectForKey:@"msg"];
-    
   
     SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
     NSError *error = nil;
     NSDictionary *jsonObjects = [jsonParser objectWithString:msg error:&error];
     
-    NSArray *arrivals = [jsonObjects objectForKey:@"arrivals"];
-    NSArray *departures = [jsonObjects objectForKey:@"departures"];
     
-    
-    for (NSString *rfid in arrivals) {
-        [self addRFID:rfid];
-        [self increaseByRFID: rfid];
+    if( jsonObjects != nil){
+        NSString *patch = [jsonObjects objectForKey:@"patch"];
+        
+        NSString *myJID = [[NSUserDefaults standardUserDefaults] stringForKey:@"kXMPPmyJID"];
+
+        if ([myJID rangeOfString:patch].location == NSNotFound) {
+            return;
+        }
+        
+        NSArray *arrivals = [jsonObjects objectForKey:@"arrivals"];
+        NSArray *departures = [jsonObjects objectForKey:@"departures"];
+        
+        if([startButton.currentTitle isEqualToString:@"start"]) {
+            [self startAndStop:nil];
+        }
+        
+        if( arrivals != nil) {
+            for (NSString *rfid in arrivals) {
+                [self addRFID:rfid];
+                [self increaseByRFID: rfid];
+            }
+        }
+        
+        if( departures != nil) {
+            for (NSString *rfid in departures) {
+                [self decreaseByRFID: rfid];
+                [self removeRFID:rfid];
+            }
+        }
+        
     }
-    
-    for (NSString *rfid in departures) {
-        [self decreaseByRFID: rfid];
-        [self removeRFID:rfid];
-    }
-    
-//    NSArray *wordsAndEmptyStrings = [msg componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-//    NSArray *words = [wordsAndEmptyStrings filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"length > 0"]];
-//    
-//    
-//    if( [words[0] isEqualToString:@"add"]) {
-//        
-//        if([startButton.currentTitle isEqualToString:@"start"]) {
-//            [self startAndStop:nil];
-//        }
-//        
-//        [self addRFID:words[1]];
-//        [self increaseByRFID: words[1]];
-//    } else if( [words[0] isEqualToString:@"subtract"]) {
-//        
-//       
-//        [self decreaseByRFID: words[1]];
-//        [currentRFIDS removeObject:words[1]];
-//        
-//       
-//    }
     NSLog(@"message %@", msg);
     
     

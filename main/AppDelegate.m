@@ -27,12 +27,18 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 NSString *const kXMPPmyJID = @"kXMPPmyJID";
 NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
 
+BOOL isMUC = YES;
+
+#define ROOM_JID       @"foraging-group@conference.ltg.evl.uic.edu"
+#define XMPP_HOSTNAME  @"ltg.evl.uic.edu"
+#define XMPP_JID       @"fg-patch-1@ltg.evl.uic.edu"
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
     //only have this we are hardcoding the username
     
-    [[NSUserDefaults standardUserDefaults] setObject:@"@ltg.evl.uic.edu" forKey:kXMPPmyJID];
+    [[NSUserDefaults standardUserDefaults] setObject:@"fg-patch-1@ltg.evl.uic.edu" forKey:kXMPPmyJID];
     [[NSUserDefaults standardUserDefaults] setObject:@"fg-patch-1" forKey:kXMPPmyPassword];
     
     // Configure logging framework
@@ -183,7 +189,17 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
     
 	// Activate xmpp modules
     
+    if( isMUC ) {
+        //setup of room
+        XMPPJID *roomJID = [XMPPJID jidWithString:ROOM_JID];
+        
+        xmppRoom = [[XMPPRoom alloc] initWithRoomStorage:self jid:roomJID];
+        [xmppRoom              activate:xmppStream];
+        [xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    }
+    
 	[xmppReconnect         activate:xmppStream];
+    [xmppRoom              activate:xmppStream];
 //	[xmppRoster            activate:xmppStream];
 //	[xmppvCardTempModule   activate:xmppStream];
 //	[xmppvCardAvatarModule activate:xmppStream];
@@ -278,8 +294,10 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
 	if (myJID == nil || myPassword == nil) {
 		return NO;
 	}
+   
+    [xmppStream setMyJID:[XMPPJID jidWithString:myJID]];
+    [xmppStream setHostName:[[XMPPJID jidWithString:myJID] domain ] ];
     
-	[xmppStream setMyJID:[XMPPJID jidWithString:myJID]];
 	password = myPassword;
     
 	NSError *error = nil;
@@ -391,6 +409,11 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
 {
 	DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
 	
+    if( isMUC) {
+        NSString *myJID = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID];
+        [xmppRoom joinRoomUsingNickname:myJID history:nil];
+    }
+    
 	[self goOnline];
 }
 
@@ -411,9 +434,22 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
 	DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
     
 	// A simple example of inbound message handling.
-    
-	if ([message isChatMessageWithBody])
-	{
+
+    if( [message isGroupChatMessageWithBody]) {
+        DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
+        NSString *msg = [[message elementForName:@"body"] stringValue];
+        
+        
+        NSString *from = [[message attributeForName:@"from"] stringValue];
+        
+        lastMessageDict = [[NSMutableDictionary alloc] init];
+        [lastMessageDict setObject:msg forKey:@"msg"];
+        [lastMessageDict setObject:from forKey:@"sender"];
+        
+        
+        [xmppBaseNewMessageDelegate newMessageReceived:lastMessageDict];
+        
+    } else if ([message isChatMessageWithBody]) {
 		//XMPPUserCoreDataStorageObject *user = [xmppRosterStorage userForJID:[message from]
 		//                                                         xmppStream:xmppStream
 		 //                                              managedObjectContext:[self managedObjectContext_roster]];
@@ -431,28 +467,7 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
         [lastMessageDict setObject:msg forKey:@"msg"];
         [lastMessageDict setObject:from forKey:@"sender"];
         
-        
-        NSString *displayName = @"Hello";
-        
-        
-//		if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
-//		{
-//			UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:displayName
-//                                                                message:@"hye"
-//                                                               delegate:nil
-//                                                      cancelButtonTitle:@"Ok"
-//                                                      otherButtonTitles:nil];
-//			[alertView show];
-//		}
-//		else
-//		{
-//			// We are not active, so use a local notification instead
-//			UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-//			localNotification.alertAction = @"Ok";
-//			//localNotification.alertBody = [NSString stringWithFormat:@"From: %@\n\n%@",displayName,body];
-//            
-//			[[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
-//		}
+
         [xmppBaseNewMessageDelegate newMessageReceived:lastMessageDict];
 	}
 }
@@ -479,6 +494,84 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
 	}
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark XMPPRoom Delegate
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+- (void)xmppRoomDidCreate:(XMPPRoom *)sender
+{
+	DDLogInfo(@"%@: %@", THIS_FILE, THIS_METHOD);
+}
+
+- (void)xmppRoomDidJoin:(XMPPRoom *)sender
+{
+	DDLogInfo(@"%@: %@", THIS_FILE, THIS_METHOD);
+	
+	[xmppRoom fetchConfigurationForm];
+	[xmppRoom fetchBanList];
+	[xmppRoom fetchMembersList];
+	[xmppRoom fetchModeratorsList];
+}
+
+- (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm
+{
+	DDLogInfo(@"%@: %@", THIS_FILE, THIS_METHOD);
+}
+
+- (void)xmppRoom:(XMPPRoom *)sender didFetchBanList:(NSArray *)items
+{
+	DDLogInfo(@"%@: %@", THIS_FILE, THIS_METHOD);
+}
+
+- (void)xmppRoom:(XMPPRoom *)sender didNotFetchBanList:(XMPPIQ *)iqError
+{
+	DDLogInfo(@"%@: %@", THIS_FILE, THIS_METHOD);
+}
+
+- (void)xmppRoom:(XMPPRoom *)sender didFetchMembersList:(NSArray *)items
+{
+	DDLogInfo(@"%@: %@", THIS_FILE, THIS_METHOD);
+}
+
+- (void)xmppRoom:(XMPPRoom *)sender didNotFetchMembersList:(XMPPIQ *)iqError
+{
+	DDLogInfo(@"%@: %@", THIS_FILE, THIS_METHOD);
+}
+
+- (void)xmppRoom:(XMPPRoom *)sender didFetchModeratorsList:(NSArray *)items
+{
+	DDLogInfo(@"%@: %@", THIS_FILE, THIS_METHOD);
+}
+
+- (void)xmppRoom:(XMPPRoom *)sender didNotFetchModeratorsList:(XMPPIQ *)iqError
+{
+	DDLogInfo(@"%@: %@", THIS_FILE, THIS_METHOD);
+}
+
+- (void)handleDidLeaveRoom:(XMPPRoom *)room
+{
+	DDLogInfo(@"%@: %@", THIS_FILE, THIS_METHOD);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark XMPPRoomStorage Protocol
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+- (void)handlePresence:(XMPPPresence *)presence room:(XMPPRoom *)room {
+    
+}
+
+- (void)handleIncomingMessage:(XMPPMessage *)message room:(XMPPRoom *)room {
+    DDLogInfo(@"%@: %@", THIS_FILE, THIS_METHOD);
+}
+
+- (void)handleOutgoingMessage:(XMPPMessage *)message room:(XMPPRoom *)room {
+    
+}
+
+- (BOOL)configureWithParent:(XMPPRoom *)aParent queue:(dispatch_queue_t)queue {
+	return YES;
+}
 
 
 @end

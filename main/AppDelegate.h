@@ -10,12 +10,16 @@
 
 #import <UIKit/UIKit.h>
 #import "XMPPFramework.h"
+#import "XMPPRoom.h"
 #import "XMPPBaseNewMessageDelegate.h"
+#import "XMPPMessage+XEP0045.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate> {
+@interface AppDelegate : UIResponder <UIApplicationDelegate,XMPPRoomStorage> {
     
     XMPPStream *xmppStream;
 	XMPPReconnect *xmppReconnect;
+    XMPPRoom *xmppRoom;
+
     NSString *password;
     NSMutableDictionary *lastMessageDict;
     
@@ -29,6 +33,8 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong, readonly) XMPPStream *xmppStream;
 @property (nonatomic, strong, readonly) XMPPReconnect *xmppReconnect;
+@property (nonatomic, readonly) XMPPRoom *xmppRoom;
+
 @property (nonatomic, weak) id <XMPPBaseNewMessageDelegate> xmppBaseNewMessageDelegate;
 
 - (BOOL)connect;

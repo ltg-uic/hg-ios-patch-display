@@ -52,7 +52,7 @@ static NSMutableArray *players;
     [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
     [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
     [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"1623819" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"1623728" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
     [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
     [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
     [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];

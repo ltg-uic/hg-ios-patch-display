@@ -42,13 +42,13 @@
     if( l != nil ) {
         loginTextField.text = l;
     } else {
-        loginTextField.text = @"@phenomena.evl.uic.edu";
+        loginTextField.text = @"fg-patch-@ltg.evl.uic.edu";
     }
     
     if( p != nil ) {
         passTextField.text = p;
     } else {
-         passTextField.text = @"password";
+         passTextField.text = @"fg-patch-";
     }
 
 }
