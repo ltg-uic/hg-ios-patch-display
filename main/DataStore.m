@@ -39,26 +39,40 @@ static NSMutableArray *players;
     players = [NSMutableArray array];
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    [players addObject:[[Player alloc] initWithRFID:@"1623683" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"1623624" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"1623678" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"1623352" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    
     [players addObject:[[Player alloc] initWithRFID:@"1612507" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"1623365" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"1623641" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"1623667" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"1623110" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"1623373" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"1623115" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"1623392" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
     [players addObject:[[Player alloc] initWithRFID:@"1623454" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"1623386" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"1623210" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"1623305" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"1623257" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
     [players addObject:[[Player alloc] initWithRFID:@"1623728" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"1623238" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"1623126" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"1623303" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"1623302" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
     [players addObject:[[Player alloc] initWithRFID:@"1623972" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"034" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
+    [players addObject:[[Player alloc] initWithRFID:@"1623663" AndName:@"tony" AndScore:[NSNumber numberWithInt:0]]];
     
 }
 

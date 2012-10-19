@@ -13,6 +13,7 @@
 #import "XMPPRoom.h"
 #import "XMPPBaseNewMessageDelegate.h"
 #import "XMPPMessage+XEP0045.h"
+#import "XMPPBaseOnlineDelegate.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate,XMPPRoomStorage> {
     
@@ -28,6 +29,8 @@
 	BOOL allowSSLHostNameMismatch;
 	BOOL isXmppConnected;
     id <XMPPBaseNewMessageDelegate> __weak xmppBaseNewMessageDelegate;
+    id <XMPPBaseOnlineDelegate>     __weak xmppBaseOnlineDelegate;
+
 }
 
 @property (strong, nonatomic) UIWindow *window;
@@ -36,6 +39,8 @@
 @property (nonatomic, readonly) XMPPRoom *xmppRoom;
 
 @property (nonatomic, weak) id <XMPPBaseNewMessageDelegate> xmppBaseNewMessageDelegate;
+@property (nonatomic, weak) id <XMPPBaseOnlineDelegate>     xmppBaseOnlineDelegate;
+
 
 - (BOOL)connect;
 - (void)disconnect;

@@ -38,8 +38,8 @@ BOOL isMUC = YES;
     
     //only have this we are hardcoding the username
     
-    [[NSUserDefaults standardUserDefaults] setObject:@"fg-patch-1@ltg.evl.uic.edu" forKey:kXMPPmyJID];
-    [[NSUserDefaults standardUserDefaults] setObject:@"fg-patch-1" forKey:kXMPPmyPassword];
+    [[NSUserDefaults standardUserDefaults] setObject:@"fg-patch-5@ltg.evl.uic.edu" forKey:kXMPPmyJID];
+    [[NSUserDefaults standardUserDefaults] setObject:@"fg-patch-5" forKey:kXMPPmyPassword];
     
     // Configure logging framework
 	
@@ -65,9 +65,11 @@ BOOL isMUC = YES;
             
 			[self.window.rootViewController presentViewController:controller animated:YES completion:nil];
 		});
-	}
+	} else {
+        [xmppBaseOnlineDelegate isAvailable:YES];
+    }
 }
-							
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
