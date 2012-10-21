@@ -23,15 +23,11 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 @synthesize xmppStream;
 @synthesize xmppReconnect;
 @synthesize xmppBaseNewMessageDelegate;
-
-NSString *const kXMPPmyJID = @"kXMPPmyJID";
-NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
+@synthesize xmppBaseOnlineDelegate;
 
 BOOL isMUC = YES;
 
-#define ROOM_JID       @"foraging-group@conference.ltg.evl.uic.edu"
-#define XMPP_HOSTNAME  @"ltg.evl.uic.edu"
-#define XMPP_JID       @"fg-patch-1@ltg.evl.uic.edu"
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -65,9 +61,7 @@ BOOL isMUC = YES;
             
 			[self.window.rootViewController presentViewController:controller animated:YES completion:nil];
 		});
-	} else {
-        [xmppBaseOnlineDelegate isAvailable:YES];
-    }
+	}
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -197,7 +191,7 @@ BOOL isMUC = YES;
         
         xmppRoom = [[XMPPRoom alloc] initWithRoomStorage:self jid:roomJID];
         [xmppRoom              activate:xmppStream];
-        [xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
+        [xmppRoom addDelegate:self delegateQueue:dispatch_get_main_queue()];
     }
     
 	[xmppReconnect         activate:xmppStream];
@@ -264,6 +258,8 @@ BOOL isMUC = YES;
 	XMPPPresence *presence = [XMPPPresence presence]; // type="available" is implicit
 	
 	[[self xmppStream] sendElement:presence];
+    
+     [xmppBaseOnlineDelegate isAvailable:YES];
 }
 
 - (void)goOffline
@@ -476,22 +472,42 @@ BOOL isMUC = YES;
 
 
 
-- (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence
-{
-	DDLogVerbose(@"%@: %@ - %@", THIS_FILE, THIS_METHOD, [presence fromStr]);
+- (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence {
+//	DDLogVerbose(@"%@: %@ - %@", THIS_FILE, THIS_METHOD, [presence fromStr]);
+//    
+//    NSString *presenceType = [presence type]; // online/offline
+//	NSString *myUsername = [[sender myJID] user];
+//	NSString *presenceFromUser = [[presence from] user];
+//	
+//	if ([presenceFromUser isEqualToString:myUsername]) {
+//		
+//		if ([presenceType isEqualToString:@"available"]) {
+//            
+//            NSString *t = [NSString stringWithFormat:@"%@@%@", presenceFromUser, @"jerry.local"];
+//            DDLogVerbose(t);
+//			
+//            
+//			
+//		} else if ([presenceType isEqualToString:@"unavailable"]) {
+//			
+//            NSString *t = [NSString stringWithFormat:@"%@@%@", presenceFromUser, @"jerry.local"];
+//            DDLogVerbose(t);
+//            
+//            [xmppBaseOnlineDelegate isAvailable:NO];
+//			
+//		}
+//		
+//	}
 }
 
-- (void)xmppStream:(XMPPStream *)sender didReceiveError:(id)error
-{
+- (void)xmppStream:(XMPPStream *)sender didReceiveError:(id)error {
 	DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
 }
 
-- (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error
-{
+- (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error {
 	DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
 	
-	if (!isXmppConnected)
-	{
+	if (!isXmppConnected) {
 		DDLogError(@"Unable to connect to server. Check xmppStream.hostName");
 	}
 }
@@ -500,59 +516,53 @@ BOOL isMUC = YES;
 #pragma mark XMPPRoom Delegate
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (void)xmppRoomDidCreate:(XMPPRoom *)sender
-{
+- (void)xmppRoomDidCreate:(XMPPRoom *)sender {
 	DDLogInfo(@"%@: %@", THIS_FILE, THIS_METHOD);
 }
 
-- (void)xmppRoomDidJoin:(XMPPRoom *)sender
-{
+- (void)xmppRoomDidJoin:(XMPPRoom *)sender {
 	DDLogInfo(@"%@: %@", THIS_FILE, THIS_METHOD);
 	
+    [xmppBaseOnlineDelegate isAvailable:YES];
+    
 	[xmppRoom fetchConfigurationForm];
 	[xmppRoom fetchBanList];
 	[xmppRoom fetchMembersList];
 	[xmppRoom fetchModeratorsList];
 }
 
-- (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm
-{
+- (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm {
 	DDLogInfo(@"%@: %@", THIS_FILE, THIS_METHOD);
 }
 
-- (void)xmppRoom:(XMPPRoom *)sender didFetchBanList:(NSArray *)items
-{
+- (void)xmppRoom:(XMPPRoom *)sender didFetchBanList:(NSArray *)items {
 	DDLogInfo(@"%@: %@", THIS_FILE, THIS_METHOD);
 }
 
-- (void)xmppRoom:(XMPPRoom *)sender didNotFetchBanList:(XMPPIQ *)iqError
-{
+- (void)xmppRoom:(XMPPRoom *)sender didNotFetchBanList:(XMPPIQ *)iqError {
 	DDLogInfo(@"%@: %@", THIS_FILE, THIS_METHOD);
 }
 
-- (void)xmppRoom:(XMPPRoom *)sender didFetchMembersList:(NSArray *)items
-{
+- (void)xmppRoom:(XMPPRoom *)sender didFetchMembersList:(NSArray *)items {
 	DDLogInfo(@"%@: %@", THIS_FILE, THIS_METHOD);
 }
 
-- (void)xmppRoom:(XMPPRoom *)sender didNotFetchMembersList:(XMPPIQ *)iqError
-{
+- (void)xmppRoom:(XMPPRoom *)sender didNotFetchMembersList:(XMPPIQ *)iqError {
 	DDLogInfo(@"%@: %@", THIS_FILE, THIS_METHOD);
 }
 
-- (void)xmppRoom:(XMPPRoom *)sender didFetchModeratorsList:(NSArray *)items
-{
+- (void)xmppRoom:(XMPPRoom *)sender didFetchModeratorsList:(NSArray *)items {
 	DDLogInfo(@"%@: %@", THIS_FILE, THIS_METHOD);
 }
 
-- (void)xmppRoom:(XMPPRoom *)sender didNotFetchModeratorsList:(XMPPIQ *)iqError
-{
+- (void)xmppRoom:(XMPPRoom *)sender didNotFetchModeratorsList:(XMPPIQ *)iqError {
 	DDLogInfo(@"%@: %@", THIS_FILE, THIS_METHOD);
 }
 
-- (void)handleDidLeaveRoom:(XMPPRoom *)room
-{
+- (void)handleDidLeaveRoom:(XMPPRoom *)room {
 	DDLogInfo(@"%@: %@", THIS_FILE, THIS_METHOD);
+    [xmppBaseOnlineDelegate isAvailable:NO];
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -560,7 +570,9 @@ BOOL isMUC = YES;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (void)handlePresence:(XMPPPresence *)presence room:(XMPPRoom *)room {
-    
+
+    DDLogInfo(@"%@: %@", THIS_FILE, THIS_METHOD);
+
 }
 
 - (void)handleIncomingMessage:(XMPPMessage *)message room:(XMPPRoom *)room {

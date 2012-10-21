@@ -104,7 +104,16 @@ static NSMutableArray *players;
     p.score = [NSNumber numberWithDouble:[p.score doubleValue] + [score doubleValue]];
 }
 
--(void)resetScoreWithRFID:rfid {
+-(NSNumber *)scoreForRFID:(NSString *)rfid {
+    for (int i = 0; i < [players count]; i++) {
+        Player *p = [players objectAtIndex: i];
+        if([p.rfid isEqualToString:rfid]){
+            return p.score;
+        }
+    }
+}
+
+-(void)resetScoreWithRFID:  (NSString *)rfid {
     for (int i = 0; i < [players count]; i++) {
         Player *p = [players objectAtIndex: i];
         if([p.rfid isEqualToString:rfid]){

@@ -30,6 +30,13 @@
 	BOOL isXmppConnected;
     id <XMPPBaseNewMessageDelegate> __weak xmppBaseNewMessageDelegate;
     id <XMPPBaseOnlineDelegate>     __weak xmppBaseOnlineDelegate;
+    
+    #define ROOM_JID        @"foraging-group@conference.ltg.evl.uic.edu"
+    #define XMPP_HOSTNAME   @"ltg.evl.uic.edu"
+    #define XMPP_JID        @"fg-patch-1@ltg.evl.uic.edu"
+    
+    #define kXMPPmyJID      @"kXMPPmyJID"
+    #define kXMPPmyPassword @"kXMPPmyPassword"
 
 }
 

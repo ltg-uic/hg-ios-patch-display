@@ -24,6 +24,9 @@
 - (void)addScore:(NSNumber *)score withKey: (NSNumber *)key;
 - (NSNumber *)scoreForKey: (NSUInteger)key;
 - (void)addScore:(NSNumber *)score withRFID: (NSString *)rfid;
-- (void)resetScoreWithRFID:rfid;
+
+- (void)resetScoreWithRFID: (NSString *)rfid;
+- (NSNumber *)scoreForRFID: (NSString *)rfid;
+
 
 @end

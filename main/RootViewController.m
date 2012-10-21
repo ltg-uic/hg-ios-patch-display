@@ -14,7 +14,7 @@
 #import "XMPPBaseNewMessageDelegate.h"
 #import "SBJson.h"
 
-@interface RootViewController : UIViewController <CPTBarPlotDataSource, CPTBarPlotDelegate, XMPPBaseNewMessageDelegate> {
+@interface RootViewController : UIViewController <CPTBarPlotDataSource, CPTBarPlotDelegate, XMPPBaseNewMessageDelegate, XMPPBaseOnlineDelegate> {
     
     __weak IBOutlet UILabel *stopWatchLabel;
     __weak IBOutlet UILabel *timeIntervalLabel;
@@ -54,6 +54,7 @@ CGFloat const CPDBarInitialX = 0.5f;
 int scoreIncrease = 5;
 
 NSString *  const newFoodDynamicPlot = @"newFoodDynamicPlot";
+NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
 
 @synthesize hostView    = hostView_;
 @synthesize aaplPlot    = aaplPlot_;
@@ -70,6 +71,8 @@ NSString *  const newFoodDynamicPlot = @"newFoodDynamicPlot";
     [super viewDidLoad];
     
     self.appDelegate.xmppBaseNewMessageDelegate = self;
+    self.appDelegate.xmppBaseOnlineDelegate = self;
+    
     currentRFIDS = [NSMutableArray array];
     [self initPlot];
 }
@@ -379,36 +382,47 @@ NSString *  const newFoodDynamicPlot = @"newFoodDynamicPlot";
     
     
     if( jsonObjects != nil){
-        NSString *patch = [jsonObjects objectForKey:@"patch"];
+        NSString *destination = [jsonObjects objectForKey:@"destination"];
         
-        NSString *myJID = [[NSUserDefaults standardUserDefaults] stringForKey:@"kXMPPmyJID"];
-
-        if ([myJID rangeOfString:patch].location == NSNotFound) {
+        if( ! [destination isEqualToString:[self origin]] )
             return;
-        }
+    
+        NSString *event = [jsonObjects objectForKey:@"event"];
         
-        NSArray *arrivals = [jsonObjects objectForKey:@"arrivals"];
-        NSArray *departures = [jsonObjects objectForKey:@"departures"];
         
-        if([startButton.currentTitle isEqualToString:@"start"]) {
-            [self startAndStop:nil];
-        }
-        
-        if( arrivals != nil) {
-            for (NSString *rfid in arrivals) {
-                [self addRFID:rfid];
-                [self increaseByRFID: rfid];
+        if( event != nil) {
+            
+            if( [event isEqualToString:@"game_reset"] ) {
+                [self resetGame];
+            } else if( [event isEqualToString:@"rfid_update"] ){
+                NSDictionary *payload = [jsonObjects objectForKey:@"payload"];
+                
+            
+                NSArray *arrivals = [payload objectForKey:@"arrivals"];
+                NSArray *departures = [jsonObjects objectForKey:@"departures"];
+                
+                if( arrivals != nil) {
+                    for (NSString *rfid in arrivals) {
+                        [self addRFID:rfid];
+                        [self increaseByRFID: rfid];
+                    }
+                }
+                
+                if( departures != nil) {
+                    for (NSString *rfid in departures) {
+                        [self sendOutScoreUpdateWith:rfid];
+                        [self decreaseByRFID: rfid];
+                        [self removeRFID:rfid];
+                        
+                    }
+                }
             }
-        }
-        
-        if( departures != nil) {
-            for (NSString *rfid in departures) {
-                [self decreaseByRFID: rfid];
-                [self removeRFID:rfid];
+            
+            
             }
+            
         }
-        
-    }
+
     NSLog(@"message %@", msg);
     
     
@@ -433,17 +447,78 @@ NSString *  const newFoodDynamicPlot = @"newFoodDynamicPlot";
     
 }
 - (IBAction)test:(id)sender {
-    NSString *msg = @"{ \"arrivals\" : [\"student-1\",\"student-5\"],\"departures\" : []}";
     
-    SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
-    NSError *error = nil;
-    NSDictionary *jsonObjects = [jsonParser objectWithString:msg error:&error];
+
+    NSString *origin = [self origin];
     
-    NSArray *arrivals = [jsonObjects objectForKey:@"arrivals"];
-    NSArray *departures = [jsonObjects objectForKey:@"departures"];
+    NSString *eventType = @"\"event\": \"score_upate\"";
     
+    NSString *originType = [[NSString alloc] initWithFormat:@"\"origin\": \"%@\"",origin];
+    
+    NSString *payloadType = [[NSString alloc] initWithFormat:@"\"payload\": { \"tag\": \"%@\", \"score\": \"%@\" }",@"3243434", @"45"];
+    
+    NSString *msg = [[NSString alloc] initWithFormat:@"{ %@,%@, %@ }",eventType, originType,payloadType];
+    
+    [self sendGroupChatMessage:msg];
     
 }
 
+- (void)isAvailable:(BOOL)available {
+    
+    [self sendGroupChatMessage:patchinitMessage];
+}
+
+-(void)sendGroupChatMessage: (NSString *)msg {
+    NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
+    [body setStringValue:msg];
+    
+    NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
+    [message addAttributeWithName:@"type" stringValue:@"groupchat"];
+    [message addAttributeWithName:@"to" stringValue:ROOM_JID];
+    [message addChild:body];
+    
+    [[[self appDelegate] xmppStream ] sendElement:message];
+}
+
+#pragma mark - Game methods
+
+-(void)sendOutScoreUpdateWith: (NSString *)rfid {
+    for( NSString *someRFID in currentRFIDS) {
+        if( [someRFID isEqualToString:rfid]){
+            NSNumber *score = [[DataStore sharedInstance ] scoreForRFID:rfid];
+            NSString *origin = [self origin];
+            
+            NSString *eventType = @"\"event\": \"score_upate\"";
+            
+            NSString *originType = [[NSString alloc] initWithFormat:@"\"origin\": \"%@\"",origin];
+            
+            NSString *payloadType = [[NSString alloc] initWithFormat:@"\"payload\": { \"tag\": \"%@\", \"score\": \"%@\" }",rfid, [score stringValue]];
+            
+            NSString *msg = [[NSString alloc] initWithFormat:@"{ %@,%@, %@ }",eventType, originType,payloadType];
+            
+            [self sendGroupChatMessage:msg];
+            
+        }
+    }
+}
+
+-(NSString *) origin {
+    NSString *myJID = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID];
+    NSString *origin = [[myJID componentsSeparatedByString:@"@"] objectAtIndex:0 ];
+    return origin;
+}
+
+-(void)resetGame {
+    [startButton setTitle: @"start" forState: UIControlStateNormal];
+    stopWatchLabel.text = @"0:00";
+    [stopWatchTimer invalidate];
+    [intervalTimer invalidate];
+    [[DataStore sharedInstance] resetPlayerCount];
+    [graph reloadData];
+    [self updateTimer];
+    
+    [self sendGroupChatMessage:patchinitMessage];
+
+}
 
 @end
