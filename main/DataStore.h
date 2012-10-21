@@ -10,23 +10,20 @@
 
 + (DataStore *)sharedInstance;
 
-- (int)animalCount;
-
-- (NSNumber *)animalFoodForKey: (NSUInteger)key;
-- (void)addFood:(NSNumber *)food withKey: (NSNumber *)key;
-- (void)addFood:(int)food;
-- (void)resetAnimalCount;
-- (void)removeAnimal;
-
 
 - (void)resetPlayerCount;
 - (int)playerCount;
-- (void)addScore:(NSNumber *)score withKey: (NSNumber *)key;
-- (NSNumber *)scoreForKey: (NSUInteger)key;
+- (int)playerCountWithId: (NSString *)plotId;
+
+
 - (void)addScore:(NSNumber *)score withRFID: (NSString *)rfid;
+- (void)addScore:(NSNumber *)score withKey: (NSNumber *)key;
 
 - (void)resetScoreWithRFID: (NSString *)rfid;
 - (NSNumber *)scoreForRFID: (NSString *)rfid;
 
+- (NSNumber *)scoreForKey: (NSUInteger)key;
+- (NSNumber *)scoreForKey: (NSUInteger)key andCluster:(NSString *)cluster;
 
+- (NSString *)colorForKey: (NSUInteger)key;
 @end

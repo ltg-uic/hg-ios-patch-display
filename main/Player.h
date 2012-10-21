@@ -16,8 +16,11 @@
 @property(strong) NSString *rfid;
 @property(strong) NSString *name;
 @property(strong) NSNumber *score;
+@property(strong) NSString *cluster;
+@property(strong) NSString *color;
 
 -(id)initWithRFID:(NSString *)rfid AndName:(NSString *)name AndScore:(NSNumber *)score;
 
+-(id)initWithRFID:(NSString *)rfid AndCluster:(NSString *)cluster AndColor:(NSString *)color AndScore:(NSNumber *)score;
 
 @end

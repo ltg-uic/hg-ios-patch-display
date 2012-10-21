@@ -30,7 +30,8 @@
 }
 
 @property (nonatomic, strong) IBOutlet CPTGraphHostingView *hostView;
-@property (nonatomic, strong) CPTBarPlot *aaplPlot;
+@property (nonatomic, strong) CPTBarPlot *trianglePlot;
+@property (nonatomic, strong) CPTBarPlot *squarePlot;
 @property (nonatomic, strong) CPTPlotSpaceAnnotation *priceAnnotation;
 
 -(void)initPlot;
@@ -54,10 +55,16 @@ CGFloat const CPDBarInitialX = 0.5f;
 int scoreIncrease = 5;
 
 NSString *  const newFoodDynamicPlot = @"newFoodDynamicPlot";
+NSString *  const starPlot = @"star";
+NSString *  const trianglePlot = @"triangle";
+NSString *  const circlePlot = @"circle";
+NSString *  const squarePlot = @"square";
+
 NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
 
 @synthesize hostView    = hostView_;
-@synthesize aaplPlot    = aaplPlot_;
+@synthesize trianglePlot    = trianglePlot_;
+@synthesize squarePlot    = squarePlot_;
 @synthesize priceAnnotation = priceAnnotation_;
 
 - (AppDelegate *)appDelegate {
@@ -96,17 +103,18 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
 #pragma mark - CPTPlotDataSource methods
 
 -(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot {
-	return [[DataStore sharedInstance] playerCount];
+    return [[DataStore sharedInstance] playerCount];
 }
 
 -(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index {
 	if ((fieldEnum == CPTBarPlotFieldBarTip) && (index < [[DataStore sharedInstance] playerCount])) {
-		if ([plot.identifier isEqual:newFoodDynamicPlot]) {
+		if ([plot.identifier isEqual:trianglePlot]) {
             return [[DataStore sharedInstance] scoreForKey:index];
-            
-            
-			//return [[[DataStore sharedInstance] weeklyPrices:newFoodDynamicPlot] objectAtIndex:index];
-		}
+        }
+        //else if ([plot.identifier isEqual:squarePlot]) {
+          //  return [[DataStore sharedInstance] scoreForKey:index andCluster:squarePlot];
+        //}
+        
 	}
 	return [NSDecimalNumber numberWithUnsignedInteger:index];
 }
@@ -166,7 +174,9 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
     [self configureGraph];
     [self configurePlots];
     [self configureAxes];
-    [self.aaplPlot setHidden:NO];
+    [self.trianglePlot setHidden:NO];
+    [self.squarePlot setHidden:NO];
+
 }
 
 -(void)configureGraph {
@@ -177,7 +187,7 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
     
     hostView_.hostedGraph = graph;
     // 2 - Configure the graph
-    [graph applyTheme:[CPTTheme themeNamed:kCPTSlateTheme]];
+    [graph applyTheme:[CPTTheme themeNamed:kCPTPlainBlackTheme]];
     graph.paddingBottom = 10.0f;
     graph.paddingLeft  = 10.0f;
     graph.paddingTop    = 1.0f;
@@ -195,9 +205,11 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
 //    graph.titleDisplacement = CGPointMake(0.0f, -16.0f);
     // 5 - Set up plot space
     CGFloat xMin = 0.0f;
+    
+    //CGFloat xMax = 25;
     CGFloat xMax = [[DataStore sharedInstance] playerCount];
     CGFloat yMin = 0.0f;
-    CGFloat yMax = 800.0f;  // should determine dynamically based on max price
+    CGFloat yMax = 3000.0f;  // should determine dynamically based on max price
     plotSpace = (CPTXYPlotSpace *) graph.defaultPlotSpace;
     plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(xMin) length:CPTDecimalFromFloat(xMax)];
     plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(yMin) length:CPTDecimalFromFloat(yMax)];
@@ -205,8 +217,11 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
 
 -(void)configurePlots {
     // 1 - Set up the three plots
-    self.aaplPlot = [CPTBarPlot tubularBarPlotWithColor:[CPTColor greenColor] horizontalBars:NO];
-    self.aaplPlot.identifier = newFoodDynamicPlot;
+    self.trianglePlot = [CPTBarPlot tubularBarPlotWithColor:[CPTColor greenColor] horizontalBars:NO];
+    self.trianglePlot.identifier = trianglePlot;
+    
+    self.squarePlot = [CPTBarPlot tubularBarPlotWithColor:[CPTColor redColor] horizontalBars:NO];
+    self.squarePlot.identifier = squarePlot;
 
     // 2 - Set up line style
     CPTMutableLineStyle *barLineStyle = [[CPTMutableLineStyle alloc] init];
@@ -215,7 +230,7 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
     // 3 - Add plots to graph
     graph = self.hostView.hostedGraph;
     CGFloat barX = CPDBarInitialX;
-    NSArray *plots = [NSArray arrayWithObjects:self.aaplPlot, nil];
+    NSArray *plots = [NSArray arrayWithObjects:self.trianglePlot, nil];
     for (CPTBarPlot *plot in plots) {
         plot.dataSource = self;
         plot.delegate = self;
@@ -223,10 +238,39 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
         plot.barOffset = CPTDecimalFromDouble(CPDBarInitialX);
         plot.lineStyle = barLineStyle;
         [graph addPlot:plot toPlotSpace:graph.defaultPlotSpace];
-       // barX += CPDBarWidth;
+        //barX += CPDBarWidth;
     }
     
 }
+
+-(CPTFill *)barFillForBarPlot:(CPTBarPlot *)barPlot
+                  recordIndex:(NSUInteger)index {
+    
+    
+    NSDictionary *colors = @{@"red":[CPTColor redColor], @"blue":[CPTColor blueColor], @"orange": [CPTColor orangeColor], @"yellow": [CPTColor yellowColor], @"green": [CPTColor greenColor]};
+    
+    if ( [barPlot.identifier isEqual:trianglePlot] ) {
+        
+        
+        
+        
+        NSString *color = [[DataStore sharedInstance] colorForKey:index];
+        
+        CPTGradient *gradient = [CPTGradient gradientWithBeginningColor:[CPTColor whiteColor]
+                                                            endingColor:[colors objectForKey:color]
+                                                      beginningPosition:0.0 endingPosition:0.3 ];
+        [gradient setGradientType:CPTGradientTypeAxial];
+        [gradient setAngle:350];
+        
+        CPTFill *fill = [CPTFill fillWithGradient:gradient];
+        
+        return fill;
+        
+    }
+    return [CPTFill fillWithColor:[CPTColor colorWithComponentRed:1.0 green:1.0 blue:1.0 alpha:1.0]];
+    
+}
+
 
 -(void)configureAxes {
     
@@ -400,6 +444,10 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
             
                 NSArray *arrivals = [payload objectForKey:@"arrivals"];
                 NSArray *departures = [jsonObjects objectForKey:@"departures"];
+                
+                if([startButton.currentTitle isEqualToString:@"start"]) {
+                [self startAndStop:nil];
+                }
                 
                 if( arrivals != nil) {
                     for (NSString *rfid in arrivals) {

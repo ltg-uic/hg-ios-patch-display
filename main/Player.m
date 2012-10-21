@@ -33,4 +33,15 @@
     return self;
 }
 
+-(id)initWithRFID:(NSString *)rfid AndCluster:(NSString *)cluster AndColor:(NSString *)color AndScore:(NSNumber *)score {
+    self = [super init];
+    if (self) {
+        _rfid = rfid;
+        _cluster = cluster;
+        _color = color;
+        _score = score;
+    }
+    return self;
+}
+
 @end
