@@ -44,4 +44,8 @@
     return self;
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat: @"player: rfid=%@ cluster=%@ color=%@ score=%@", _rfid, _cluster, _color, _score];
+}
+
 @end

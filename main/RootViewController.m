@@ -23,6 +23,7 @@
     NSTimer *stopWatchTimer;
     NSDate *startDate;
     NSMutableArray *currentRFIDS;
+    NSNumber *feedRatio;
         
     CPTGraph *graph;
     CPTXYPlotSpace *plotSpace;
@@ -111,10 +112,6 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
 		if ([plot.identifier isEqual:trianglePlot]) {
             return [[DataStore sharedInstance] scoreForKey:index];
         }
-        //else if ([plot.identifier isEqual:squarePlot]) {
-          //  return [[DataStore sharedInstance] scoreForKey:index andCluster:squarePlot];
-        //}
-        
 	}
 	return [NSDecimalNumber numberWithUnsignedInteger:index];
 }
@@ -188,10 +185,12 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
     hostView_.hostedGraph = graph;
     // 2 - Configure the graph
     [graph applyTheme:[CPTTheme themeNamed:kCPTPlainBlackTheme]];
-    graph.paddingBottom = 10.0f;
+    graph.paddingBottom = 50.0f;
     graph.paddingLeft  = 10.0f;
     graph.paddingTop    = 1.0f;
     graph.paddingRight  = 5.0f;
+    //graph.axisSet.paddingBottom = 10.0f;
+
     // 3 - Set up styles
 //    CPTMutableTextStyle *titleStyle = [CPTMutableTextStyle textStyle];
 //    titleStyle.color = [CPTColor whiteColor];
@@ -274,6 +273,14 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
 
 -(void)configureAxes {
     
+    
+    NSArray *customTickLocations = [NSArray arrayWithObjects:[NSDecimalNumber numberWithInt:0],
+                                    [NSDecimalNumber numberWithInt:5],
+                                    [NSDecimalNumber numberWithInt:10],
+                                    [NSDecimalNumber numberWithInt:15],
+                                    [NSDecimalNumber numberWithInt:20],
+                                    nil];
+    
     // 1 - Configure styles
 //    CPTMutableTextStyle *axisTitleStyle = [CPTMutableTextStyle textStyle];
 //    axisTitleStyle.color = [CPTColor whiteColor];
@@ -285,6 +292,14 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
     // 2 - Get the graph's axis set
     CPTXYAxisSet *axisSet = (CPTXYAxisSet *) self.hostView.hostedGraph.axisSet;
     // 3 - Configure the x-axis
+
+    axisSet.xAxis.majorTickLocations = customTickLocations;
+    axisSet.xAxis.tickDirection = CPTSignNegative;
+    
+    //axisSet.xAxis.majorTickLineStyle = axisLineStyle;
+    axisSet.xAxis.labelOffset = 10.f;
+    axisSet.xAxis.majorTickLength = 10.0f;
+    
     axisSet.xAxis.labelingPolicy = CPTAxisLabelingPolicyNone;
     //axisSet.xAxis.title = @"Days of Week (Mon - Fri)";
     //axisSet.xAxis.titleTextStyle = axisTitleStyle;
@@ -315,7 +330,7 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
 - (void)increaseByRFID:(NSString *)rfid {
     
     [[DataStore sharedInstance] addScore:[NSNumber numberWithInt:scoreIncrease] withRFID:rfid];
-      [graph reloadData];
+    [graph reloadData];
 }
 
 - (void)decreaseByRFID:(NSString *)rfid {
@@ -438,6 +453,22 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
             
             if( [event isEqualToString:@"game_reset"] ) {
                 [self resetGame];
+            } else if( [event isEqualToString:@"patch_init_data"]){
+                NSDictionary *payload = [jsonObjects objectForKey:@"payload"];
+
+                feedRatio = @([[payload objectForKey:@"feed-ratio"] integerValue]);
+                
+                NSArray *tags = [payload objectForKey:@"tags"];
+                
+                for (NSDictionary *tag in tags) {
+                    
+                    NSString *tagId = [tag objectForKey:@"tag_id"];
+                    NSString *cluster = [tag objectForKey:@"cluster"];
+                    NSString *color = [tag objectForKey:@"color"];
+                    
+                    [[DataStore sharedInstance] addPlayerWithRFID:tagId withCluster:cluster withColor:color];
+                }
+
             } else if( [event isEqualToString:@"rfid_update"] ){
                 NSDictionary *payload = [jsonObjects objectForKey:@"payload"];
                 
@@ -564,7 +595,7 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
     [[DataStore sharedInstance] resetPlayerCount];
     [graph reloadData];
     [self updateTimer];
-    
+    feedRatio = @(0);
     [self sendGroupChatMessage:patchinitMessage];
 
 }

@@ -44,66 +44,66 @@ static NSMutableArray *star;
     dataPoints = [NSMutableDictionary dictionary];
     players = [NSMutableArray array];
     
-    triangle = [NSMutableArray array];
-    square = [NSMutableArray array];
-    circle = [NSMutableArray array];
-    star = [NSMutableArray array];
-    
-    clusters = [NSMutableDictionary dictionary];
-    [clusters setObject:triangle    forKey:@"triangle"];
-    [clusters setObject:square      forKey:@"square"];
-    [clusters setObject:circle      forKey:@"circle"];
-    [clusters setObject:star        forKey:@"star"];
-    
-    
-    [triangle addObject:[[Player alloc] initWithRFID:@"1623365"  AndCluster:@"triangle" AndColor:@"red" AndScore:[NSNumber numberWithInt:100]]];
-    [triangle addObject:[[Player alloc] initWithRFID:@"1623641"  AndCluster:@"triangle" AndColor:@"blue" AndScore:[NSNumber numberWithInt:100]]];
-    [triangle addObject:[[Player alloc] initWithRFID:@"1623683"  AndCluster:@"triangle" AndColor:@"green" AndScore:[NSNumber numberWithInt:100]]];
-    [triangle addObject:[[Player alloc] initWithRFID:@"1623624"  AndCluster:@"triangle" AndColor:@"yellow" AndScore:[NSNumber numberWithInt:100]]];
-    [triangle addObject:[[Player alloc] initWithRFID:@"1623352"  AndCluster:@"triangle" AndColor:@"orange" AndScore:[NSNumber numberWithInt:100]]];
-    
-    [square addObject:[[Player alloc] initWithRFID:@"1623678"  AndCluster:@"square" AndColor:@"red" AndScore:[NSNumber numberWithInt:30]]];
-    [square addObject:[[Player alloc] initWithRFID:@"1623663"  AndCluster:@"square" AndColor:@"blue" AndScore:[NSNumber numberWithInt:30]]];
-    [square addObject:[[Player alloc] initWithRFID:@"1623302"  AndCluster:@"square" AndColor:@"green" AndScore:[NSNumber numberWithInt:30]]];
-    [square addObject:[[Player alloc] initWithRFID:@"1623303"  AndCluster:@"square" AndColor:@"yellow" AndScore:[NSNumber numberWithInt:30]]];
-    [square addObject:[[Player alloc] initWithRFID:@"1623126"  AndCluster:@"square" AndColor:@"orange" AndScore:[NSNumber numberWithInt:30]]];
-
-    [circle addObject:[[Player alloc] initWithRFID:@"1623238"  AndCluster:@"circle" AndColor:@"red" AndScore:[NSNumber numberWithInt:40]]];
-    [circle addObject:[[Player alloc] initWithRFID:@"1623257"  AndCluster:@"circle" AndColor:@"blue" AndScore:[NSNumber numberWithInt:40]]];
-    [circle addObject:[[Player alloc] initWithRFID:@"1623210"  AndCluster:@"circle" AndColor:@"green" AndScore:[NSNumber numberWithInt:40]]];
-    [circle addObject:[[Player alloc] initWithRFID:@"1623305"  AndCluster:@"circle" AndColor:@"yellow" AndScore:[NSNumber numberWithInt:40]]];
-    [circle addObject:[[Player alloc] initWithRFID:@"1623386"  AndCluster:@"circle" AndColor:@"orange" AndScore:[NSNumber numberWithInt:40]]];
-    
-    [star addObject:[[Player alloc] initWithRFID:@"1623392"  AndCluster:@"star" AndColor:@"red" AndScore:[NSNumber numberWithInt:50]]];
-    [star addObject:[[Player alloc] initWithRFID:@"1623115"  AndCluster:@"star" AndColor:@"blue" AndScore:[NSNumber numberWithInt:50]]];
-    [star addObject:[[Player alloc] initWithRFID:@"1623373"  AndCluster:@"star" AndColor:@"green" AndScore:[NSNumber numberWithInt:50]]];
-    [star addObject:[[Player alloc] initWithRFID:@"1623110"  AndCluster:@"star" AndColor:@"yellow" AndScore:[NSNumber numberWithInt:50]]];
-    [star addObject:[[Player alloc] initWithRFID:@"1623667"  AndCluster:@"star" AndColor:@"orange" AndScore:[NSNumber numberWithInt:50]]];
-
-
-    [players addObject:[[Player alloc] initWithRFID:@"1623365"  AndCluster:@"triangle" AndColor:@"red" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"1623641"  AndCluster:@"triangle" AndColor:@"blue" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"1623683"  AndCluster:@"triangle" AndColor:@"green" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"1623624"  AndCluster:@"triangle" AndColor:@"yellow" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"1623352"  AndCluster:@"triangle" AndColor:@"orange" AndScore:[NSNumber numberWithInt:0]]];
-    
-    [players addObject:[[Player alloc] initWithRFID:@"1623678"  AndCluster:@"square" AndColor:@"red" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"1623663"  AndCluster:@"square" AndColor:@"blue" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"1623302"  AndCluster:@"square" AndColor:@"green" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"1623303"  AndCluster:@"square" AndColor:@"yellow" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"1623126"  AndCluster:@"square" AndColor:@"orange" AndScore:[NSNumber numberWithInt:0]]];
-    
-    [players addObject:[[Player alloc] initWithRFID:@"1623238"  AndCluster:@"circle" AndColor:@"red" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"1623257"  AndCluster:@"circle" AndColor:@"blue" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"1623210"  AndCluster:@"circle" AndColor:@"green" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"1623305"  AndCluster:@"circle" AndColor:@"yellow" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"1623386"  AndCluster:@"circle" AndColor:@"orange" AndScore:[NSNumber numberWithInt:0]]];
-    
-    [players addObject:[[Player alloc] initWithRFID:@"1623392"  AndCluster:@"star" AndColor:@"red" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"1623115"  AndCluster:@"star" AndColor:@"blue" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"1623373"  AndCluster:@"star" AndColor:@"green" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"1623110"  AndCluster:@"star" AndColor:@"yellow" AndScore:[NSNumber numberWithInt:0]]];
-    [players addObject:[[Player alloc] initWithRFID:@"1623667"  AndCluster:@"star" AndColor:@"orange" AndScore:[NSNumber numberWithInt:0]]];
+//    triangle = [NSMutableArray array];
+//    square = [NSMutableArray array];
+//    circle = [NSMutableArray array];
+//    star = [NSMutableArray array];
+//    
+//    clusters = [NSMutableDictionary dictionary];
+//    [clusters setObject:triangle    forKey:@"triangle"];
+//    [clusters setObject:square      forKey:@"square"];
+//    [clusters setObject:circle      forKey:@"circle"];
+//    [clusters setObject:star        forKey:@"star"];
+//    
+//    
+//    [triangle addObject:[[Player alloc] initWithRFID:@"1623365"  AndCluster:@"triangle" AndColor:@"red" AndScore:[NSNumber numberWithInt:100]]];
+//    [triangle addObject:[[Player alloc] initWithRFID:@"1623641"  AndCluster:@"triangle" AndColor:@"blue" AndScore:[NSNumber numberWithInt:100]]];
+//    [triangle addObject:[[Player alloc] initWithRFID:@"1623683"  AndCluster:@"triangle" AndColor:@"green" AndScore:[NSNumber numberWithInt:100]]];
+//    [triangle addObject:[[Player alloc] initWithRFID:@"1623624"  AndCluster:@"triangle" AndColor:@"yellow" AndScore:[NSNumber numberWithInt:100]]];
+//    [triangle addObject:[[Player alloc] initWithRFID:@"1623352"  AndCluster:@"triangle" AndColor:@"orange" AndScore:[NSNumber numberWithInt:100]]];
+//    
+//    [square addObject:[[Player alloc] initWithRFID:@"1623678"  AndCluster:@"square" AndColor:@"red" AndScore:[NSNumber numberWithInt:30]]];
+//    [square addObject:[[Player alloc] initWithRFID:@"1623663"  AndCluster:@"square" AndColor:@"blue" AndScore:[NSNumber numberWithInt:30]]];
+//    [square addObject:[[Player alloc] initWithRFID:@"1623302"  AndCluster:@"square" AndColor:@"green" AndScore:[NSNumber numberWithInt:30]]];
+//    [square addObject:[[Player alloc] initWithRFID:@"1623303"  AndCluster:@"square" AndColor:@"yellow" AndScore:[NSNumber numberWithInt:30]]];
+//    [square addObject:[[Player alloc] initWithRFID:@"1623126"  AndCluster:@"square" AndColor:@"orange" AndScore:[NSNumber numberWithInt:30]]];
+//
+//    [circle addObject:[[Player alloc] initWithRFID:@"1623238"  AndCluster:@"circle" AndColor:@"red" AndScore:[NSNumber numberWithInt:40]]];
+//    [circle addObject:[[Player alloc] initWithRFID:@"1623257"  AndCluster:@"circle" AndColor:@"blue" AndScore:[NSNumber numberWithInt:40]]];
+//    [circle addObject:[[Player alloc] initWithRFID:@"1623210"  AndCluster:@"circle" AndColor:@"green" AndScore:[NSNumber numberWithInt:40]]];
+//    [circle addObject:[[Player alloc] initWithRFID:@"1623305"  AndCluster:@"circle" AndColor:@"yellow" AndScore:[NSNumber numberWithInt:40]]];
+//    [circle addObject:[[Player alloc] initWithRFID:@"1623386"  AndCluster:@"circle" AndColor:@"orange" AndScore:[NSNumber numberWithInt:40]]];
+//    
+//    [star addObject:[[Player alloc] initWithRFID:@"1623392"  AndCluster:@"star" AndColor:@"red" AndScore:[NSNumber numberWithInt:50]]];
+//    [star addObject:[[Player alloc] initWithRFID:@"1623115"  AndCluster:@"star" AndColor:@"blue" AndScore:[NSNumber numberWithInt:50]]];
+//    [star addObject:[[Player alloc] initWithRFID:@"1623373"  AndCluster:@"star" AndColor:@"green" AndScore:[NSNumber numberWithInt:50]]];
+//    [star addObject:[[Player alloc] initWithRFID:@"1623110"  AndCluster:@"star" AndColor:@"yellow" AndScore:[NSNumber numberWithInt:50]]];
+//    [star addObject:[[Player alloc] initWithRFID:@"1623667"  AndCluster:@"star" AndColor:@"orange" AndScore:[NSNumber numberWithInt:50]]];
+//
+//
+//    [players addObject:[[Player alloc] initWithRFID:@"1623365"  AndCluster:@"triangle" AndColor:@"red" AndScore:[NSNumber numberWithInt:0]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623641"  AndCluster:@"triangle" AndColor:@"blue" AndScore:[NSNumber numberWithInt:0]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623683"  AndCluster:@"triangle" AndColor:@"green" AndScore:[NSNumber numberWithInt:0]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623624"  AndCluster:@"triangle" AndColor:@"yellow" AndScore:[NSNumber numberWithInt:0]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623352"  AndCluster:@"triangle" AndColor:@"orange" AndScore:[NSNumber numberWithInt:0]]];
+//    
+//    [players addObject:[[Player alloc] initWithRFID:@"1623678"  AndCluster:@"square" AndColor:@"red" AndScore:[NSNumber numberWithInt:0]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623663"  AndCluster:@"square" AndColor:@"blue" AndScore:[NSNumber numberWithInt:0]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623302"  AndCluster:@"square" AndColor:@"green" AndScore:[NSNumber numberWithInt:0]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623303"  AndCluster:@"square" AndColor:@"yellow" AndScore:[NSNumber numberWithInt:0]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623126"  AndCluster:@"square" AndColor:@"orange" AndScore:[NSNumber numberWithInt:0]]];
+//    
+//    [players addObject:[[Player alloc] initWithRFID:@"1623238"  AndCluster:@"circle" AndColor:@"red" AndScore:[NSNumber numberWithInt:0]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623257"  AndCluster:@"circle" AndColor:@"blue" AndScore:[NSNumber numberWithInt:0]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623210"  AndCluster:@"circle" AndColor:@"green" AndScore:[NSNumber numberWithInt:0]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623305"  AndCluster:@"circle" AndColor:@"yellow" AndScore:[NSNumber numberWithInt:0]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623386"  AndCluster:@"circle" AndColor:@"orange" AndScore:[NSNumber numberWithInt:0]]];
+//    
+//    [players addObject:[[Player alloc] initWithRFID:@"1623392"  AndCluster:@"star" AndColor:@"red" AndScore:[NSNumber numberWithInt:0]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623115"  AndCluster:@"star" AndColor:@"blue" AndScore:[NSNumber numberWithInt:0]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623373"  AndCluster:@"star" AndColor:@"green" AndScore:[NSNumber numberWithInt:0]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623110"  AndCluster:@"star" AndColor:@"yellow" AndScore:[NSNumber numberWithInt:0]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623667"  AndCluster:@"star" AndColor:@"orange" AndScore:[NSNumber numberWithInt:0]]];
     
 }
 
@@ -122,6 +122,16 @@ static NSMutableArray *star;
     return cluster.count;
 }
 
+- (void)addPlayerWithRFID:(NSString *)rfid withCluster:(NSString *)cluster withColor:(NSString *)color {
+    [players addObject:[[Player alloc] initWithRFID:rfid  AndCluster:cluster AndColor:color AndScore:[NSNumber numberWithInt:0]]];
+    
+    //sort the array
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"cluster" ascending:TRUE];
+    [players sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    
+    //tese
+
+}
 
 - (void)addScore:(NSNumber *)score withRFID: (NSString *)rfid {
     

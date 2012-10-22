@@ -15,6 +15,7 @@
 - (int)playerCount;
 - (int)playerCountWithId: (NSString *)plotId;
 
+- (void)addPlayerWithRFID:(NSString *)rfid withCluster:(NSString *)cluster withColor:(NSString *)color;
 
 - (void)addScore:(NSNumber *)score withRFID: (NSString *)rfid;
 - (void)addScore:(NSNumber *)score withKey: (NSNumber *)key;
