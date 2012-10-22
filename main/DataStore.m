@@ -81,8 +81,8 @@ static NSMutableArray *star;
 //    [star addObject:[[Player alloc] initWithRFID:@"1623667"  AndCluster:@"star" AndColor:@"orange" AndScore:[NSNumber numberWithInt:50]]];
 //
 //
-//    [players addObject:[[Player alloc] initWithRFID:@"1623365"  AndCluster:@"triangle" AndColor:@"red" AndScore:[NSNumber numberWithInt:0]]];
-//    [players addObject:[[Player alloc] initWithRFID:@"1623641"  AndCluster:@"triangle" AndColor:@"blue" AndScore:[NSNumber numberWithInt:0]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623365"  AndCluster:@"triangle" AndColor:@"red" AndScore:[NSNumber numberWithInt:100]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623641"  AndCluster:@"triangle" AndColor:@"blue" AndScore:[NSNumber numberWithInt:1000]]];
 //    [players addObject:[[Player alloc] initWithRFID:@"1623683"  AndCluster:@"triangle" AndColor:@"green" AndScore:[NSNumber numberWithInt:0]]];
 //    [players addObject:[[Player alloc] initWithRFID:@"1623624"  AndCluster:@"triangle" AndColor:@"yellow" AndScore:[NSNumber numberWithInt:0]]];
 //    [players addObject:[[Player alloc] initWithRFID:@"1623352"  AndCluster:@"triangle" AndColor:@"orange" AndScore:[NSNumber numberWithInt:0]]];
@@ -115,6 +115,11 @@ static NSMutableArray *star;
 
 - (int)playerCount {
     return [players count];
+}
+
+-(void) addScore: (NSNumber *)score WithIndex: (NSNumber *)index {
+    Player *p = [players objectAtIndex:[index intValue]];
+    p.score = [NSNumber numberWithDouble:[p.score doubleValue] + [score doubleValue]];
 }
 
 - (int)playerCountWithId: (NSString *)plotId {

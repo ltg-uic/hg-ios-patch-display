@@ -53,15 +53,12 @@
 
 CGFloat const CPDBarWidth = 1.0f;
 CGFloat const CPDBarInitialX = 0.5f;
-int scoreIncrease = 5;
 
 NSString *  const newFoodDynamicPlot = @"newFoodDynamicPlot";
 NSString *  const starPlot = @"star";
 NSString *  const trianglePlot = @"triangle";
 NSString *  const circlePlot = @"circle";
 NSString *  const squarePlot = @"square";
-
-NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
 
 @synthesize hostView    = hostView_;
 @synthesize trianglePlot    = trianglePlot_;
@@ -82,7 +79,6 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
     self.appDelegate.xmppBaseOnlineDelegate = self;
     
     currentRFIDS = [NSMutableArray array];
-    [self initPlot];
 }
 
 - (void)didReceiveMemoryWarning
@@ -116,54 +112,6 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
 	return [NSDecimalNumber numberWithUnsignedInteger:index];
 }
 
-#pragma mark - CPTBarPlotDelegate methods
-
--(void)barPlot:(CPTBarPlot *)plot barWasSelectedAtRecordIndex:(NSUInteger)index {
-    // 1 - Is the plot hidden?
-    if (plot.isHidden == YES) {
-        return;
-    }
-    // 2 - Create style, if necessary
-    static CPTMutableTextStyle *style = nil;
-    if (!style) {
-        style = [CPTMutableTextStyle textStyle];
-        style.color= [CPTColor yellowColor];
-        style.fontSize = 16.0f;
-        style.fontName = @"Helvetica-Bold";
-    }
-    // 3 - Create annotation, if necessary
-    NSNumber *price = [self numberForPlot:plot field:CPTBarPlotFieldBarTip recordIndex:index];
-    if (!self.priceAnnotation) {
-        NSNumber *x = [NSNumber numberWithInt:0];
-        NSNumber *y = [NSNumber numberWithInt:0];
-        NSArray *anchorPoint = [NSArray arrayWithObjects:x, y, nil];
-        self.priceAnnotation = [[CPTPlotSpaceAnnotation alloc] initWithPlotSpace:plot.plotSpace anchorPlotPoint:anchorPoint];
-    }
-    // 4 - Create number formatter, if needed
-    static NSNumberFormatter *formatter = nil;
-    if (!formatter) {
-        formatter = [[NSNumberFormatter alloc] init];
-        [formatter setMaximumFractionDigits:2];
-    }
-    // 5 - Create text layer for annotation
-    NSString *priceValue = [formatter stringFromNumber:price];
-    CPTTextLayer *textLayer = [[CPTTextLayer alloc] initWithText:priceValue style:style];
-    self.priceAnnotation.contentLayer = textLayer;
-    // 6 - Get plot index based on identifier
-    NSInteger plotIndex = 0;
-//    if ([plot.identifier isEqual:newFoodDynamicPlot] == YES) {
-//        plotIndex = 0;
-//    }
-    // 7 - Get the anchor point for annotation
-    CGFloat x = index + CPDBarInitialX + (plotIndex * CPDBarWidth);
-    NSNumber *anchorX = [NSNumber numberWithFloat:x];
-    CGFloat y = [price floatValue] + 40.0f;
-    NSNumber *anchorY = [NSNumber numberWithFloat:y];
-    self.priceAnnotation.anchorPlotPoint = [NSArray arrayWithObjects:anchorX, anchorY, nil];
-    // 8 - Add the annotation 
-    [plot.graph.plotAreaFrame.plotArea addAnnotation:self.priceAnnotation];
-}
-
 #pragma mark - Chart behavior
 
 -(void)initPlot {
@@ -172,7 +120,6 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
     [self configurePlots];
     [self configureAxes];
     [self.trianglePlot setHidden:NO];
-    [self.squarePlot setHidden:NO];
 
 }
 
@@ -185,7 +132,7 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
     hostView_.hostedGraph = graph;
     // 2 - Configure the graph
     [graph applyTheme:[CPTTheme themeNamed:kCPTPlainBlackTheme]];
-    graph.paddingBottom = 50.0f;
+    graph.paddingBottom = 10.0f;
     graph.paddingLeft  = 10.0f;
     graph.paddingTop    = 1.0f;
     graph.paddingRight  = 5.0f;
@@ -219,10 +166,7 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
     self.trianglePlot = [CPTBarPlot tubularBarPlotWithColor:[CPTColor greenColor] horizontalBars:NO];
     self.trianglePlot.identifier = trianglePlot;
     
-    self.squarePlot = [CPTBarPlot tubularBarPlotWithColor:[CPTColor redColor] horizontalBars:NO];
-    self.squarePlot.identifier = squarePlot;
-
-    // 2 - Set up line style
+      // 2 - Set up line style
     CPTMutableLineStyle *barLineStyle = [[CPTMutableLineStyle alloc] init];
     barLineStyle.lineColor = [CPTColor lightGrayColor];
     barLineStyle.lineWidth = 0.1;
@@ -293,12 +237,12 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
     CPTXYAxisSet *axisSet = (CPTXYAxisSet *) self.hostView.hostedGraph.axisSet;
     // 3 - Configure the x-axis
 
-    axisSet.xAxis.majorTickLocations = customTickLocations;
-    axisSet.xAxis.tickDirection = CPTSignNegative;
+   // axisSet.xAxis.majorTickLocations = customTickLocations;
+    //axisSet.xAxis.tickDirection = CPTSignNegative;
     
     //axisSet.xAxis.majorTickLineStyle = axisLineStyle;
-    axisSet.xAxis.labelOffset = 10.f;
-    axisSet.xAxis.majorTickLength = 10.0f;
+    //axisSet.xAxis.labelOffset = 10.f;
+    //axisSet.xAxis.majorTickLength = 10.0f;
     
     axisSet.xAxis.labelingPolicy = CPTAxisLabelingPolicyNone;
     //axisSet.xAxis.title = @"Days of Week (Mon - Fri)";
@@ -316,18 +260,42 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
 
 -(void)updateGraph {
     
-    for( NSString *rfid in currentRFIDS) {
-        [[DataStore sharedInstance] addScore:[NSNumber numberWithInt:scoreIncrease] withRFID:rfid];
+    
+   // int scoreIncrease = [feedRatio intValue] / [[DataStore sharedInstance] playerCount ];
+    
+    int scoreIncrease = 100 / [[DataStore sharedInstance] playerCount ];
+
+    
+    NSMutableArray *updatedArray = [NSMutableArray array];
+    
+    int currentPlayerCount = currentRFIDS.count;
+    while ([updatedArray count] !=  currentPlayerCount ) {
+        
+        NSNumber *randNum = @(arc4random() % currentPlayerCount);
+        
+        if( [randNum intValue] <= currentPlayerCount) {
+            
+            while ([updatedArray containsObject:randNum]) {
+                randNum = @(arc4random() % currentPlayerCount);
+            }
+            
+            [updatedArray addObject:randNum];
+            
+            [[DataStore sharedInstance] addScore:@( scoreIncrease ) withRFID:[currentRFIDS objectAtIndex:[randNum intValue]]];
+            
+            [graph reloadData];
+        }
     }
     
-    
-    [graph reloadData];
 }
 
 #pragma mark - Actions
 
 
 - (void)increaseByRFID:(NSString *)rfid {
+    
+    int scoreIncrease = [feedRatio intValue] / [[DataStore sharedInstance] playerCount ];
+    
     
     [[DataStore sharedInstance] addScore:[NSNumber numberWithInt:scoreIncrease] withRFID:rfid];
     [graph reloadData];
@@ -462,12 +430,15 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
                 
                 for (NSDictionary *tag in tags) {
                     
-                    NSString *tagId = [tag objectForKey:@"tag_id"];
+                    NSString *tagId = [tag objectForKey:@"tag"];
                     NSString *cluster = [tag objectForKey:@"cluster"];
                     NSString *color = [tag objectForKey:@"color"];
                     
                     [[DataStore sharedInstance] addPlayerWithRFID:tagId withCluster:cluster withColor:color];
                 }
+                
+                //init the graph
+                [self initPlot];
 
             } else if( [event isEqualToString:@"rfid_update"] ){
                 NSDictionary *payload = [jsonObjects objectForKey:@"payload"];
@@ -508,6 +479,10 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
 }
 
 -(void)addRFID: (NSString *)newRFID {
+    
+    if( [currentRFIDS containsObject:newRFID ] )
+        return;
+    
     for( NSString *rfid in currentRFIDS) {
         if( [rfid isEqualToString:newRFID]){
             return;
@@ -544,9 +519,25 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
 
 - (void)isAvailable:(BOOL)available {
     
-    [self sendGroupChatMessage:patchinitMessage];
+    
+    
+    
+    [self sendGroupChatMessage:[self patchMessage]];
 }
 
+-(NSString *) patchMessage {
+    NSString *origin = [self origin];
+    
+    NSString *eventType = @"\"event\": \"patch_init\"";
+    
+    NSString *originType = [[NSString alloc] initWithFormat:@"\"origin\": \"%@\"",origin];
+    
+    NSString *payloadType = [[NSString alloc] initWithFormat:@"\"payload\": { }"];
+    
+    NSString *msg = [[NSString alloc] initWithFormat:@"{ %@,%@, %@ }",eventType, originType,payloadType];
+    
+    return msg;
+}
 -(void)sendGroupChatMessage: (NSString *)msg {
     NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
     [body setStringValue:msg];
@@ -596,7 +587,7 @@ NSString *patchinitMessage = @"{ \"event\" : \"patch_init\",\"payload\" : []}";
     [graph reloadData];
     [self updateTimer];
     feedRatio = @(0);
-    [self sendGroupChatMessage:patchinitMessage];
+    [self sendGroupChatMessage:[self patchMessage]];
 
 }
 

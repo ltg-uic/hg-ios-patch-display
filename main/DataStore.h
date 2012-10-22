@@ -8,6 +8,8 @@
 
 @interface DataStore : NSObject
 
+
+
 + (DataStore *)sharedInstance;
 
 
@@ -17,6 +19,7 @@
 
 - (void)addPlayerWithRFID:(NSString *)rfid withCluster:(NSString *)cluster withColor:(NSString *)color;
 
+- (void) addScore: (NSNumber *)score WithIndex: (NSNumber *)index;
 - (void)addScore:(NSNumber *)score withRFID: (NSString *)rfid;
 - (void)addScore:(NSNumber *)score withKey: (NSNumber *)key;
 
