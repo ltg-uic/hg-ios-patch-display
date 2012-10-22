@@ -261,9 +261,9 @@ NSString *  const squarePlot = @"square";
 -(void)updateGraph {
     
     
-   // int scoreIncrease = [feedRatio intValue] / [[DataStore sharedInstance] playerCount ];
+    int scoreIncrease = [feedRatio intValue] / [[DataStore sharedInstance] playerCount ];
     
-    int scoreIncrease = 100 / [[DataStore sharedInstance] playerCount ];
+    //int scoreIncrease = 100 / [[DataStore sharedInstance] playerCount ];
 
     
     NSMutableArray *updatedArray = [NSMutableArray array];
