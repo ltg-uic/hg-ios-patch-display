@@ -13,6 +13,7 @@
 #import "CorePlot-CocoaTouch.h"
 #import "XMPPBaseNewMessageDelegate.h"
 #import "SBJson.h"
+#import "UIColor-Expanded.h"
 
 @interface RootViewController : UIViewController <CPTBarPlotDataSource, CPTBarPlotDelegate, XMPPBaseNewMessageDelegate, XMPPBaseOnlineDelegate> {
     
@@ -199,13 +200,18 @@ NSString *  const squarePlot = @"square";
         
         NSString *color = [[DataStore sharedInstance] colorForKey:index];
         
-        CPTGradient *gradient = [CPTGradient gradientWithBeginningColor:[CPTColor whiteColor]
-                                                            endingColor:[colors objectForKey:color]
-                                                      beginningPosition:0.0 endingPosition:0.3 ];
+
+        UIColor *myColor = [UIColor colorWithHexString:color];
+
+        
+        
+        CPTGradient *gradient = [CPTGradient gradientWithBeginningColor:[CPTColor colorWithComponentRed:myColor.red green:myColor.green blue:myColor.blue alpha:myColor.alpha]
+                                                            endingColor:[CPTColor colorWithComponentRed:myColor.red green:myColor.green blue:myColor.blue alpha:myColor.alpha]
+                                                      beginningPosition:0.0 endingPosition:0.0 ];
         [gradient setGradientType:CPTGradientTypeAxial];
         [gradient setAngle:350];
         
-        CPTFill *fill = [CPTFill fillWithGradient:gradient];
+        CPTFill *fill = [CPTFill fillWithColor:[CPTColor blueColor]];
         
         return fill;
         
@@ -260,32 +266,40 @@ NSString *  const squarePlot = @"square";
 
 -(void)updateGraph {
     
+    int scoreIncrease = [feedRatio intValue] / currentRFIDS.count;
     
-    int scoreIncrease = [feedRatio intValue] / [[DataStore sharedInstance] playerCount ];
-    
-    //int scoreIncrease = 100 / [[DataStore sharedInstance] playerCount ];
-
-    
-    NSMutableArray *updatedArray = [NSMutableArray array];
-    
-    int currentPlayerCount = currentRFIDS.count;
-    while ([updatedArray count] !=  currentPlayerCount ) {
-        
-        NSNumber *randNum = @(arc4random() % currentPlayerCount);
-        
-        if( [randNum intValue] <= currentPlayerCount) {
-            
-            while ([updatedArray containsObject:randNum]) {
-                randNum = @(arc4random() % currentPlayerCount);
-            }
-            
-            [updatedArray addObject:randNum];
-            
-            [[DataStore sharedInstance] addScore:@( scoreIncrease ) withRFID:[currentRFIDS objectAtIndex:[randNum intValue]]];
-            
-            [graph reloadData];
-        }
+    for( NSString *rfid in currentRFIDS) {
+        [[DataStore sharedInstance] addScore:[NSNumber numberWithInt:100] withRFID:rfid];
     }
+    
+    
+    [graph reloadData];
+    
+//    int scoreIncrease = [feedRatio intValue] / [[DataStore sharedInstance] playerCount ];
+//    
+//    //int scoreIncrease = 100 / [[DataStore sharedInstance] playerCount ];
+//
+//    
+//    NSMutableArray *updatedArray = [NSMutableArray array];
+//    
+//    int currentPlayerCount = currentRFIDS.count;
+//    while ([updatedArray count] !=  currentPlayerCount ) {
+//        
+//        NSNumber *randNum = @(arc4random() % currentPlayerCount);
+//        
+//        if( [randNum intValue] <= currentPlayerCount) {
+//            
+//            while ([updatedArray containsObject:randNum]) {
+//                randNum = @(arc4random() % currentPlayerCount);
+//            }
+//            
+//            [updatedArray addObject:randNum];
+//            
+//            [[DataStore sharedInstance] addScore:@( scoreIncrease ) withRFID:[currentRFIDS objectAtIndex:[randNum intValue]]];
+//            
+//            [graph reloadData];
+//        }
+//    }
     
 }
 
@@ -297,7 +311,7 @@ NSString *  const squarePlot = @"square";
     int scoreIncrease = [feedRatio intValue] / [[DataStore sharedInstance] playerCount ];
     
     
-    [[DataStore sharedInstance] addScore:[NSNumber numberWithInt:scoreIncrease] withRFID:rfid];
+    [[DataStore sharedInstance] addScore:[NSNumber numberWithInt:100] withRFID:rfid];
     [graph reloadData];
 }
 
@@ -445,20 +459,20 @@ NSString *  const squarePlot = @"square";
                 
             
                 NSArray *arrivals = [payload objectForKey:@"arrivals"];
-                NSArray *departures = [jsonObjects objectForKey:@"departures"];
+                NSArray *departures = [payload objectForKey:@"departures"];
                 
                 if([startButton.currentTitle isEqualToString:@"start"]) {
                 [self startAndStop:nil];
                 }
                 
-                if( arrivals != nil) {
+                if( arrivals != nil && arrivals.count > 0 ) {
                     for (NSString *rfid in arrivals) {
                         [self addRFID:rfid];
-                        [self increaseByRFID: rfid];
+                       // [self increaseByRFID: rfid];
                     }
                 }
                 
-                if( departures != nil) {
+                if( departures != nil && departures.count > 0 ) {
                     for (NSString *rfid in departures) {
                         [self sendOutScoreUpdateWith:rfid];
                         [self decreaseByRFID: rfid];

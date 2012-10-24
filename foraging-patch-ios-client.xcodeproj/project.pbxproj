@@ -63,6 +63,7 @@
 		700C3B3A160430DA005A9E34 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700C3B39160430DA005A9E34 /* SystemConfiguration.framework */; };
 		702CE04D162256310038EC73 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 702CE04C162256310038EC73 /* Player.m */; };
 		70383F9A161A1A850045F5E1 /* temp57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = 70383F99161A1A850045F5E1 /* temp57x57.png */; };
+		7078F33D16384F7B00D2344F /* UIColor-Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 7078F33C16384F7B00D2344F /* UIColor-Expanded.m */; };
 		707C2C3916080C6A00A09AB8 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 707C2C3816080C6A00A09AB8 /* LoginViewController.m */; };
 		70878FE2160BAF6F0099DD5D /* XMPPRoom.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 70878FC0160BAF620099DD5D /* XMPPRoom.xcdatamodeld */; settings = {COMPILER_FLAGS = "-w"; }; };
 		70878FE4160BAF6F0099DD5D /* XMPPRoomCoreDataStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 70878FC3160BAF620099DD5D /* XMPPRoomCoreDataStorage.m */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -214,6 +215,8 @@
 		703B95F2160FEDF20012EE57 /* DataStore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataStore.m; sourceTree = "<group>"; };
 		7042A3CA16320FE2001B44B5 /* XMPPBaseOnlineDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPBaseOnlineDelegate.h; sourceTree = "<group>"; };
 		7077CDD41618EE5500BFA216 /* XMPPBaseNewMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPBaseNewMessageDelegate.h; sourceTree = "<group>"; };
+		7078F33B16384F7B00D2344F /* UIColor-Expanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor-Expanded.h"; path = "../UIColor-Expanded.h"; sourceTree = "<group>"; };
+		7078F33C16384F7B00D2344F /* UIColor-Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor-Expanded.m"; path = "../UIColor-Expanded.m"; sourceTree = "<group>"; };
 		707C2C3716080C6A00A09AB8 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		707C2C3816080C6A00A09AB8 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		70878FC1160BAF620099DD5D /* XMPPRoom.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = XMPPRoom.xcdatamodel; sourceTree = "<group>"; };
@@ -434,6 +437,7 @@
 		700C3A57160427DA005A9E34 /* main */ = {
 			isa = PBXGroup;
 			children = (
+				7078F33F16384F8500D2344F /* UIColor-Expanded */,
 				70D22EDB162B51FE0075F175 /* PatchMessage.h */,
 				70D22EDC162B51FE0075F175 /* PatchMessage.m */,
 				702CE04B162256310038EC73 /* Player.h */,
@@ -728,6 +732,15 @@
 				700C3B3416042FE5005A9E34 /* Reconnect */,
 			);
 			name = Extension;
+			sourceTree = "<group>";
+		};
+		7078F33F16384F8500D2344F /* UIColor-Expanded */ = {
+			isa = PBXGroup;
+			children = (
+				7078F33B16384F7B00D2344F /* UIColor-Expanded.h */,
+				7078F33C16384F7B00D2344F /* UIColor-Expanded.m */,
+			);
+			name = "UIColor-Expanded";
 			sourceTree = "<group>";
 		};
 		70878FBE160BAF620099DD5D /* XEP-0045 */ = {
@@ -1112,6 +1125,7 @@
 				70D22ED8162B4C090075F175 /* SBJsonUTF8Stream.m in Sources */,
 				70D22ED9162B4C090075F175 /* SBJsonWriter.m in Sources */,
 				70D22EDD162B51FE0075F175 /* PatchMessage.m in Sources */,
+				7078F33D16384F7B00D2344F /* UIColor-Expanded.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
