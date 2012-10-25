@@ -20,6 +20,8 @@
     __weak IBOutlet UILabel *stopWatchLabel;
     __weak IBOutlet UILabel *timeIntervalLabel;
     __weak IBOutlet UIButton *startButton;
+    
+    UILabel *feedRatioLabel;
     NSTimer *intervalTimer;
     NSTimer *stopWatchTimer;
     NSDate *startDate;
@@ -61,10 +63,7 @@ NSString *  const trianglePlot = @"triangle";
 NSString *  const circlePlot = @"circle";
 NSString *  const squarePlot = @"square";
 
-@synthesize hostView    = hostView_;
-@synthesize trianglePlot    = trianglePlot_;
-@synthesize squarePlot    = squarePlot_;
-@synthesize priceAnnotation = priceAnnotation_;
+bool isRUNNING = NO;
 
 - (AppDelegate *)appDelegate {
 	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -73,6 +72,22 @@ NSString *  const squarePlot = @"square";
 
 #pragma mark - UIViewController lifecycle methods
 
+-(void)viewWillAppear:(BOOL)animated {
+    
+     feedRatioLabel = [[UILabel alloc] initWithFrame:CGRectMake(-60, 930, 156, 21)];
+    
+   
+    
+    feedRatioLabel.text = @"Feed Ratio:";
+    [feedRatioLabel setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
+    feedRatioLabel.backgroundColor = [UIColor clearColor];
+    
+    feedRatioLabel.textColor = [UIColor whiteColor];
+    [self.view addSubview:feedRatioLabel];
+    
+}
+
+
 -(void)viewDidLoad {
     [super viewDidLoad];
     
@@ -80,6 +95,8 @@ NSString *  const squarePlot = @"square";
     self.appDelegate.xmppBaseOnlineDelegate = self;
     
     currentRFIDS = [NSMutableArray array];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -130,13 +147,13 @@ NSString *  const squarePlot = @"square";
     graph.plotAreaFrame.masksToBorder = NO;
     
     
-    hostView_.hostedGraph = graph;
+    _hostView.hostedGraph = graph;
     // 2 - Configure the graph
     [graph applyTheme:[CPTTheme themeNamed:kCPTPlainBlackTheme]];
     graph.paddingBottom = 10.0f;
-    graph.paddingLeft  = 10.0f;
-    graph.paddingTop    = 1.0f;
-    graph.paddingRight  = 5.0f;
+    graph.paddingLeft  = 0.0f;
+    graph.paddingTop    = 2.0f;
+    graph.paddingRight  = 2.0f;
     //graph.axisSet.paddingBottom = 10.0f;
 
     // 3 - Set up styles
@@ -156,7 +173,7 @@ NSString *  const squarePlot = @"square";
     //CGFloat xMax = 25;
     CGFloat xMax = [[DataStore sharedInstance] playerCount];
     CGFloat yMin = 0.0f;
-    CGFloat yMax = 3000.0f;  // should determine dynamically based on max price
+    CGFloat yMax = 12000.0f;  // should determine dynamically based on max price
     plotSpace = (CPTXYPlotSpace *) graph.defaultPlotSpace;
     plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(xMin) length:CPTDecimalFromFloat(xMax)];
     plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(yMin) length:CPTDecimalFromFloat(yMax)];
@@ -189,9 +206,7 @@ NSString *  const squarePlot = @"square";
 
 -(CPTFill *)barFillForBarPlot:(CPTBarPlot *)barPlot
                   recordIndex:(NSUInteger)index {
-    
-    
-    NSDictionary *colors = @{@"red":[CPTColor redColor], @"blue":[CPTColor blueColor], @"orange": [CPTColor orangeColor], @"yellow": [CPTColor yellowColor], @"green": [CPTColor greenColor]};
+
     
     if ( [barPlot.identifier isEqual:trianglePlot] ) {
         
@@ -200,8 +215,10 @@ NSString *  const squarePlot = @"square";
         
         NSString *color = [[DataStore sharedInstance] colorForKey:index];
         
+        NSString* cleanedString = [color stringByReplacingOccurrencesOfString:@"#" withString:@""];
 
-        UIColor *myColor = [UIColor colorWithHexString:color];
+
+        UIColor *myColor = [UIColor colorWithHexString:cleanedString];
 
         
         
@@ -211,7 +228,7 @@ NSString *  const squarePlot = @"square";
         [gradient setGradientType:CPTGradientTypeAxial];
         [gradient setAngle:350];
         
-        CPTFill *fill = [CPTFill fillWithColor:[CPTColor blueColor]];
+        CPTFill *fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:myColor.CGColor]];
         
         return fill;
         
@@ -266,41 +283,46 @@ NSString *  const squarePlot = @"square";
 
 -(void)updateGraph {
     
-    int scoreIncrease = [feedRatio intValue] / currentRFIDS.count;
+   // int scoreIncrease = [feedRatio intValue] / currentRFIDS.count;
     
-    for( NSString *rfid in currentRFIDS) {
-        [[DataStore sharedInstance] addScore:[NSNumber numberWithInt:100] withRFID:rfid];
+//    for( NSString *rfid in currentRFIDS) {
+//        [[DataStore sharedInstance] addScore:[NSNumber numberWithInt:100] withRFID:rfid];
+//    }
+//    
+//    
+//    [graph reloadData];
+    
+    float scoreIncrease = [feedRatio floatValue] / currentRFIDS.count;
+    
+    [self updateFeedRatioLabelWith:scoreIncrease];
+    //int scoreIncrease = 100 / [[DataStore sharedInstance] playerCount ];
+
+    
+    NSMutableArray *updatedArray = [NSMutableArray array];
+    
+    int currentPlayerCount = currentRFIDS.count;
+    while ([updatedArray count] !=  currentPlayerCount ) {
+        
+        NSNumber *randNum = @(arc4random() % currentPlayerCount);
+        
+        if( [randNum intValue] <= currentPlayerCount) {
+            
+            while ([updatedArray containsObject:randNum]) {
+                randNum = @(arc4random() % currentPlayerCount);
+            }
+            
+            [updatedArray addObject:randNum];
+            
+            [[DataStore sharedInstance] addScore:@( scoreIncrease ) withRFID:[currentRFIDS objectAtIndex:[randNum intValue]]];
+            
+            [graph reloadData];
+        }
     }
     
-    
-    [graph reloadData];
-    
-//    int scoreIncrease = [feedRatio intValue] / [[DataStore sharedInstance] playerCount ];
-//    
-//    //int scoreIncrease = 100 / [[DataStore sharedInstance] playerCount ];
-//
-//    
-//    NSMutableArray *updatedArray = [NSMutableArray array];
-//    
-//    int currentPlayerCount = currentRFIDS.count;
-//    while ([updatedArray count] !=  currentPlayerCount ) {
-//        
-//        NSNumber *randNum = @(arc4random() % currentPlayerCount);
-//        
-//        if( [randNum intValue] <= currentPlayerCount) {
-//            
-//            while ([updatedArray containsObject:randNum]) {
-//                randNum = @(arc4random() % currentPlayerCount);
-//            }
-//            
-//            [updatedArray addObject:randNum];
-//            
-//            [[DataStore sharedInstance] addScore:@( scoreIncrease ) withRFID:[currentRFIDS objectAtIndex:[randNum intValue]]];
-//            
-//            [graph reloadData];
-//        }
-//    }
-    
+}
+
+-(void)updateFeedRatioLabelWith: (float)ratio {
+    feedRatioLabel.text = [NSString stringWithFormat:@"Feed Ration: %f per/sec", ratio];
 }
 
 #pragma mark - Actions
@@ -373,7 +395,7 @@ NSString *  const squarePlot = @"square";
                                                          repeats:YES];
         
         
-        intervalTimer = [NSTimer scheduledTimerWithTimeInterval:2.0
+        intervalTimer = [NSTimer scheduledTimerWithTimeInterval:.2
                                                          target:self
                                                        selector:@selector(updateGraph)
                                                        userInfo:nil
@@ -563,8 +585,6 @@ NSString *  const squarePlot = @"square";
     
     [[[self appDelegate] xmppStream ] sendElement:message];
 }
-
-#pragma mark - Game methods
 
 -(void)sendOutScoreUpdateWith: (NSString *)rfid {
     for( NSString *someRFID in currentRFIDS) {

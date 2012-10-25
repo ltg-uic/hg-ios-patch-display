@@ -13,41 +13,30 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RUv-0X-tu3" customClass="CPTGraphHostingView">
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dFm-km-vsY">
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="106" id="wh3-80-joN"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" red="0.33614152050000001" green="1" blue="0.2887720413" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WvN-I5-qSb">
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="start">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="startAndStop:" destination="2" eventType="touchUpInside" id="Sn4-Pe-PPw"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dFm-km-vsY">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="106" id="wh3-80-joN"/>
+                                    <constraint firstItem="dFm-km-vsY" firstAttribute="leading" secondItem="RUv-0X-tu3" secondAttribute="leading" constant="-27" id="3LZ-HI-zNt"/>
+                                    <constraint firstItem="dFm-km-vsY" firstAttribute="top" secondItem="RUv-0X-tu3" secondAttribute="top" constant="443" id="HQu-HV-l3w"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="dFm-km-vsY" firstAttribute="leading" secondItem="5" secondAttribute="leading" constant="12" id="B0d-7s-gL3"/>
-                            <constraint firstItem="RUv-0X-tu3" firstAttribute="trailing" secondItem="5" secondAttribute="trailing" type="default" id="DcD-0z-std"/>
-                            <constraint firstItem="RUv-0X-tu3" firstAttribute="top" secondItem="5" secondAttribute="top" constant="20" symbolic="YES" type="default" id="fmk-5H-293"/>
-                            <constraint firstItem="RUv-0X-tu3" firstAttribute="leading" secondItem="5" secondAttribute="leading" type="default" id="j4u-rY-FFc"/>
-                            <constraint firstItem="WvN-I5-qSb" firstAttribute="top" secondItem="5" secondAttribute="top" constant="1" id="jIk-VC-Ko0"/>
-                            <constraint firstItem="RUv-0X-tu3" firstAttribute="bottom" secondItem="5" secondAttribute="bottom" type="default" id="l2C-tj-d5Z"/>
-                            <constraint firstItem="WvN-I5-qSb" firstAttribute="leading" secondItem="5" secondAttribute="leading" constant="5" id="mu0-vi-TDu"/>
-                            <constraint firstItem="dFm-km-vsY" firstAttribute="top" secondItem="WvN-I5-qSb" secondAttribute="top" type="default" id="yCs-dX-n4X"/>
+                            <constraint firstItem="RUv-0X-tu3" firstAttribute="leading" secondItem="5" secondAttribute="leading" constant="33" id="ON5-od-YKE"/>
+                            <constraint firstItem="RUv-0X-tu3" firstAttribute="trailing" secondItem="5" secondAttribute="trailing" type="default" id="cJh-ub-lB2"/>
+                            <constraint firstItem="RUv-0X-tu3" firstAttribute="top" secondItem="5" secondAttribute="top" type="default" id="heJ-dH-fhw"/>
+                            <constraint firstItem="RUv-0X-tu3" firstAttribute="bottom" secondItem="5" secondAttribute="bottom" type="default" id="z9J-H5-ngr"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="Kuf-Gp-pqu" appends="YES" id="chB-35-xtn"/>
@@ -57,7 +46,6 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="hostView" destination="RUv-0X-tu3" id="fsj-Pp-eDg"/>
-                        <outlet property="startButton" destination="WvN-I5-qSb" id="ktu-Di-ecb"/>
                         <outlet property="stopWatchLabel" destination="dFm-km-vsY" id="58h-GI-dts"/>
                     </connections>
                 </viewController>
@@ -70,7 +58,7 @@
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-394" y="-122"/>
+            <point key="canvasLocation" x="-472" y="-42"/>
         </scene>
         <!--Login View Controller - Login-->
         <scene sceneID="ia9-99-P46">
@@ -163,7 +151,9 @@
             <relationships>
                 <relationship kind="action" name="decreaseIntervalTime:"/>
                 <relationship kind="action" name="increaseIntervalTime:"/>
+                <relationship kind="action" name="showLogin:"/>
                 <relationship kind="action" name="startAndStop:"/>
+                <relationship kind="action" name="test:"/>
                 <relationship kind="outlet" name="hostView" candidateClass="CPTGraphHostingView"/>
                 <relationship kind="outlet" name="startButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="stopWatchLabel" candidateClass="UILabel"/>

@@ -177,11 +177,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "333"
-         endingLineNumber = "333"
+         startingLineNumber = "347"
+         endingLineNumber = "347"
          landmarkName = "-increaseIntervalTime:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -190,11 +190,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "372"
-         endingLineNumber = "372"
+         startingLineNumber = "386"
+         endingLineNumber = "386"
          landmarkName = "-startAndStop:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -294,11 +294,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "426"
-         endingLineNumber = "426"
+         startingLineNumber = "440"
+         endingLineNumber = "440"
          landmarkName = "-newMessageReceived:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -307,11 +307,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "430"
-         endingLineNumber = "430"
+         startingLineNumber = "444"
+         endingLineNumber = "444"
          landmarkName = "-newMessageReceived:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -385,11 +385,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "545"
-         endingLineNumber = "545"
+         startingLineNumber = "559"
+         endingLineNumber = "559"
          landmarkName = "-isAvailable:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -424,11 +424,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "442"
-         endingLineNumber = "442"
+         startingLineNumber = "456"
+         endingLineNumber = "456"
          landmarkName = "-newMessageReceived:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -437,11 +437,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "433"
-         endingLineNumber = "433"
+         startingLineNumber = "447"
+         endingLineNumber = "447"
          landmarkName = "-newMessageReceived:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -450,11 +450,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "481"
-         endingLineNumber = "481"
+         startingLineNumber = "495"
+         endingLineNumber = "495"
          landmarkName = "-newMessageReceived:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -463,24 +463,24 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "465"
-         endingLineNumber = "465"
+         startingLineNumber = "479"
+         endingLineNumber = "479"
          landmarkName = "-newMessageReceived:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "No"
+         shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "466"
-         endingLineNumber = "466"
+         startingLineNumber = "480"
+         endingLineNumber = "480"
          landmarkName = "-newMessageReceived:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -515,50 +515,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "121"
-         endingLineNumber = "121"
-         landmarkName = "-numberForPlot:field:recordIndex:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "117"
-         endingLineNumber = "117"
-         landmarkName = "-numberForPlot:field:recordIndex:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "116"
-         endingLineNumber = "116"
-         landmarkName = "-numberForPlot:field:recordIndex:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "204"
-         endingLineNumber = "204"
+         startingLineNumber = "211"
+         endingLineNumber = "211"
          landmarkName = "-barFillForBarPlot:recordIndex:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -567,11 +528,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "469"
-         endingLineNumber = "469"
+         startingLineNumber = "483"
+         endingLineNumber = "483"
          landmarkName = "-newMessageReceived:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -580,11 +541,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "477"
-         endingLineNumber = "477"
+         startingLineNumber = "491"
+         endingLineNumber = "491"
          landmarkName = "-newMessageReceived:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -593,11 +554,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "476"
-         endingLineNumber = "476"
+         startingLineNumber = "490"
+         endingLineNumber = "490"
          landmarkName = "-newMessageReceived:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -632,11 +593,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "459"
-         endingLineNumber = "459"
+         startingLineNumber = "473"
+         endingLineNumber = "473"
          landmarkName = "-newMessageReceived:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -645,11 +606,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "447"
-         endingLineNumber = "447"
+         startingLineNumber = "461"
+         endingLineNumber = "461"
          landmarkName = "-newMessageReceived:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -658,11 +619,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "444"
-         endingLineNumber = "444"
+         startingLineNumber = "458"
+         endingLineNumber = "458"
          landmarkName = "-newMessageReceived:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -671,11 +632,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "446"
-         endingLineNumber = "446"
+         startingLineNumber = "460"
+         endingLineNumber = "460"
          landmarkName = "-newMessageReceived:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -723,24 +684,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "118"
-         endingLineNumber = "118"
-         landmarkName = "-numberForPlot:field:recordIndex:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "319"
-         endingLineNumber = "319"
+         startingLineNumber = "333"
+         endingLineNumber = "333"
          landmarkName = "-increaseByRFID:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -749,11 +697,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "329"
-         endingLineNumber = "329"
+         startingLineNumber = "343"
+         endingLineNumber = "343"
          landmarkName = "-decreaseByRFID:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -762,11 +710,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "483"
-         endingLineNumber = "483"
+         startingLineNumber = "497"
+         endingLineNumber = "497"
          landmarkName = "-newMessageReceived:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -775,11 +723,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "439"
-         endingLineNumber = "439"
+         startingLineNumber = "453"
+         endingLineNumber = "453"
          landmarkName = "-newMessageReceived:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -788,11 +736,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "438"
-         endingLineNumber = "438"
+         startingLineNumber = "452"
+         endingLineNumber = "452"
          landmarkName = "-newMessageReceived:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -801,11 +749,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "470"
-         endingLineNumber = "470"
+         startingLineNumber = "484"
+         endingLineNumber = "484"
          landmarkName = "-newMessageReceived:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -814,11 +762,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "216"
-         endingLineNumber = "216"
+         startingLineNumber = "225"
+         endingLineNumber = "225"
          landmarkName = "-barFillForBarPlot:recordIndex:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -827,12 +775,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "main/RootViewController.m"
-         timestampString = "372792854.176373"
+         timestampString = "372803225.615674"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "279"
-         endingLineNumber = "279"
-         landmarkName = "-updateGraph"
+         startingLineNumber = "221"
+         endingLineNumber = "221"
+         landmarkName = "-barFillForBarPlot:recordIndex:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
