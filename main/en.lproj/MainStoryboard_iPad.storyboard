@@ -13,21 +13,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RUv-0X-tu3" customClass="CPTGraphHostingView">
-                                <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dFm-km-vsY">
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="106" id="wh3-80-joN"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
                                 <color key="backgroundColor" red="0.33614152050000001" green="1" blue="0.2887720413" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstItem="dFm-km-vsY" firstAttribute="leading" secondItem="RUv-0X-tu3" secondAttribute="leading" constant="-27" id="3LZ-HI-zNt"/>
-                                    <constraint firstItem="dFm-km-vsY" firstAttribute="top" secondItem="RUv-0X-tu3" secondAttribute="top" constant="443" id="HQu-HV-l3w"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -46,7 +32,6 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="hostView" destination="RUv-0X-tu3" id="fsj-Pp-eDg"/>
-                        <outlet property="stopWatchLabel" destination="dFm-km-vsY" id="58h-GI-dts"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3" sceneMemberID="firstResponder"/>

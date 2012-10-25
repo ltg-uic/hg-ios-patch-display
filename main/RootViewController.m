@@ -74,7 +74,7 @@ bool isRUNNING = NO;
 
 -(void)viewWillAppear:(BOOL)animated {
     
-     feedRatioLabel = [[UILabel alloc] initWithFrame:CGRectMake(-60, 930, 156, 21)];
+    feedRatioLabel = [[UILabel alloc] initWithFrame:CGRectMake(-83, 900, 200, 21)];
     
    
     
@@ -283,24 +283,17 @@ bool isRUNNING = NO;
 
 -(void)updateGraph {
     
-   // int scoreIncrease = [feedRatio intValue] / currentRFIDS.count;
+    float diff = [feedRatio floatValue] / 5.0f;
     
-//    for( NSString *rfid in currentRFIDS) {
-//        [[DataStore sharedInstance] addScore:[NSNumber numberWithInt:100] withRFID:rfid];
-//    }
-//    
-//    
-//    [graph reloadData];
     
-    float scoreIncrease = [feedRatio floatValue] / currentRFIDS.count;
+    float scoreIncrease =  diff/ (float)currentRFIDS.count;
     
     [self updateFeedRatioLabelWith:scoreIncrease];
-    //int scoreIncrease = 100 / [[DataStore sharedInstance] playerCount ];
-
     
     NSMutableArray *updatedArray = [NSMutableArray array];
     
     int currentPlayerCount = currentRFIDS.count;
+    
     while ([updatedArray count] !=  currentPlayerCount ) {
         
         NSNumber *randNum = @(arc4random() % currentPlayerCount);
@@ -322,71 +315,18 @@ bool isRUNNING = NO;
 }
 
 -(void)updateFeedRatioLabelWith: (float)ratio {
-    feedRatioLabel.text = [NSString stringWithFormat:@"Feed Ration: %f per/sec", ratio];
+    feedRatioLabel.text = [NSString stringWithFormat:@"Feed Ratio: %.02f per/sec", ratio];
 }
 
-#pragma mark - Actions
-
-
-- (void)increaseByRFID:(NSString *)rfid {
-    
-    int scoreIncrease = [feedRatio intValue] / [[DataStore sharedInstance] playerCount ];
-    
-    
-    [[DataStore sharedInstance] addScore:[NSNumber numberWithInt:100] withRFID:rfid];
-    [graph reloadData];
-}
-
-- (void)decreaseByRFID:(NSString *)rfid {
-    
+- (void)resetScoreByRFID:(NSString *)rfid {
     [[DataStore sharedInstance] resetScoreWithRFID:rfid];
     [graph reloadData];
 }
 
-- (IBAction)increaseIntervalTime:(id)sender {
-  
-
-    int newTime = [timeIntervalLabel.text intValue] + 1;
+-(void)toggleTimer {
     
-    timeIntervalLabel.text = [NSString stringWithFormat:@"%d", newTime];
-    
-    
-    [intervalTimer invalidate];
-    intervalTimer = [NSTimer scheduledTimerWithTimeInterval:newTime
-                                                     target:self
-                                                   selector:@selector(updateGraph)
-                                                   userInfo:nil
-                                                    repeats:YES];
-    
-    
-}
-
-- (IBAction)decreaseIntervalTime:(id)sender {
-   
-    
-    int newTime = [timeIntervalLabel.text intValue] - 1;
-    
-    timeIntervalLabel.text = [NSString stringWithFormat:@"%d", newTime];
-    
-    
-    [intervalTimer invalidate];
-    intervalTimer = [NSTimer scheduledTimerWithTimeInterval:newTime
-                                                     target:self
-                                                   selector:@selector(updateGraph)
-                                                   userInfo:nil
-                                                    repeats:YES];
-}
-
-- (IBAction)startAndStop:(id)sender {
-    
-    
-    
-    NSString *title = [startButton currentTitle];
-    
-    if( [title isEqualToString:@"start"] ){
+    if( isRUNNING ) {
         startDate = [[NSDate date]init];
-       [startButton setTitle: @"stop" forState: UIControlStateNormal];
-        
         
         stopWatchTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/10.0
                                                           target:self
@@ -400,13 +340,7 @@ bool isRUNNING = NO;
                                                        selector:@selector(updateGraph)
                                                        userInfo:nil
                                                         repeats:YES];
-        
-        //[self increase:nil];
-
-        
-        
     } else {
-        [startButton setTitle: @"start" forState: UIControlStateNormal];
         [stopWatchTimer invalidate];
         [intervalTimer invalidate];
         [[DataStore sharedInstance] resetPlayerCount];
@@ -415,8 +349,7 @@ bool isRUNNING = NO;
         [self updateTimer];
     }
     
-    
-   }
+}
 
 #pragma mark - Timer methods
 
@@ -428,7 +361,6 @@ bool isRUNNING = NO;
     [dateFormatter setDateFormat:@"HH:mm:ss.SSS"];
     [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0.0]];
     NSString *timeString=[dateFormatter stringFromDate:timerDate];
-    stopWatchLabel.text = timeString;
 }
 
 #pragma mark - XMPP delegate methods
@@ -483,21 +415,22 @@ bool isRUNNING = NO;
                 NSArray *arrivals = [payload objectForKey:@"arrivals"];
                 NSArray *departures = [payload objectForKey:@"departures"];
                 
-                if([startButton.currentTitle isEqualToString:@"start"]) {
-                [self startAndStop:nil];
-                }
-                
                 if( arrivals != nil && arrivals.count > 0 ) {
                     for (NSString *rfid in arrivals) {
                         [self addRFID:rfid];
-                       // [self increaseByRFID: rfid];
+                    }
+                    
+                    if( isRUNNING == NO) {
+                        isRUNNING = YES;
+                        [self toggleTimer];
+                        
                     }
                 }
                 
                 if( departures != nil && departures.count > 0 ) {
                     for (NSString *rfid in departures) {
                         [self sendOutScoreUpdateWith:rfid];
-                        [self decreaseByRFID: rfid];
+                        [self resetScoreByRFID: rfid];
                         [self removeRFID:rfid];
                         
                     }
@@ -554,10 +487,6 @@ bool isRUNNING = NO;
 }
 
 - (void)isAvailable:(BOOL)available {
-    
-    
-    
-    
     [self sendGroupChatMessage:[self patchMessage]];
 }
 
