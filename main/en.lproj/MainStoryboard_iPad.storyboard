@@ -89,17 +89,17 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Frm-ud-U7V" firstAttribute="top" secondItem="OGh-Fq-buS" secondAttribute="top" type="default" id="3ar-F6-XnS"/>
+                            <constraint firstItem="9wa-Rd-0Hg" firstAttribute="baseline" secondItem="VI9-bO-hds" secondAttribute="baseline" type="default" id="7Hu-U7-mgi"/>
                             <constraint firstItem="W3d-pk-PV3" firstAttribute="trailing" secondItem="50n-1d-bhV" secondAttribute="trailing" type="default" id="7eW-2d-d6U"/>
                             <constraint firstItem="W3d-pk-PV3" firstAttribute="top" secondItem="50n-1d-bhV" secondAttribute="top" type="default" id="8OS-Fo-7di"/>
+                            <constraint firstItem="9wa-Rd-0Hg" firstAttribute="leading" secondItem="50n-1d-bhV" secondAttribute="leading" constant="152" id="9sW-SW-zlG"/>
                             <constraint firstItem="OGh-Fq-buS" firstAttribute="trailing" secondItem="VI9-bO-hds" secondAttribute="trailing" type="default" id="Fmb-sm-inF"/>
                             <constraint firstItem="W3d-pk-PV3" firstAttribute="leading" secondItem="50n-1d-bhV" secondAttribute="leading" type="default" id="LVj-o1-w8j"/>
-                            <constraint firstItem="Frm-ud-U7V" firstAttribute="leading" secondItem="9wa-Rd-0Hg" secondAttribute="leading" type="default" id="LtP-BB-5Oc"/>
+                            <constraint firstItem="OGh-Fq-buS" firstAttribute="leading" secondItem="Frm-ud-U7V" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="SBc-bU-NaP"/>
                             <constraint firstItem="VI9-bO-hds" firstAttribute="centerX" secondItem="W3d-pk-PV3" secondAttribute="centerX" type="default" id="Si7-cM-vtx"/>
                             <constraint firstItem="Frm-ud-U7V" firstAttribute="top" secondItem="50n-1d-bhV" secondAttribute="top" constant="169" id="TX7-r2-Ww3"/>
-                            <constraint firstItem="9wa-Rd-0Hg" firstAttribute="top" secondItem="50n-1d-bhV" secondAttribute="top" constant="127" id="Vs3-Py-SbD"/>
                             <constraint firstItem="VI9-bO-hds" firstAttribute="top" secondItem="50n-1d-bhV" secondAttribute="top" constant="123" id="nDl-YN-x4Q"/>
                             <constraint firstItem="OGh-Fq-buS" firstAttribute="leading" secondItem="VI9-bO-hds" secondAttribute="leading" type="default" id="pKt-Yg-g6y"/>
-                            <constraint firstItem="9wa-Rd-0Hg" firstAttribute="leading" secondItem="50n-1d-bhV" secondAttribute="leading" constant="265" id="qFB-bn-9K8"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -136,12 +136,8 @@
             <relationships>
                 <relationship kind="action" name="decreaseIntervalTime:"/>
                 <relationship kind="action" name="increaseIntervalTime:"/>
-                <relationship kind="action" name="showLogin:"/>
                 <relationship kind="action" name="startAndStop:"/>
-                <relationship kind="action" name="test:"/>
                 <relationship kind="outlet" name="hostView" candidateClass="CPTGraphHostingView"/>
-                <relationship kind="outlet" name="startButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="stopWatchLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="timeIntervalLabel" candidateClass="UILabel"/>
             </relationships>
         </class>

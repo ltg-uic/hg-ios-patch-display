@@ -13,6 +13,7 @@
 + (DataStore *)sharedInstance;
 
 - (void)resetPlayerCount;
+- (Player *)playerAt: (int)index;
 - (int)playerCount;
 - (void)printPlayers;
 - (int)clusterCountWith: (NSString *)label;

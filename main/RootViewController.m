@@ -8,6 +8,7 @@
 
 
 #import "LoginViewController.h"
+#import "Player.h"
 #import "AppDelegate.h"
 #import "DataStore.h"
 #import "CorePlot-CocoaTouch.h"
@@ -18,13 +19,11 @@
 
 @interface RootViewController : UIViewController <CPTBarPlotDataSource, CPTBarPlotDelegate, XMPPBaseNewMessageDelegate, XMPPBaseOnlineDelegate> {
     
-    __weak IBOutlet UILabel *stopWatchLabel;
     __weak IBOutlet UILabel *timeIntervalLabel;
-    __weak IBOutlet UIButton *startButton;
+
     
     UILabel *feedRatioLabel;
     NSTimer *intervalTimer;
-    NSTimer *stopWatchTimer;
     NSDate *startDate;
     NSMutableArray *currentRFIDS;
     NSNumber *feedRatio;
@@ -57,9 +56,12 @@
 CGFloat const CPDBarWidth = 1.0f;
 CGFloat const CPDBarInitialX = 0.5f;
 
-NSString *  const newFoodDynamicPlot = @"newFoodDynamicPlot";
+int labelFontSize = 41;
 
+NSString *  const newFoodDynamicPlot = @"newFoodDynamicPlot";
 NSString *  const trianglePlot = @"triangle";
+NSString *  const calorieStr = @"Each animal is getting";
+NSString *  const caloriePerMinuteStr = @"Calories per Minute";
 
 
 bool isRUNNING = NO;
@@ -73,11 +75,11 @@ bool isRUNNING = NO;
 
 -(void)viewWillAppear:(BOOL)animated {
     
-    feedRatioLabel = [[UILabel alloc] initWithFrame:CGRectMake(-275, 666, 600, 35)];
+    feedRatioLabel = [[UILabel alloc] initWithFrame:CGRectMake(-472, 450, 1000, 50)];
     
-    feedRatioLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:31];
+    feedRatioLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:labelFontSize];
    
-    feedRatioLabel.text = @"Feed Ratio:";
+    feedRatioLabel.text = [[NSString alloc] initWithFormat:@"%@ 0 %@",calorieStr, caloriePerMinuteStr]; 
     [feedRatioLabel setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
     feedRatioLabel.backgroundColor = [UIColor clearColor];
     
@@ -149,11 +151,14 @@ bool isRUNNING = NO;
     _hostView.hostedGraph = graph;
     // 2 - Configure the graph
 	[graph applyTheme:[CPTTheme themeNamed:kCPTDarkGradientTheme]];
-    graph.paddingBottom = 40.0f;
-    graph.paddingLeft  = 50.0f;
+    graph.paddingBottom = 50.0f;
+    graph.paddingLeft  = 60.0f;
     graph.paddingTop    = 0.0f;
     graph.paddingRight  = 1.0f;
 
+
+    graph.plotAreaFrame.borderLineStyle = nil;
+    graph.plotAreaFrame.cornerRadius = 0;
     // 3 - Set up styles
 //    CPTMutableTextStyle *titleStyle = [CPTMutableTextStyle textStyle];
 //    titleStyle.color = [CPTColor whiteColor];
@@ -171,7 +176,7 @@ bool isRUNNING = NO;
     //CGFloat xMax = 25;
     CGFloat xMax = [[DataStore sharedInstance] playerCount];
     CGFloat yMin = 0.0f;
-    CGFloat yMax = 3000.0f;  // should determine dynamically based on max price
+    CGFloat yMax = 2500.0f;  // should determine dynamically based on max price
     plotSpace = (CPTXYPlotSpace *) graph.defaultPlotSpace;
     plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(xMin) length:CPTDecimalFromFloat(xMax)];
     plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(yMin) length:CPTDecimalFromFloat(yMax)];
@@ -188,49 +193,43 @@ bool isRUNNING = NO;
     barLineStyle.lineWidth = 0.1;
     // 3 - Add plots to graph
     graph = self.hostView.hostedGraph;
-    CGFloat barX = CPDBarInitialX;
-    NSArray *plots = [NSArray arrayWithObjects:self.trianglePlot, nil];
-    for (CPTBarPlot *plot in plots) {
-        plot.dataSource = self;
-        plot.delegate = self;
-        plot.barWidth = CPTDecimalFromDouble(CPDBarWidth);
-        plot.barOffset = CPTDecimalFromDouble(CPDBarInitialX);
-        plot.lineStyle = barLineStyle;
-        [graph addPlot:plot toPlotSpace:graph.defaultPlotSpace];
-        //barX += CPDBarWidth;
-    }
-    
+    self.trianglePlot.dataSource = self;
+    self.trianglePlot.delegate = self;
+    self.trianglePlot.barWidth = CPTDecimalFromDouble(CPDBarWidth);
+    self.trianglePlot.barOffset = CPTDecimalFromDouble(.53);
+    self.trianglePlot.lineStyle = barLineStyle;
+    [graph addPlot:self.trianglePlot toPlotSpace:graph.defaultPlotSpace];    
 }
 
 -(void)configureAxes {
     
     // 1 - Configure styles
     // 1 - Create styles
-    CPTMutableTextStyle *axisTitleStyle = [CPTMutableTextStyle textStyle];
-    axisTitleStyle.color = [CPTColor whiteColor];
-    axisTitleStyle.fontName = @"Helvetica-Bold";
-    axisTitleStyle.fontSize = 12.0f;
+//    CPTMutableTextStyle *axisTitleStyle = [CPTMutableTextStyle textStyle];
+//    axisTitleStyle.color = [CPTColor whiteColor];
+//    axisTitleStyle.fontName = @"Helvetica-Bold";
+//    axisTitleStyle.fontSize = 12.0f;
     CPTMutableLineStyle *axisLineStyle = [CPTMutableLineStyle lineStyle];
-    axisLineStyle.lineWidth = 2.0f;
+    axisLineStyle.lineWidth = .5f;
     axisLineStyle.lineColor = [CPTColor whiteColor];
     CPTMutableTextStyle *axisTextStyle = [[CPTMutableTextStyle alloc] init];
     axisTextStyle.color = [CPTColor whiteColor];
     axisTextStyle.fontName = @"Helvetica-Bold";
-    axisTextStyle.fontSize = 31.0f;
-    CPTMutableLineStyle *tickLineStyle = [CPTMutableLineStyle lineStyle];
-    tickLineStyle.lineColor = [CPTColor blueColor];
-    tickLineStyle.lineWidth = 1.0f;
-    CPTMutableLineStyle *gridLineStyle = [CPTMutableLineStyle lineStyle];
-    tickLineStyle.lineColor = [CPTColor redColor];
-    tickLineStyle.lineWidth = 1.0f;
-    
+    axisTextStyle.fontSize = labelFontSize;
+//    CPTMutableLineStyle *tickLineStyle = [CPTMutableLineStyle lineStyle];
+//    tickLineStyle.lineColor = [CPTColor blueColor];
+//    tickLineStyle.lineWidth = 1.0f;
+//    CPTMutableLineStyle *gridLineStyle = [CPTMutableLineStyle lineStyle];
+//    tickLineStyle.lineColor = [CPTColor redColor];
+//    tickLineStyle.lineWidth = 1.0f;
+//    
     // 2 - Get axis set
     CPTXYAxisSet *axisSet = (CPTXYAxisSet *) self.hostView.hostedGraph.axisSet;
     // 3 - Configure x-axis
     CPTAxis *x = axisSet.xAxis;
    // x.title = @"Day of Month";
-    x.titleTextStyle = axisTitleStyle;
-    x.titleOffset = 10.0f;
+    //x.titleTextStyle = axisTitleStyle;
+    //x.titleOffset = 10.0f;
     x.axisLineStyle = axisLineStyle;
     x.labelingPolicy = CPTAxisLabelingPolicyNone;
     x.labelTextStyle = axisTextStyle;
@@ -276,38 +275,38 @@ bool isRUNNING = NO;
     // 4 - Configure y-axis
     CPTAxis *y = axisSet.yAxis;
     //y.title = @"Price";
-    y.titleTextStyle = axisTitleStyle;
-    y.titleOffset = -40.0f;
+   // y.titleTextStyle = axisTitleStyle;
+    //y.titleOffset = -40.0f;
     y.axisLineStyle = axisLineStyle;
-    y.majorGridLineStyle = gridLineStyle;
+   // y.majorGridLineStyle = gridLineStyle;
     y.labelingPolicy = CPTAxisLabelingPolicyNone;
-    y.labelTextStyle = axisTextStyle;
-    y.labelOffset = 16.0f;
-    y.majorTickLineStyle = axisLineStyle;
-    y.majorTickLength = 4.0f;
-    y.minorTickLength = 2.0f;
-    y.tickDirection = CPTSignNone;
-    NSInteger majorIncrement = 100;
-    NSInteger minorIncrement = 50;
-    CGFloat yMax = 700.0f;  // should determine dynamically based on max price
-    NSMutableSet *yLabels = [NSMutableSet set];
-    NSMutableSet *yMajorLocations = [NSMutableSet set];
-    NSMutableSet *yMinorLocations = [NSMutableSet set];
-    for (NSInteger j = minorIncrement; j <= yMax; j += minorIncrement) {
-        NSUInteger mod = j % majorIncrement;
-        if (mod == 0) {
-            CPTAxisLabel *label = [[CPTAxisLabel alloc] initWithText:[NSString stringWithFormat:@"%i", j] textStyle:y.labelTextStyle];
-            NSDecimal location = CPTDecimalFromInteger(j);
-            label.tickLocation = location;
-            label.offset = -y.majorTickLength - y.labelOffset;
-            if (label) {
-                [yLabels addObject:label];
-            }
-            [yMajorLocations addObject:[NSDecimalNumber decimalNumberWithDecimal:location]];
-        } else {
-            [yMinorLocations addObject:[NSDecimalNumber decimalNumberWithDecimal:CPTDecimalFromInteger(j)]];
-        }
-    }
+//    y.labelTextStyle = axisTextStyle;
+//    y.labelOffset = 16.0f;
+//    y.majorTickLineStyle = axisLineStyle;
+//    y.majorTickLength = 4.0f;
+//    y.minorTickLength = 2.0f;
+//    y.tickDirection = CPTSignNone;
+//    NSInteger majorIncrement = 100;
+//    NSInteger minorIncrement = 50;
+//    CGFloat yMax = 700.0f;  // should determine dynamically based on max price
+//    NSMutableSet *yLabels = [NSMutableSet set];
+//    NSMutableSet *yMajorLocations = [NSMutableSet set];
+//    NSMutableSet *yMinorLocations = [NSMutableSet set];
+//    for (NSInteger j = minorIncrement; j <= yMax; j += minorIncrement) {
+//        NSUInteger mod = j % majorIncrement;
+//        if (mod == 0) {
+//            CPTAxisLabel *label = [[CPTAxisLabel alloc] initWithText:[NSString stringWithFormat:@"%i", j] textStyle:y.labelTextStyle];
+//            NSDecimal location = CPTDecimalFromInteger(j);
+//            label.tickLocation = location;
+//            label.offset = -y.majorTickLength - y.labelOffset;
+//            if (label) {
+//                [yLabels addObject:label];
+//            }
+//            [yMajorLocations addObject:[NSDecimalNumber decimalNumberWithDecimal:location]];
+//        } else {
+//            [yMinorLocations addObject:[NSDecimalNumber decimalNumberWithDecimal:CPTDecimalFromInteger(j)]];
+//        }
+//    }
    // y.axisLabels = yLabels;
     //y.majorTickLocations = yMajorLocations;
     //y.minorTickLocations = yMinorLocations;
@@ -333,6 +332,9 @@ bool isRUNNING = NO;
 	}
     
     
+    Player *player = [[DataStore sharedInstance] playerAt:index];
+
+    
 	// 3 - Create annotation, if necessary
 	NSNumber *playerScore = [self numberForPlot:plot field:CPTBarPlotFieldBarTip recordIndex:index];
 	if (!self.scoreAnnotation) {
@@ -349,18 +351,11 @@ bool isRUNNING = NO;
 	}
 	// 5 - Create text layer for annotation
 	NSString *playerString = [formatter stringFromNumber:playerScore];
-	CPTTextLayer *textLayer = [[CPTTextLayer alloc] initWithText:playerString style:style];
+    
+	CPTTextLayer *textLayer = [[CPTTextLayer alloc] initWithText:[playerString stringByAppendingFormat:@"- %@", player.rfid] style:style];
 	self.scoreAnnotation.contentLayer = textLayer;
     
 	// 6 - Get plot index based on identifier
-//	NSInteger plotIndex = 0;
-//	if ([plot.identifier isEqual:CPDTickerSymbolAAPL] == YES) {
-//		plotIndex = 0;
-//	} else if ([plot.identifier isEqual:CPDTickerSymbolGOOG] == YES) {
-//		plotIndex = 1;
-//	} else if ([plot.identifier isEqual:CPDTickerSymbolMSFT] == YES) {
-//		plotIndex = 2;
-//	}
     
 	// 7 - Get the anchor point for annotation
 	CGFloat x = index + CPDBarInitialX;
@@ -387,8 +382,6 @@ bool isRUNNING = NO;
 		self.scoreAnnotation = nil;
 	}
 }
-
-
 
 -(CPTFill *)barFillForBarPlot:(CPTBarPlot *)barPlot
                   recordIndex:(NSUInteger)index {
@@ -420,39 +413,45 @@ bool isRUNNING = NO;
 
 -(void)updateGraph {
     
-    //adjusted feedratio for .2 msec
-    float adjustedFeedratio = [feedRatio floatValue] / 5.0f;
-    
-    
-    float scoreIncrease =  adjustedFeedratio/ (float)currentRFIDS.count;
-    
-    [self updateFeedRatioLabelWith:[feedRatio floatValue]/(float)currentRFIDS.count];
-    
-    NSMutableArray *updatedArray = [NSMutableArray array];
-    
-    int currentPlayerCount = currentRFIDS.count;
-    
-    while ([updatedArray count] !=  currentPlayerCount ) {
-        NSNumber *randNum = @(arc4random() % currentPlayerCount);
-        if( [randNum intValue] <= currentPlayerCount) {
-            
-            while ([updatedArray containsObject:randNum]) {
-                randNum = @(arc4random() % currentPlayerCount);
+    if( isRUNNING && currentRFIDS.count > 0 ) {
+        
+        //adjusted feedratio for .2 msec
+        float adjustedFeedratio = [feedRatio floatValue] / 5.0f;
+        
+        float scoreIncrease =  adjustedFeedratio/ (float)currentRFIDS.count;
+        
+        [self updateFeedRatioLabelWith: ([feedRatio floatValue]/(float)currentRFIDS.count) * 60.0f];
+        
+        NSMutableArray *updatedArray = [NSMutableArray array];
+        
+        int currentPlayerCount = currentRFIDS.count;
+        
+        while ([updatedArray count] !=  currentPlayerCount ) {
+            NSNumber *randNum = @(arc4random() % currentPlayerCount);
+            if( [randNum intValue] <= currentPlayerCount) {
+                
+                while ([updatedArray containsObject:randNum]) {
+                    randNum = @(arc4random() % currentPlayerCount);
+                }
+                
+                [updatedArray addObject:randNum];
+                
+                [[DataStore sharedInstance] addScore:@( scoreIncrease ) withRFID:[currentRFIDS objectAtIndex:[randNum intValue]]];
+                
+                [graph reloadData];
             }
-            
-            [updatedArray addObject:randNum];
-            
-            [[DataStore sharedInstance] addScore:@( scoreIncrease ) withRFID:[currentRFIDS objectAtIndex:[randNum intValue]]];
-            
-            [graph reloadData];
         }
+    } else {
+        [self updateFeedRatioLabelWith: 0.0f];
     }
-    
 }
 
 -(void)updateFeedRatioLabelWith: (float)ratio {
     feedRatioLabel.text = nil;
-    feedRatioLabel.text = [NSString stringWithFormat:@"Feed Ratio: %00.02f calories per/sec", ratio];
+    
+    int intRatio = ratio;
+    
+    feedRatioLabel.text = [NSString stringWithFormat:@"%@ %d %@", calorieStr, intRatio, caloriePerMinuteStr];
 }
 
 - (void)resetScoreByRFID:(NSString *)rfid {
@@ -460,43 +459,15 @@ bool isRUNNING = NO;
     [graph reloadData];
 }
 
--(void)toggleTimer {
-    
-    if( isRUNNING ) {
-        startDate = [[NSDate date]init];
-        
-        stopWatchTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/10.0
-                                                          target:self
-                                                        selector:@selector(updateTimer)
-                                                        userInfo:nil
-                                                         repeats:YES];
-        
-        
+-(void)startTimer {
+
+  
         intervalTimer = [NSTimer scheduledTimerWithTimeInterval:.2
                                                          target:self
                                                        selector:@selector(updateGraph)
                                                        userInfo:nil
                                                         repeats:YES];
-    } else {
-        [stopWatchTimer invalidate];
-        [intervalTimer invalidate];
-        [[DataStore sharedInstance] resetPlayerCount];
-        [graph reloadData];
-        stopWatchTimer = nil;
-        [self updateTimer];
-    }
     
-}
-
-#pragma mark - Timer methods
-
-- (void)updateTimer {
-    NSDate *currentDate = [NSDate date];
-    NSTimeInterval timeInterval = [currentDate timeIntervalSinceDate:startDate];
-    NSDate *timerDate = [NSDate dateWithTimeIntervalSince1970:timeInterval];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"HH:mm:ss.SSS"];
-    [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0.0]];
 }
 
 #pragma mark - XMPP delegate methods
@@ -523,6 +494,8 @@ bool isRUNNING = NO;
             
             if( [event isEqualToString:@"game_reset"] ) {
                 [self resetGame];
+            } else if( [event isEqualToString:@"game_stop"] ) {
+                isRUNNING = NO;
             } else if( [event isEqualToString:@"patch_init_data"]){
                 NSDictionary *payload = [jsonObjects objectForKey:@"payload"];
 
@@ -541,6 +514,7 @@ bool isRUNNING = NO;
                 
                 [[DataStore sharedInstance] addPlayerSpacing];
                 [[DataStore sharedInstance] printPlayers];
+                
                 //init the graph
                 [self initPlot];
 
@@ -558,7 +532,7 @@ bool isRUNNING = NO;
                     
                     if( isRUNNING == NO) {
                         isRUNNING = YES;
-                        [self toggleTimer];
+                        [self startTimer];
                         
                     }
                 }
@@ -579,8 +553,6 @@ bool isRUNNING = NO;
         }
 
     NSLog(@"message %@", msg);
-    
-    
 }
 
 -(void)addRFID: (NSString *)newRFID {
@@ -606,8 +578,6 @@ bool isRUNNING = NO;
     
 }
 - (IBAction)test:(id)sender {
-    
-
     NSString *origin = [self origin];
     
     NSString *eventType = @"\"event\": \"score_upate\"";
@@ -623,10 +593,10 @@ bool isRUNNING = NO;
 }
 
 - (void)isAvailable:(BOOL)available {
-    [self sendGroupChatMessage:[self patchMessage]];
+    [self sendGroupChatMessage:[self patchInitMessage]];
 }
 
--(NSString *) patchMessage {
+-(NSString *) patchInitMessage {
     NSString *origin = [self origin];
     
     NSString *eventType = @"\"event\": \"patch_init\"";
@@ -678,16 +648,11 @@ bool isRUNNING = NO;
 }
 
 -(void)resetGame {
-    [startButton setTitle: @"start" forState: UIControlStateNormal];
-    stopWatchLabel.text = @"0:00";
-    [stopWatchTimer invalidate];
-    [intervalTimer invalidate];
     [[DataStore sharedInstance] resetPlayerCount];
     [graph reloadData];
-    [self updateTimer];
     feedRatio = @(0);
     isRUNNING = NO;
-    [self sendGroupChatMessage:[self patchMessage]];
+    [self sendGroupChatMessage:[self patchInitMessage]];
     [self updateFeedRatioLabelWith:0.0f];
 
 }

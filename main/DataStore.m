@@ -50,6 +50,11 @@ NSString *lastCluster;
 
 - (void)resetPlayerCount {
     [players removeAllObjects];
+    [clusters removeAllObjects];
+}
+
+- (Player *)playerAt: (int)index {
+    return players[index];
 }
 
 - (int)playerCount {
