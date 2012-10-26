@@ -74,7 +74,7 @@ bool isRUNNING = NO;
 
 -(void)viewWillAppear:(BOOL)animated {
     
-    feedRatioLabel = [[UILabel alloc] initWithFrame:CGRectMake(-83, 900, 200, 21)];
+    feedRatioLabel = [[UILabel alloc] initWithFrame:CGRectMake(-120, 825, 275, 21)];
     
    
     
@@ -95,7 +95,7 @@ bool isRUNNING = NO;
     self.appDelegate.xmppBaseOnlineDelegate = self;
     
     currentRFIDS = [NSMutableArray array];
-    
+    //[self initPlot];
     
 }
 
@@ -149,12 +149,11 @@ bool isRUNNING = NO;
     
     _hostView.hostedGraph = graph;
     // 2 - Configure the graph
-    [graph applyTheme:[CPTTheme themeNamed:kCPTPlainBlackTheme]];
-    graph.paddingBottom = 10.0f;
-    graph.paddingLeft  = 0.0f;
+	[graph applyTheme:[CPTTheme themeNamed:kCPTDarkGradientTheme]];
+    graph.paddingBottom = 50.0f;
+    graph.paddingLeft  = 50.0f;
     graph.paddingTop    = 2.0f;
-    graph.paddingRight  = 2.0f;
-    //graph.axisSet.paddingBottom = 10.0f;
+    graph.paddingRight  = 10.0f;
 
     // 3 - Set up styles
 //    CPTMutableTextStyle *titleStyle = [CPTMutableTextStyle textStyle];
@@ -173,7 +172,7 @@ bool isRUNNING = NO;
     //CGFloat xMax = 25;
     CGFloat xMax = [[DataStore sharedInstance] playerCount];
     CGFloat yMin = 0.0f;
-    CGFloat yMax = 12000.0f;  // should determine dynamically based on max price
+    CGFloat yMax = 3000.0f;  // should determine dynamically based on max price
     plotSpace = (CPTXYPlotSpace *) graph.defaultPlotSpace;
     plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(xMin) length:CPTDecimalFromFloat(xMax)];
     plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(yMin) length:CPTDecimalFromFloat(yMax)];
@@ -204,14 +203,118 @@ bool isRUNNING = NO;
     
 }
 
+-(void)configureAxes {
+    
+    
+    NSArray *customTickLocations = [NSArray arrayWithObjects:
+                                    [NSDecimalNumber numberWithInt:0],
+                                    [NSDecimalNumber numberWithInt:4],
+                                    [NSDecimalNumber numberWithInt:8],
+                                    [NSDecimalNumber numberWithInt:12],
+                                    [NSDecimalNumber numberWithInt:17],
+                                    nil];
+    
+    //NSArray *xxLabels  = @["A","B","C","D"];
+    
+    // 1 - Configure styles
+    // 1 - Create styles
+    CPTMutableTextStyle *axisTitleStyle = [CPTMutableTextStyle textStyle];
+    axisTitleStyle.color = [CPTColor whiteColor];
+    axisTitleStyle.fontName = @"Helvetica-Bold";
+    axisTitleStyle.fontSize = 12.0f;
+    CPTMutableLineStyle *axisLineStyle = [CPTMutableLineStyle lineStyle];
+    axisLineStyle.lineWidth = 1.0f;
+    axisLineStyle.lineColor = [CPTColor greenColor];
+    CPTMutableTextStyle *axisTextStyle = [[CPTMutableTextStyle alloc] init];
+    axisTextStyle.color = [CPTColor yellowColor];
+    axisTextStyle.fontName = @"Helvetica-Bold";
+    axisTextStyle.fontSize = 11.0f;
+    CPTMutableLineStyle *tickLineStyle = [CPTMutableLineStyle lineStyle];
+    tickLineStyle.lineColor = [CPTColor blueColor];
+    tickLineStyle.lineWidth = 1.0f;
+    CPTMutableLineStyle *gridLineStyle = [CPTMutableLineStyle lineStyle];
+    tickLineStyle.lineColor = [CPTColor redColor];
+    tickLineStyle.lineWidth = 1.0f;
+    
+    // 2 - Get axis set
+    CPTXYAxisSet *axisSet = (CPTXYAxisSet *) self.hostView.hostedGraph.axisSet;
+    // 3 - Configure x-axis
+    CPTAxis *x = axisSet.xAxis;
+   // x.title = @"Day of Month";
+    x.titleTextStyle = axisTitleStyle;
+    x.titleOffset = 30.0f;
+    x.axisLineStyle = axisLineStyle;
+    x.labelingPolicy = CPTAxisLabelingPolicyNone;
+    x.labelTextStyle = axisTextStyle;
+    x.majorTickLineStyle = axisLineStyle;
+    x.majorTickLength = 30.0f;
+    x.tickDirection = CPTSignNegative;
+    
+    CGFloat dateCount = [[[DataStore sharedInstance] datesInMonth] count];
+    NSMutableSet *xLabels = [NSMutableSet setWithCapacity:dateCount];
+    NSMutableSet *xLocations = [NSMutableSet setWithCapacity:dateCount];
+    NSInteger i = 0;
+    for (NSString *date in [[DataStore sharedInstance] datesInMonth]) {
+        CPTAxisLabel *label = [[CPTAxisLabel alloc] initWithText:date  textStyle:x.labelTextStyle];
+        CGFloat location = i++;
+        label.tickLocation = CPTDecimalFromCGFloat(location);
+        label.offset = x.majorTickLength;
+        if (label) {
+            [xLabels addObject:label];
+            [xLocations addObject:[NSNumber numberWithFloat:location]];
+        }
+    }
+ //  x.axisLabels = xxLabels;
+    x.majorTickLocations = customTickLocations;
+    
+    // 4 - Configure y-axis
+    CPTAxis *y = axisSet.yAxis;
+    //y.title = @"Price";
+    y.titleTextStyle = axisTitleStyle;
+    y.titleOffset = -40.0f;
+    y.axisLineStyle = axisLineStyle;
+    //y.majorGridLineStyle = gridLineStyle;
+    y.labelingPolicy = CPTAxisLabelingPolicyNone;
+    y.labelTextStyle = axisTextStyle;
+    y.labelOffset = 16.0f;
+    y.majorTickLineStyle = axisLineStyle;
+    y.majorTickLength = 4.0f;
+    y.minorTickLength = 2.0f;
+    y.tickDirection = CPTSignPositive;
+    NSInteger majorIncrement = 100;
+    NSInteger minorIncrement = 50;
+    CGFloat yMax = 700.0f;  // should determine dynamically based on max price
+    NSMutableSet *yLabels = [NSMutableSet set];
+    NSMutableSet *yMajorLocations = [NSMutableSet set];
+    NSMutableSet *yMinorLocations = [NSMutableSet set];
+    for (NSInteger j = minorIncrement; j <= yMax; j += minorIncrement) {
+        NSUInteger mod = j % majorIncrement;
+        if (mod == 0) {
+            CPTAxisLabel *label = [[CPTAxisLabel alloc] initWithText:[NSString stringWithFormat:@"%i", j] textStyle:y.labelTextStyle];
+            NSDecimal location = CPTDecimalFromInteger(j);
+            label.tickLocation = location;
+            label.offset = -y.majorTickLength - y.labelOffset;
+            if (label) {
+                [yLabels addObject:label];
+            }
+            [yMajorLocations addObject:[NSDecimalNumber decimalNumberWithDecimal:location]];
+        } else {
+            [yMinorLocations addObject:[NSDecimalNumber decimalNumberWithDecimal:CPTDecimalFromInteger(j)]];
+        }
+    }
+   // y.axisLabels = yLabels;
+    //y.majorTickLocations = yMajorLocations;
+    //y.minorTickLocations = yMinorLocations;
+
+    
+}
+
+
 -(CPTFill *)barFillForBarPlot:(CPTBarPlot *)barPlot
                   recordIndex:(NSUInteger)index {
 
     
     if ( [barPlot.identifier isEqual:trianglePlot] ) {
-        
-        
-        
         
         NSString *color = [[DataStore sharedInstance] colorForKey:index];
         
@@ -220,13 +323,6 @@ bool isRUNNING = NO;
 
         UIColor *myColor = [UIColor colorWithHexString:cleanedString];
 
-        
-        
-        CPTGradient *gradient = [CPTGradient gradientWithBeginningColor:[CPTColor colorWithComponentRed:myColor.red green:myColor.green blue:myColor.blue alpha:myColor.alpha]
-                                                            endingColor:[CPTColor colorWithComponentRed:myColor.red green:myColor.green blue:myColor.blue alpha:myColor.alpha]
-                                                      beginningPosition:0.0 endingPosition:0.0 ];
-        [gradient setGradientType:CPTGradientTypeAxial];
-        [gradient setAngle:350];
         
         CPTFill *fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:myColor.CGColor]];
         
@@ -238,57 +334,16 @@ bool isRUNNING = NO;
 }
 
 
--(void)configureAxes {
-    
-    
-    NSArray *customTickLocations = [NSArray arrayWithObjects:[NSDecimalNumber numberWithInt:0],
-                                    [NSDecimalNumber numberWithInt:5],
-                                    [NSDecimalNumber numberWithInt:10],
-                                    [NSDecimalNumber numberWithInt:15],
-                                    [NSDecimalNumber numberWithInt:20],
-                                    nil];
-    
-    // 1 - Configure styles
-//    CPTMutableTextStyle *axisTitleStyle = [CPTMutableTextStyle textStyle];
-//    axisTitleStyle.color = [CPTColor whiteColor];
-//    axisTitleStyle.fontName = @"Helvetica-Bold";
-//    axisTitleStyle.fontSize = 12.0f;
-    CPTMutableLineStyle *axisLineStyle = [CPTMutableLineStyle lineStyle];
-    axisLineStyle.lineWidth = 1.0f;
-    axisLineStyle.lineColor = [[CPTColor whiteColor] colorWithAlphaComponent:1];
-    // 2 - Get the graph's axis set
-    CPTXYAxisSet *axisSet = (CPTXYAxisSet *) self.hostView.hostedGraph.axisSet;
-    // 3 - Configure the x-axis
-
-   // axisSet.xAxis.majorTickLocations = customTickLocations;
-    //axisSet.xAxis.tickDirection = CPTSignNegative;
-    
-    //axisSet.xAxis.majorTickLineStyle = axisLineStyle;
-    //axisSet.xAxis.labelOffset = 10.f;
-    //axisSet.xAxis.majorTickLength = 10.0f;
-    
-    axisSet.xAxis.labelingPolicy = CPTAxisLabelingPolicyNone;
-    //axisSet.xAxis.title = @"Days of Week (Mon - Fri)";
-    //axisSet.xAxis.titleTextStyle = axisTitleStyle;
-    //axisSet.xAxis.titleOffset = 10.0f;
-    axisSet.xAxis.axisLineStyle = axisLineStyle;
-    // 4 - Configure the y-axis
-    axisSet.yAxis.labelingPolicy = CPTAxisLabelingPolicyNone;
-    //axisSet.yAxis.title = @"Price";
-    //axisSet.yAxis.titleTextStyle = axisTitleStyle;
-    //axisSet.yAxis.titleOffset = 5.0f;
-    axisSet.yAxis.axisLineStyle = axisLineStyle;
-    
-}
 
 -(void)updateGraph {
     
-    float diff = [feedRatio floatValue] / 5.0f;
+    //adjusted feedratio for .2 msec
+    float adjustedFeedratio = [feedRatio floatValue] / 5.0f;
     
     
-    float scoreIncrease =  diff/ (float)currentRFIDS.count;
+    float scoreIncrease =  adjustedFeedratio/ (float)currentRFIDS.count;
     
-    [self updateFeedRatioLabelWith:scoreIncrease];
+    [self updateFeedRatioLabelWith:[feedRatio floatValue]/(float)currentRFIDS.count];
     
     NSMutableArray *updatedArray = [NSMutableArray array];
     
@@ -315,7 +370,8 @@ bool isRUNNING = NO;
 }
 
 -(void)updateFeedRatioLabelWith: (float)ratio {
-    feedRatioLabel.text = [NSString stringWithFormat:@"Feed Ratio: %.02f per/sec", ratio];
+    feedRatioLabel.text = nil;
+    feedRatioLabel.text = [NSString stringWithFormat:@"Feed Ratio: %00.02f calories per/sec", ratio];
 }
 
 - (void)resetScoreByRFID:(NSString *)rfid {
@@ -366,8 +422,6 @@ bool isRUNNING = NO;
 #pragma mark - XMPP delegate methods
 
 - (void)newMessageReceived:(NSDictionary *)messageContent{
-    
-    //NSString *msg = @"{\"patch\": \"fg-patch-1\", \"arrivals\" : [\"student-1\"],\"departures\" : []}";
 
     NSString *msg = [messageContent objectForKey:@"msg"];
   
@@ -405,6 +459,8 @@ bool isRUNNING = NO;
                     [[DataStore sharedInstance] addPlayerWithRFID:tagId withCluster:cluster withColor:color];
                 }
                 
+                [[DataStore sharedInstance] addPlayerSpacing];
+                [[DataStore sharedInstance] printPlayers];
                 //init the graph
                 [self initPlot];
 
@@ -550,7 +606,9 @@ bool isRUNNING = NO;
     [graph reloadData];
     [self updateTimer];
     feedRatio = @(0);
+    isRUNNING = NO;
     [self sendGroupChatMessage:[self patchMessage]];
+    [self updateFeedRatioLabelWith:0.0f];
 
 }
 
