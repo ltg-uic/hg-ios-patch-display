@@ -12,25 +12,22 @@
 
 + (DataStore *)sharedInstance;
 
-
 - (void)resetPlayerCount;
 - (int)playerCount;
-- (int)playerCountWithId: (NSString *)plotId;
-
-- (void)addPlayerWithRFID:(NSString *)rfid withCluster:(NSString *)cluster withColor:(NSString *)color;
 - (void)printPlayers;
+- (int)clusterCountWith: (NSString *)label;
+
+- (NSMutableArray *)clusterLabels;
 - (void)addPlayerSpacing;
+- (void)addPlayerWithRFID:(NSString *)rfid withCluster:(NSString *)cluster withColor:(NSString *)color;
 
 - (void)addScore: (NSNumber *)score WithIndex: (NSNumber *)index;
 - (void)addScore:(NSNumber *)score withRFID: (NSString *)rfid;
 - (void)addScore:(NSNumber *)score withKey: (NSNumber *)key;
-
 - (void)resetScoreWithRFID: (NSString *)rfid;
+
 - (NSNumber *)scoreForRFID: (NSString *)rfid;
-
 - (NSNumber *)scoreForKey: (NSUInteger)key;
-- (NSNumber *)scoreForKey: (NSUInteger)key andCluster:(NSString *)cluster;
-
 - (NSString *)colorForKey: (NSUInteger)key;
 
 - (NSArray *)datesInMonth;

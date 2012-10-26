@@ -11,8 +11,8 @@
 @implementation DataStore
 
 static NSMutableDictionary *dataPoints;
-static NSMutableDictionary *clusters;
 static NSMutableArray *players;
+static NSMutableArray *clusters;
 
 NSString *lastCluster;
 
@@ -35,34 +35,46 @@ NSString *lastCluster;
 - (id)init {
     self = [super init];
     if (self) {
-        [self initDatapoints];
+        [self initCollections];
     }
     return self;
 }
 
--(void)initDatapoints {
+-(void)initCollections {
     dataPoints = [NSMutableDictionary dictionary];
-    players = [NSMutableArray array];    
+    players = [NSMutableArray array];
+    clusters = [NSMutableArray array];
 }
 
 #pragma mark - data access methods
 
--(void)resetPlayerCount {
-    [clusters removeAllObjects];
+- (void)resetPlayerCount {
+    [players removeAllObjects];
 }
 
 - (int)playerCount {
     return [players count];
 }
 
--(void)addScore: (NSNumber *)score WithIndex: (NSNumber *)index {
-    Player *p = [players objectAtIndex:[index intValue]];
-    p.score = [NSNumber numberWithDouble:[p.score doubleValue] + [score doubleValue]];
+- (NSMutableArray *)clusterLabels {
+    return clusters;
 }
 
-- (int)playerCountWithId: (NSString *)plotId {
-    NSArray *cluster = [clusters objectForKey:plotId];
-    return cluster.count;
+- (int)clusterCountWith: (NSString *)label {
+    int i = 0;
+    for (Player *p in players) {
+
+        if( [p.cluster isEqualToString:label] ) {
+            i++;
+        }
+    }
+    return i;
+}
+
+
+- (void)addScore: (NSNumber *)score WithIndex: (NSNumber *)index {
+    Player *p = [players objectAtIndex:[index intValue]];
+    p.score = [NSNumber numberWithDouble:[p.score doubleValue] + [score doubleValue]];
 }
 
 - (void)addPlayerWithRFID:(NSString *)rfid withCluster:(NSString *)cluster withColor:(NSString *)color {
@@ -76,21 +88,23 @@ NSString *lastCluster;
     [players sortUsingDescriptors:[NSArray arrayWithObjects:sortDescriptor, rfidDescriptor, nil]];
 }
 
--(void)addPlayerSpacing {
+- (void)addPlayerSpacing {
     for (int i = 0; i < [players count]; i++) {
         Player *player = [players objectAtIndex: i];
         
         if( lastCluster == nil ) {
             lastCluster = player.cluster;
+            [clusters addObject:lastCluster];
         } else if( ![lastCluster isEqualToString:player.cluster] ) {
             lastCluster = player.cluster;
-            [players insertObject:[[Player alloc] initWithRFID:nil AndCluster:nil AndColor:nil AndScore:0] atIndex:i];
+            [clusters addObject:lastCluster];
+            [players insertObject:[[Player alloc] initWithRFID:@"" AndCluster:@"" AndColor:@"blank" AndScore:0] atIndex:i];
         };
 
     }
 }
 
--(void)printPlayers {
+- (void)printPlayers {
     NSLog(@"PRINTING LOCAL DB");
     for (Player *player in players) {
        NSLog(@"%@\n", [player description]);
@@ -116,7 +130,7 @@ NSString *lastCluster;
     p.score = [NSNumber numberWithDouble:[p.score doubleValue] + [score doubleValue]];
 }
 
--(NSNumber *)scoreForRFID:(NSString *)rfid {
+- (NSNumber *)scoreForRFID:(NSString *)rfid {
     for (int i = 0; i < [players count]; i++) {
         Player *p = [players objectAtIndex: i];
         if([p.rfid isEqualToString:rfid]){
@@ -126,7 +140,7 @@ NSString *lastCluster;
     return nil;
 }
 
--(void)resetScoreWithRFID:  (NSString *)rfid {
+- (void)resetScoreWithRFID:  (NSString *)rfid {
     for (int i = 0; i < [players count]; i++) {
         Player *p = [players objectAtIndex: i];
         if([p.rfid isEqualToString:rfid]){
@@ -136,29 +150,14 @@ NSString *lastCluster;
     }
 }
 
--(NSNumber *)scoreForKey: (NSUInteger)key {
+- (NSNumber *)scoreForKey: (NSUInteger)key {
     Player *player = [players objectAtIndex:key];
     return player.score;
 }
 
--(NSString *)colorForKey: (NSUInteger)key {
+- (NSString *)colorForKey: (NSUInteger)key {
     Player *player = [players objectAtIndex:key];
     return player.color;
-}
-
--(NSNumber *)scoreForKey: (NSUInteger)key andCluster:(NSString *)cluster {
-    
-    NSArray *c = [clusters objectForKey:cluster];
-    
-    if( key > c.count-1)
-        return [NSNumber numberWithInt:-1 ];
-    
-    Player *player = [c objectAtIndex:key];
-    
-    if( [player.cluster isEqualToString:cluster] )
-        return player.score;
-    
-    return [NSNumber numberWithInt:-1 ];
 }
 
 - (NSArray *)datesInMonth
