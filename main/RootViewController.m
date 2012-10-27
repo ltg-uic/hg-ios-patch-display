@@ -66,6 +66,7 @@ NSString *  const caloriePerMinuteStr = @"Calories per Minute";
 
 bool isRUNNING = NO;
 bool isGAME_STOPPED = NO;
+bool hasGraph = NO;
 
 - (AppDelegate *)appDelegate {
 	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -497,6 +498,9 @@ bool isGAME_STOPPED = NO;
         
         if( event != nil) {
             if( [event isEqualToString:@"patch_init_data"]){
+                
+                [[DataStore sharedInstance] resetPlayerCount];
+                
                 NSDictionary *payload = [jsonObjects objectForKey:@"payload"];
 
                 feedRatio = @([[payload objectForKey:@"feed-ratio"] integerValue]);
@@ -513,10 +517,18 @@ bool isGAME_STOPPED = NO;
                 }
                 
                 [[DataStore sharedInstance] addPlayerSpacing];
-                [[DataStore sharedInstance] printPlayers];
+                
+                //[[DataStore sharedInstance] printPlayers];
                 
                 //init the graph
-                [self initPlot];
+                if( hasGraph) {
+                    [graph reloadData];
+                } else {
+                    hasGraph = YES;
+
+                    [self initPlot];
+                }
+
 
             } else if( [event isEqualToString:@"rfid_update"] ){
                 NSDictionary *payload = [jsonObjects objectForKey:@"payload"];
@@ -648,7 +660,9 @@ bool isGAME_STOPPED = NO;
 }
 
 -(void)resetGame {
-    [[DataStore sharedInstance] resetPlayerCount];
+   // [[DataStore sharedInstance] resetPlayerCount];
+    [currentRFIDS removeAllObjects];
+    [ [DataStore sharedInstance] zeroOutPlayersScore];
     [graph reloadData];
     feedRatio = @(0);
     isRUNNING = NO;

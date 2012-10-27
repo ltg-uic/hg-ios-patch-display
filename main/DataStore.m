@@ -48,9 +48,17 @@ NSString *lastCluster;
 
 #pragma mark - data access methods
 
+
+-(void)zeroOutPlayersScore {
+    for (Player *p in players) {
+        p.score = 0;
+    }
+}
+
 - (void)resetPlayerCount {
     [players removeAllObjects];
     [clusters removeAllObjects];
+    lastCluster = nil;
 }
 
 - (Player *)playerAt: (int)index {

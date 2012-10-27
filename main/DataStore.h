@@ -14,6 +14,7 @@
 
 - (void)resetPlayerCount;
 - (Player *)playerAt: (int)index;
+- (void)zeroOutPlayersScore;
 - (int)playerCount;
 - (void)printPlayers;
 - (int)clusterCountWith: (NSString *)label;
