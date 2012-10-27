@@ -19,9 +19,9 @@
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="RUv-0X-tu3" firstAttribute="trailing" secondItem="5" secondAttribute="trailing" type="default" id="ehT-5m-hdR"/>
                             <constraint firstItem="RUv-0X-tu3" firstAttribute="top" secondItem="5" secondAttribute="top" type="default" id="heJ-dH-fhw"/>
-                            <constraint firstItem="RUv-0X-tu3" firstAttribute="leading" secondItem="5" secondAttribute="leading" type="default" id="iWp-qg-yEG"/>
-                            <constraint firstItem="RUv-0X-tu3" firstAttribute="trailing" secondItem="5" secondAttribute="trailing" type="default" id="lTq-4t-Ki3"/>
+                            <constraint firstItem="RUv-0X-tu3" firstAttribute="leading" secondItem="5" secondAttribute="leading" constant="55" id="xgs-Ad-iYB"/>
                             <constraint firstItem="RUv-0X-tu3" firstAttribute="bottom" secondItem="5" secondAttribute="bottom" type="default" id="z9J-H5-ngr"/>
                         </constraints>
                         <connections>
@@ -136,7 +136,9 @@
             <relationships>
                 <relationship kind="action" name="decreaseIntervalTime:"/>
                 <relationship kind="action" name="increaseIntervalTime:"/>
+                <relationship kind="action" name="showLogin:"/>
                 <relationship kind="action" name="startAndStop:"/>
+                <relationship kind="action" name="test:"/>
                 <relationship kind="outlet" name="hostView" candidateClass="CPTGraphHostingView"/>
                 <relationship kind="outlet" name="timeIntervalLabel" candidateClass="UILabel"/>
             </relationships>

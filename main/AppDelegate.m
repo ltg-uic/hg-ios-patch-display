@@ -34,7 +34,7 @@ BOOL isMUC = YES;
     
     //only have this we are hardcoding the username
     
-   // [[NSUserDefaults standardUserDefaults] setObject:@"fg-patch-5@ltg.evl.uic.edu" forKey:kXMPPmyJID];
+    //[[NSUserDefaults standardUserDefaults] setObject:@"fg-patch-5@ltg.evl.uic.edu" forKey:kXMPPmyJID];
     //[[NSUserDefaults standardUserDefaults] setObject:@"fg-patch-5" forKey:kXMPPmyPassword];
     
     // Configure logging framework
@@ -105,7 +105,7 @@ BOOL isMUC = YES;
 	// Everything else plugs into the xmppStream, such as modules/extensions and delegates.
     
 	xmppStream = [[XMPPStream alloc] init];
-	
+	xmppStream.enableBackgroundingOnSocket = YES;
 #if !TARGET_IPHONE_SIMULATOR
 	{
 		// Want xmpp to run in the background?
@@ -129,7 +129,8 @@ BOOL isMUC = YES;
 	// There's a bunch more information in the XMPPReconnect header file.
 	
 	xmppReconnect = [[XMPPReconnect alloc] init];
-	
+	xmppReconnect.autoReconnect = YES;
+    
 	// Setup roster
 	//
 	// The XMPPRoster handles the xmpp protocol stuff related to the roster.

@@ -62,7 +62,6 @@
 		700C3B3816042FEE005A9E34 /* XMPPReconnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 700C3B3616042FE5005A9E34 /* XMPPReconnect.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		700C3B3A160430DA005A9E34 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700C3B39160430DA005A9E34 /* SystemConfiguration.framework */; };
 		702CE04D162256310038EC73 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 702CE04C162256310038EC73 /* Player.m */; };
-		70383F9A161A1A850045F5E1 /* temp57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = 70383F99161A1A850045F5E1 /* temp57x57.png */; };
 		7078F33D16384F7B00D2344F /* UIColor-Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 7078F33C16384F7B00D2344F /* UIColor-Expanded.m */; };
 		707C2C3916080C6A00A09AB8 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 707C2C3816080C6A00A09AB8 /* LoginViewController.m */; };
 		70878FE2160BAF6F0099DD5D /* XMPPRoom.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 70878FC0160BAF620099DD5D /* XMPPRoom.xcdatamodeld */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -88,6 +87,7 @@
 		70897D1C160FDAC10058F06C /* libCorePlot-CocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 70897CCA160FDA760058F06C /* libCorePlot-CocoaTouch.a */; };
 		70A8124316160DDA00AEDDB9 /* DataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 703B95F2160FEDF20012EE57 /* DataStore.m */; };
 		70A81247161615A900AEDDB9 /* libiconv.2.4.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 70A81246161615A900AEDDB9 /* libiconv.2.4.0.dylib */; };
+		70CE9946163B449800168670 /* Icon@2x.144.png in Resources */ = {isa = PBXBuildFile; fileRef = 70CE9945163B449800168670 /* Icon@2x.144.png */; };
 		70D22ECE162B4C090075F175 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D22EB6162B4C090075F175 /* NSObject+SBJson.m */; };
 		70D22ECF162B4C090075F175 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D22EB9162B4C090075F175 /* SBJsonParser.m */; };
 		70D22ED0162B4C090075F175 /* SBJsonStreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D22EBB162B4C090075F175 /* SBJsonStreamParser.m */; };
@@ -210,7 +210,6 @@
 		700C3B39160430DA005A9E34 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		702CE04B162256310038EC73 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		702CE04C162256310038EC73 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
-		70383F99161A1A850045F5E1 /* temp57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = temp57x57.png; path = ../temp57x57.png; sourceTree = "<group>"; };
 		703B95F1160FEDF20012EE57 /* DataStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataStore.h; sourceTree = "<group>"; };
 		703B95F2160FEDF20012EE57 /* DataStore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataStore.m; sourceTree = "<group>"; };
 		7042A3CA16320FE2001B44B5 /* XMPPBaseOnlineDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPBaseOnlineDelegate.h; sourceTree = "<group>"; };
@@ -342,6 +341,7 @@
 		70897CCA160FDA760058F06C /* libCorePlot-CocoaTouch.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libCorePlot-CocoaTouch.a"; path = "main/Graph/CorePlot/libCorePlot-CocoaTouch.a"; sourceTree = "<group>"; };
 		70897D1A160FDA9E0058F06C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		70A81246161615A900AEDDB9 /* libiconv.2.4.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.4.0.dylib; path = usr/lib/libiconv.2.4.0.dylib; sourceTree = SDKROOT; };
+		70CE9945163B449800168670 /* Icon@2x.144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.144.png"; path = "../Icon@2x.144.png"; sourceTree = "<group>"; };
 		70D22EB5162B4C090075F175 /* NSObject+SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJson.h"; sourceTree = "<group>"; };
 		70D22EB6162B4C090075F175 /* NSObject+SBJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJson.m"; sourceTree = "<group>"; };
 		70D22EB7162B4C090075F175 /* SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson.h; sourceTree = "<group>"; };
@@ -461,7 +461,7 @@
 		700C3A58160427DA005A9E34 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				70383F99161A1A850045F5E1 /* temp57x57.png */,
+				70CE9945163B449800168670 /* Icon@2x.144.png */,
 				700C3A69160427DA005A9E34 /* MainStoryboard_iPhone.storyboard */,
 				700C3A59160427DA005A9E34 /* foraging-patch-ios-client-Info.plist */,
 				700C3A5A160427DA005A9E34 /* InfoPlist.strings */,
@@ -1041,7 +1041,7 @@
 				700C3A68160427DA005A9E34 /* Default-568h@2x.png in Resources */,
 				700C3A6B160427DA005A9E34 /* MainStoryboard_iPhone.storyboard in Resources */,
 				700C3A6E160427DA005A9E34 /* MainStoryboard_iPad.storyboard in Resources */,
-				70383F9A161A1A850045F5E1 /* temp57x57.png in Resources */,
+				70CE9946163B449800168670 /* Icon@2x.144.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

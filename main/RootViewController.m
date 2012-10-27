@@ -65,6 +65,7 @@ NSString *  const caloriePerMinuteStr = @"Calories per Minute";
 
 
 bool isRUNNING = NO;
+bool isGAME_STOPPED = NO;
 
 - (AppDelegate *)appDelegate {
 	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -72,21 +73,6 @@ bool isRUNNING = NO;
 
 
 #pragma mark - UIViewController lifecycle methods
-
--(void)viewWillAppear:(BOOL)animated {
-    
-    feedRatioLabel = [[UILabel alloc] initWithFrame:CGRectMake(-472, 450, 1000, 50)];
-    
-    feedRatioLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:labelFontSize];
-   
-    feedRatioLabel.text = [[NSString alloc] initWithFormat:@"%@ 0 %@",calorieStr, caloriePerMinuteStr]; 
-    [feedRatioLabel setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
-    feedRatioLabel.backgroundColor = [UIColor clearColor];
-    
-    feedRatioLabel.textColor = [UIColor whiteColor];
-    [self.view addSubview:feedRatioLabel];
-    
-}
 
 
 -(void)viewDidLoad {
@@ -96,6 +82,17 @@ bool isRUNNING = NO;
     self.appDelegate.xmppBaseOnlineDelegate = self;
     
     currentRFIDS = [NSMutableArray array];
+    
+    feedRatioLabel = [[UILabel alloc] initWithFrame:CGRectMake(-475, 450, 1000, 50)];
+    
+    feedRatioLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:labelFontSize];
+    
+    feedRatioLabel.text = [[NSString alloc] initWithFormat:@"%@ 0 %@",calorieStr, caloriePerMinuteStr];
+    [feedRatioLabel setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
+    feedRatioLabel.backgroundColor = [UIColor clearColor];
+    
+    feedRatioLabel.textColor = [UIColor whiteColor];
+    [self.view addSubview:feedRatioLabel];
     //[self initPlot];
     
 }
@@ -152,10 +149,10 @@ bool isRUNNING = NO;
     // 2 - Configure the graph
 	[graph applyTheme:[CPTTheme themeNamed:kCPTDarkGradientTheme]];
     graph.paddingBottom = 50.0f;
-    graph.paddingLeft  = 60.0f;
+    graph.paddingLeft  = 1.0f;
     graph.paddingTop    = 0.0f;
     graph.paddingRight  = 1.0f;
-
+    graph.fill = [CPTFill fillWithColor:[CPTColor blackColor]];
 
     graph.plotAreaFrame.borderLineStyle = nil;
     graph.plotAreaFrame.cornerRadius = 0;
@@ -176,7 +173,7 @@ bool isRUNNING = NO;
     //CGFloat xMax = 25;
     CGFloat xMax = [[DataStore sharedInstance] playerCount];
     CGFloat yMin = 0.0f;
-    CGFloat yMax = 2500.0f;  // should determine dynamically based on max price
+    CGFloat yMax = 3500.0f;  // should determine dynamically based on max price
     plotSpace = (CPTXYPlotSpace *) graph.defaultPlotSpace;
     plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(xMin) length:CPTDecimalFromFloat(xMax)];
     plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(yMin) length:CPTDecimalFromFloat(yMax)];
@@ -447,11 +444,12 @@ bool isRUNNING = NO;
 }
 
 -(void)updateFeedRatioLabelWith: (float)ratio {
-    feedRatioLabel.text = nil;
+    feedRatioLabel.text = @"";
     
     int intRatio = ratio;
     
     feedRatioLabel.text = [NSString stringWithFormat:@"%@ %d %@", calorieStr, intRatio, caloriePerMinuteStr];
+    [feedRatioLabel setNeedsDisplay];
 }
 
 - (void)resetScoreByRFID:(NSString *)rfid {
@@ -460,8 +458,8 @@ bool isRUNNING = NO;
 }
 
 -(void)startTimer {
-
-  
+ 
+    
         intervalTimer = [NSTimer scheduledTimerWithTimeInterval:.2
                                                          target:self
                                                        selector:@selector(updateGraph)
@@ -484,19 +482,21 @@ bool isRUNNING = NO;
     if( jsonObjects != nil){
         NSString *destination = [jsonObjects objectForKey:@"destination"];
         
-        if( ! [destination isEqualToString:[self origin]] )
-            return;
-    
+        
         NSString *event = [jsonObjects objectForKey:@"event"];
         
+        if( [event isEqualToString:@"game_reset"] ) {
+            [self resetGame];
+        } else if( [event isEqualToString:@"game_stop"] ) {
+            isRUNNING = NO;
+            isGAME_STOPPED = YES;
+        }
+        
+        if( ! [destination isEqualToString:[self origin]] )
+            return;
         
         if( event != nil) {
-            
-            if( [event isEqualToString:@"game_reset"] ) {
-                [self resetGame];
-            } else if( [event isEqualToString:@"game_stop"] ) {
-                isRUNNING = NO;
-            } else if( [event isEqualToString:@"patch_init_data"]){
+            if( [event isEqualToString:@"patch_init_data"]){
                 NSDictionary *payload = [jsonObjects objectForKey:@"payload"];
 
                 feedRatio = @([[payload objectForKey:@"feed-ratio"] integerValue]);
@@ -530,7 +530,7 @@ bool isRUNNING = NO;
                         [self addRFID:rfid];
                     }
                     
-                    if( isRUNNING == NO) {
+                    if( (isRUNNING == NO && isGAME_STOPPED == NO)) {
                         isRUNNING = YES;
                         [self startTimer];
                         
@@ -652,6 +652,7 @@ bool isRUNNING = NO;
     [graph reloadData];
     feedRatio = @(0);
     isRUNNING = NO;
+    isGAME_STOPPED = NO;
     [self sendGroupChatMessage:[self patchInitMessage]];
     [self updateFeedRatioLabelWith:0.0f];
 
