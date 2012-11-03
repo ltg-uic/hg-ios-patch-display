@@ -146,7 +146,11 @@ bool isGAME_STOPPED = NO;
 }
 - (IBAction)changeFill:(id)sender {
     
+    PinPointGroup *pg = pinPointGroups[1];
     
+    pg.pinPoint.isFILLED = YES;
+    
+    [pg.pinPoint setNeedsDisplay];
     
     
 }

@@ -16,6 +16,6 @@
 
 @property (nonatomic, assign) BOOL isON;
 @property (nonatomic, assign) BOOL isFILLED;
-@property (nonatomic, assign) UIColor *color;
+@property (nonatomic, retain) UIColor *color;
 
 @end

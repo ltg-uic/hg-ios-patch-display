@@ -152,6 +152,7 @@
         <class className="RootViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/RootViewController.h"/>
             <relationships>
+                <relationship kind="action" name="changeFill:"/>
                 <relationship kind="action" name="decreaseIntervalTime:"/>
                 <relationship kind="action" name="increaseIntervalTime:"/>
                 <relationship kind="action" name="showLogin:"/>
