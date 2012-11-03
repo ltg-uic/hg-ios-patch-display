@@ -52,7 +52,7 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
-                        <outlet property="calorieLabel" destination="xm6-U3-q3K" id="kEQ-II-M1U"/>
+                        <outlet property="feedRatioLabel" destination="xm6-U3-q3K" id="PiP-zv-uJY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3" sceneMemberID="firstResponder"/>
@@ -158,7 +158,7 @@
                 <relationship kind="action" name="showLogin:"/>
                 <relationship kind="action" name="startAndStop:"/>
                 <relationship kind="action" name="test:"/>
-                <relationship kind="outlet" name="calorieLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="feedRatioLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="timeIntervalLabel" candidateClass="UILabel"/>
             </relationships>
         </class>

@@ -20,10 +20,8 @@
 @interface RootViewController : UIViewController <XMPPBaseNewMessageDelegate, XMPPBaseOnlineDelegate> {
     
     __weak IBOutlet UILabel *timeIntervalLabel;
-    __weak IBOutlet UILabel *calorieLabel;
+    __weak IBOutlet UILabel *feedRatioLabel;
 
-    
-    UILabel *feedRatioLabel;
     NSTimer *intervalTimer;
     NSDate *startDate;
     NSMutableArray *currentRFIDS;
@@ -81,7 +79,7 @@ bool isGAME_STOPPED = NO;
 //    feedRatioLabel.textColor = [UIColor whiteColor];
     //[self.view addSubview:feedRatioLabel];
     
-    calorieLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:450];
+    feedRatioLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:450];
     
     [[DataStore sharedInstance] addPlayerSpacing];
     
@@ -186,7 +184,7 @@ bool isGAME_STOPPED = NO;
     
     int intRatio = ratio;
     
-    feedRatioLabel.text = [NSString stringWithFormat:@"%@ %d %@", calorieStr, intRatio, caloriePerMinuteStr];
+    feedRatioLabel.text = [NSString stringWithFormat:@"%d", intRatio];
     [feedRatioLabel setNeedsDisplay];
 }
 
@@ -206,7 +204,7 @@ bool isGAME_STOPPED = NO;
     isRUNNING = NO;
     isGAME_STOPPED = NO;
     [self sendGroupChatMessage:[self patchInitMessage]];
-    //[self updateFeedRatioLabelWith:0.0f];
+    [self updateFeedRatioLabelWith:0.0f];
     
 }
 
