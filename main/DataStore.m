@@ -43,6 +43,31 @@ NSString *lastCluster;
 -(void)initCollections {
     dataPoints = [NSMutableDictionary dictionary];
     players = [NSMutableArray array];
+    
+//    [players addObject:[[Player alloc] initWithRFID:@"1623365"  AndCluster:@"a" AndColor:@"#99896f" AndScore:[NSNumber numberWithInt:10]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623641"  AndCluster:@"a" AndColor:@"#89369e" AndScore:[NSNumber numberWithInt:2]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623683"  AndCluster:@"a" AndColor:@"#cb5012" AndScore:[NSNumber numberWithInt:30]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623624"  AndCluster:@"a" AndColor:@"#146d71" AndScore:[NSNumber numberWithInt:1]]];
+//    //[players addObject:[[Player alloc] initWithRFID:@"1623352"  AndCluster:@"a" AndColor:@"#ffbeb4" AndScore:[NSNumber numberWithInt:50]]];
+//    //
+//    [players addObject:[[Player alloc] initWithRFID:@"1623678"  AndCluster:@"b" AndColor:@"#99896f" AndScore:[NSNumber numberWithInt:14]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623663"  AndCluster:@"b" AndColor:@"#89369e" AndScore:[NSNumber numberWithInt:12]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623302"  AndCluster:@"b" AndColor:@"#cb5012" AndScore:[NSNumber numberWithInt:2]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623303"  AndCluster:@"b" AndColor:@"#146d71" AndScore:[NSNumber numberWithInt:60]]];
+//   // [players addObject:[[Player alloc] initWithRFID:@"1623126"  AndCluster:@"b" AndColor:@"#ffbeb4" AndScore:[NSNumber numberWithInt:40]]];
+//    //
+//    [players addObject:[[Player alloc] initWithRFID:@"1623238"  AndCluster:@"c" AndColor:@"#99896f" AndScore:[NSNumber numberWithInt:30]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623257"  AndCluster:@"c" AndColor:@"#89369e" AndScore:[NSNumber numberWithInt:20]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623210"  AndCluster:@"c" AndColor:@"#cb5012" AndScore:[NSNumber numberWithInt:120]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623305"  AndCluster:@"c" AndColor:@"#146d71" AndScore:[NSNumber numberWithInt:0]]];
+//   // [players addObject:[[Player alloc] initWithRFID:@"1623386"  AndCluster:@"c" AndColor:@"#ffbeb4" AndScore:[NSNumber numberWithInt:26]]];
+//    //
+//    [players addObject:[[Player alloc] initWithRFID:@"1623392"  AndCluster:@"d" AndColor:@"#99896f" AndScore:[NSNumber numberWithInt:5]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623115"  AndCluster:@"d" AndColor:@"#89369e" AndScore:[NSNumber numberWithInt:4]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623373"  AndCluster:@"d" AndColor:@"#cb5012" AndScore:[NSNumber numberWithInt:39]]];
+//    [players addObject:[[Player alloc] initWithRFID:@"1623110"  AndCluster:@"d" AndColor:@"#146d71" AndScore:[NSNumber numberWithInt:9]]];
+   // [players addObject:[[Player alloc] initWithRFID:@"1623667"  AndCluster:@"d" AndColor:@"#ffbeb4" AndScore:[NSNumber numberWithInt:57]]];
+    
     clusters = [NSMutableArray array];
 }
 

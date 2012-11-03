@@ -94,7 +94,10 @@ bool hasGraph = NO;
     
     feedRatioLabel.textColor = [UIColor whiteColor];
     [self.view addSubview:feedRatioLabel];
-    //[self initPlot];
+    
+    
+    //[[DataStore sharedInstance] addPlayerSpacing];
+   // [self initPlot];
     
 }
 
@@ -157,6 +160,7 @@ bool hasGraph = NO;
 
     graph.plotAreaFrame.borderLineStyle = nil;
     graph.plotAreaFrame.cornerRadius = 0;
+ 
     // 3 - Set up styles
 //    CPTMutableTextStyle *titleStyle = [CPTMutableTextStyle textStyle];
 //    titleStyle.color = [CPTColor whiteColor];
@@ -174,7 +178,7 @@ bool hasGraph = NO;
     //CGFloat xMax = 25;
     CGFloat xMax = [[DataStore sharedInstance] playerCount];
     CGFloat yMin = 0.0f;
-    CGFloat yMax = 3500.0f;  // should determine dynamically based on max price
+    CGFloat yMax = 4000.0f;  // should determine dynamically based on max price
     plotSpace = (CPTXYPlotSpace *) graph.defaultPlotSpace;
     plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(xMin) length:CPTDecimalFromFloat(xMax)];
     plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(yMin) length:CPTDecimalFromFloat(yMax)];
@@ -350,7 +354,9 @@ bool hasGraph = NO;
 	// 5 - Create text layer for annotation
 	NSString *playerString = [formatter stringFromNumber:playerScore];
     
-	CPTTextLayer *textLayer = [[CPTTextLayer alloc] initWithText:[playerString stringByAppendingFormat:@"- %@", player.rfid] style:style];
+	//CPTTextLayer *textLayer = [[CPTTextLayer alloc] initWithText:[playerString stringByAppendingFormat:@"- %@", player.rfid] style:style];
+    CPTTextLayer *textLayer = [[CPTTextLayer alloc] initWithText:player.rfid style:style];
+
 	self.scoreAnnotation.contentLayer = textLayer;
     
 	// 6 - Get plot index based on identifier
@@ -516,9 +522,11 @@ bool hasGraph = NO;
                     [[DataStore sharedInstance] addPlayerWithRFID:tagId withCluster:cluster withColor:color];
                 }
                 
+                [[DataStore sharedInstance] printPlayers];
+                
                 [[DataStore sharedInstance] addPlayerSpacing];
                 
-                //[[DataStore sharedInstance] printPlayers];
+                
                 
                 //init the graph
                 if( hasGraph) {
