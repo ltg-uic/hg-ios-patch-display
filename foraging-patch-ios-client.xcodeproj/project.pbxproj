@@ -85,6 +85,9 @@
 		70897D1B160FDA9E0058F06C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70897D1A160FDA9E0058F06C /* QuartzCore.framework */; };
 		70A8124316160DDA00AEDDB9 /* DataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 703B95F2160FEDF20012EE57 /* DataStore.m */; };
 		70A81247161615A900AEDDB9 /* libiconv.2.4.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 70A81246161615A900AEDDB9 /* libiconv.2.4.0.dylib */; };
+		70B2EA161645C8F200EBF6E5 /* PinPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 70B2EA111645C79200EBF6E5 /* PinPoint.m */; };
+		70B2EA191645D60E00EBF6E5 /* PinPointGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 70B2EA181645D60E00EBF6E5 /* PinPointGroup.m */; };
+		70B2EA1C1645DA6C00EBF6E5 /* UIColor-Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 70B2EA1B1645DA6C00EBF6E5 /* UIColor-Expanded.m */; };
 		70CE9946163B449800168670 /* Icon@2x.144.png in Resources */ = {isa = PBXBuildFile; fileRef = 70CE9945163B449800168670 /* Icon@2x.144.png */; };
 		70D22ECE162B4C090075F175 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D22EB6162B4C090075F175 /* NSObject+SBJson.m */; };
 		70D22ECF162B4C090075F175 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D22EB9162B4C090075F175 /* SBJsonParser.m */; };
@@ -258,6 +261,12 @@
 		70897CCA160FDA760058F06C /* libCorePlot-CocoaTouch.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libCorePlot-CocoaTouch.a"; path = "main/Graph/CorePlot/libCorePlot-CocoaTouch.a"; sourceTree = "<group>"; };
 		70897D1A160FDA9E0058F06C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		70A81246161615A900AEDDB9 /* libiconv.2.4.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.4.0.dylib; path = usr/lib/libiconv.2.4.0.dylib; sourceTree = SDKROOT; };
+		70B2EA101645C79100EBF6E5 /* PinPoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PinPoint.h; sourceTree = "<group>"; };
+		70B2EA111645C79200EBF6E5 /* PinPoint.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PinPoint.m; sourceTree = "<group>"; };
+		70B2EA171645D60E00EBF6E5 /* PinPointGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinPointGroup.h; sourceTree = "<group>"; };
+		70B2EA181645D60E00EBF6E5 /* PinPointGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinPointGroup.m; sourceTree = "<group>"; };
+		70B2EA1A1645DA6C00EBF6E5 /* UIColor-Expanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor-Expanded.h"; sourceTree = "<group>"; };
+		70B2EA1B1645DA6C00EBF6E5 /* UIColor-Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor-Expanded.m"; sourceTree = "<group>"; };
 		70CE9945163B449800168670 /* Icon@2x.144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.144.png"; path = "../Icon@2x.144.png"; sourceTree = "<group>"; };
 		70D22EB5162B4C090075F175 /* NSObject+SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJson.h"; sourceTree = "<group>"; };
 		70D22EB6162B4C090075F175 /* NSObject+SBJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJson.m"; sourceTree = "<group>"; };
@@ -352,21 +361,15 @@
 		700C3A57160427DA005A9E34 /* main */ = {
 			isa = PBXGroup;
 			children = (
-				70D22EDB162B51FE0075F175 /* PatchMessage.h */,
-				70D22EDC162B51FE0075F175 /* PatchMessage.m */,
-				702CE04B162256310038EC73 /* Player.h */,
-				702CE04C162256310038EC73 /* Player.m */,
-				703B95F1160FEDF20012EE57 /* DataStore.h */,
-				703B95F2160FEDF20012EE57 /* DataStore.m */,
-				707C2C3716080C6A00A09AB8 /* LoginViewController.h */,
-				707C2C3816080C6A00A09AB8 /* LoginViewController.m */,
+				70B2EA141645C7E400EBF6E5 /* Messages */,
+				70B2EA131645C7D700EBF6E5 /* Data */,
+				70B2EA151645C84800EBF6E5 /* Login */,
+				70B2EA121645C7BF00EBF6E5 /* Graphics */,
 				700C3A60160427DA005A9E34 /* AppDelegate.h */,
 				700C3A61160427DA005A9E34 /* AppDelegate.m */,
 				700C3A6C160427DA005A9E34 /* MainStoryboard_iPad.storyboard */,
 				700C3A6F160427DA005A9E34 /* RootViewController.h */,
 				700C3A70160427DA005A9E34 /* RootViewController.m */,
-				7042A3CA16320FE2001B44B5 /* XMPPBaseOnlineDelegate.h */,
-				7077CDD41618EE5500BFA216 /* XMPPBaseNewMessageDelegate.h */,
 				700C3A58160427DA005A9E34 /* Supporting Files */,
 			);
 			path = main;
@@ -753,6 +756,50 @@
 			name = xmpp;
 			sourceTree = "<group>";
 		};
+		70B2EA121645C7BF00EBF6E5 /* Graphics */ = {
+			isa = PBXGroup;
+			children = (
+				70B2EA1A1645DA6C00EBF6E5 /* UIColor-Expanded.h */,
+				70B2EA1B1645DA6C00EBF6E5 /* UIColor-Expanded.m */,
+				70B2EA101645C79100EBF6E5 /* PinPoint.h */,
+				70B2EA111645C79200EBF6E5 /* PinPoint.m */,
+			);
+			name = Graphics;
+			sourceTree = "<group>";
+		};
+		70B2EA131645C7D700EBF6E5 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				702CE04B162256310038EC73 /* Player.h */,
+				702CE04C162256310038EC73 /* Player.m */,
+				703B95F1160FEDF20012EE57 /* DataStore.h */,
+				703B95F2160FEDF20012EE57 /* DataStore.m */,
+				70B2EA171645D60E00EBF6E5 /* PinPointGroup.h */,
+				70B2EA181645D60E00EBF6E5 /* PinPointGroup.m */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
+		70B2EA141645C7E400EBF6E5 /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				70D22EDB162B51FE0075F175 /* PatchMessage.h */,
+				70D22EDC162B51FE0075F175 /* PatchMessage.m */,
+				7042A3CA16320FE2001B44B5 /* XMPPBaseOnlineDelegate.h */,
+				7077CDD41618EE5500BFA216 /* XMPPBaseNewMessageDelegate.h */,
+			);
+			name = Messages;
+			sourceTree = "<group>";
+		};
+		70B2EA151645C84800EBF6E5 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				707C2C3716080C6A00A09AB8 /* LoginViewController.h */,
+				707C2C3816080C6A00A09AB8 /* LoginViewController.m */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
 		70D22EB4162B4C090075F175 /* json */ = {
 			isa = PBXGroup;
 			children = (
@@ -854,6 +901,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70B2EA161645C8F200EBF6E5 /* PinPoint.m in Sources */,
 				70A8124316160DDA00AEDDB9 /* DataStore.m in Sources */,
 				70879015160BB0570099DD5D /* NSDate+XMPPDateTimeProfiles.m in Sources */,
 				70879017160BB0570099DD5D /* XMPPDateTimeProfiles.m in Sources */,
@@ -927,6 +975,8 @@
 				70D22ED8162B4C090075F175 /* SBJsonUTF8Stream.m in Sources */,
 				70D22ED9162B4C090075F175 /* SBJsonWriter.m in Sources */,
 				70D22EDD162B51FE0075F175 /* PatchMessage.m in Sources */,
+				70B2EA191645D60E00EBF6E5 /* PinPointGroup.m in Sources */,
+				70B2EA1C1645DA6C00EBF6E5 /* UIColor-Expanded.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,9 +10,8 @@
 
 @implementation DataStore
 
-static NSMutableDictionary *dataPoints;
-static NSMutableArray *players;
-static NSMutableArray *clusters;
+NSMutableArray *players;
+NSMutableArray *clusters;
 
 NSString *lastCluster;
 
@@ -40,8 +39,13 @@ NSString *lastCluster;
     return self;
 }
 
+
+
+- (NSMutableArray *) playersCollection {
+    return players;
+}
+
 -(void)initCollections {
-    dataPoints = [NSMutableDictionary dictionary];
     players = [NSMutableArray array];
     
     [players addObject:[[Player alloc] initWithRFID:@"1623365"  AndCluster:@"a" AndColor:@"#99896f" AndScore:[NSNumber numberWithInt:10]]];
@@ -197,37 +201,5 @@ NSString *lastCluster;
     Player *player = [players objectAtIndex:key];
     return player.color;
 }
-
-- (NSArray *)datesInMonth
-{
-    static NSArray *dates = nil;
-    if (!dates)
-    {
-        dates = [NSArray arrayWithObjects:
-                 @"2",
-                 @"3",
-                 @"4",
-                 @"5",
-                 @"9",
-                 @"10",
-                 @"11",
-                 @"12",
-                 @"13",
-                 @"16",
-                 @"17",
-                 @"18",
-                 @"19",
-                 @"20",
-                 @"23",
-                 @"24",
-                 @"25",
-                 @"26",
-                 @"27",
-                 @"30",
-                 nil];
-    }
-    return dates;
-}
-
 
 @end

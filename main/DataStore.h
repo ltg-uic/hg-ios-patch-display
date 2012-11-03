@@ -12,6 +12,8 @@
 
 + (DataStore *)sharedInstance;
 
+
+- (NSMutableArray *) playersCollection;
 - (void)resetPlayerCount;
 - (Player *)playerAt: (int)index;
 - (void)zeroOutPlayersScore;

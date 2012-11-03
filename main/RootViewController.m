@@ -13,10 +13,14 @@
 #import "DataStore.h"
 #import "XMPPBaseNewMessageDelegate.h"
 #import "SBJson.h"
+#import "PinPoint.h"
+#import "PinPointGroup.h";
+#import "UIColor-Expanded.h"
 
 @interface RootViewController : UIViewController <XMPPBaseNewMessageDelegate, XMPPBaseOnlineDelegate> {
     
     __weak IBOutlet UILabel *timeIntervalLabel;
+    __weak IBOutlet UILabel *calorieLabel;
 
     
     UILabel *feedRatioLabel;
@@ -44,6 +48,7 @@ int labelFontSize = 41;
 NSString *  const calorieStr = @"Each animal is getting";
 NSString *  const caloriePerMinuteStr = @"Calories per Minute";
 
+NSMutableArray *pinPointGroups;
 
 bool isRUNNING = NO;
 bool isGAME_STOPPED = NO;
@@ -63,38 +68,87 @@ bool isGAME_STOPPED = NO;
     self.appDelegate.xmppBaseOnlineDelegate = self;
     
     currentRFIDS = [NSMutableArray array];
-    
-    feedRatioLabel = [[UILabel alloc] initWithFrame:CGRectMake(-475, 450, 1000, 50)];
-    
-    feedRatioLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:labelFontSize];
-    
-    feedRatioLabel.text = [[NSString alloc] initWithFormat:@"%@ 0 %@",calorieStr, caloriePerMinuteStr];
-    [feedRatioLabel setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
-    feedRatioLabel.backgroundColor = [UIColor clearColor];
-    
-    feedRatioLabel.textColor = [UIColor whiteColor];
+    pinPointGroups = [NSMutableArray array];
+//    
+//    feedRatioLabel = [[UILabel alloc] initWithFrame:CGRectMake(-475, 450, 1000, 50)];
+//    
+//    feedRatioLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:labelFontSize];
+//    
+//    feedRatioLabel.text = [[NSString alloc] initWithFormat:@"%@ 0 %@",calorieStr, caloriePerMinuteStr];
+//    [feedRatioLabel setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
+//    feedRatioLabel.backgroundColor = [UIColor clearColor];
+//    
+//    feedRatioLabel.textColor = [UIColor whiteColor];
     //[self.view addSubview:feedRatioLabel];
     
+    calorieLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:450];
     
-    //[[DataStore sharedInstance] addPlayerSpacing];
-   // [self initPlot];
+    [[DataStore sharedInstance] addPlayerSpacing];
+    
+    [self drawCircleGrid];
     
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark - Drawing methods
+
+-(void) drawCircleGrid {
+    
+    float widthOfLandscape = 1024.0f;
+    float heightOfLandscape = 768.0f;
+    float labelHeight = 55.0f;
+    
+    float widthOfCircle = 45.0;
+    float heightOfCircle = widthOfCircle;
+    
+    
+    float yOfCircle = heightOfLandscape - (40 + labelHeight  + heightOfCircle );
+    float xOfCircle = 0;
+    
+    float xOffset = 6.0f;
+    
+    
+    int numOfViews = [[[DataStore sharedInstance] playersCollection] count];
+    
+    widthOfCircle = floorf(( widthOfLandscape/ numOfViews )-xOffset);
+    heightOfCircle = widthOfCircle;
+    
+    float totalViewWidth = ((widthOfCircle * numOfViews) + (numOfViews * xOffset));
+    
+    float outsidePadding = ( 1024.0 - totalViewWidth ) / 2;
+    
+    xOfCircle = xOffset;
+    
+    
+    for (Player *player in [[DataStore sharedInstance] playersCollection]) {
+        PinPoint *dv = [[PinPoint alloc] initWithFrame:CGRectMake(xOfCircle, yOfCircle, widthOfCircle, heightOfCircle)];
+        
+        NSString* cleanedString = [player.color stringByReplacingOccurrencesOfString:@"#" withString:@""];
+        UIColor *playerColor = [UIColor colorWithHexString:cleanedString];
+        
+        //dv.isFILLED = YES;
+        dv.color = playerColor;
+        
+        if (player.rfid.length == 0) {
+            dv.isON = NO;
+        }
+        
+        
+        PinPointGroup *pg = [[PinPointGroup alloc] initWithPlayer:player AndPinPoint:dv];
+        
+        [pinPointGroups addObject:pg];
+        
+        [self.view addSubview:dv];
+        
+        xOfCircle = heightOfCircle + xOfCircle + xOffset;
+        
+    }
+
 }
-
-#pragma mark - Login method
-
-- (IBAction)showLogin:(id)sender {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPad"
-                                                             bundle: nil];
-
-    LoginViewController *controller = (LoginViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"loginController"];
-    [self presentViewController:controller animated:YES completion:nil];
+- (IBAction)changeFill:(id)sender {
+    
+    
+    
+    
 }
 
 //-(CPTFill *)barFillForBarPlot:(CPTBarPlot *)barPlot
@@ -132,19 +186,54 @@ bool isGAME_STOPPED = NO;
     [feedRatioLabel setNeedsDisplay];
 }
 
+
+
+#pragma mark - Game methods
+
 - (void)resetScoreByRFID:(NSString *)rfid {
     [[DataStore sharedInstance] resetScoreWithRFID:rfid];
 }
 
+
+-(void)resetGame {
+    [currentRFIDS removeAllObjects];
+    [ [DataStore sharedInstance] zeroOutPlayersScore];
+    feedRatio = @(0);
+    isRUNNING = NO;
+    isGAME_STOPPED = NO;
+    [self sendGroupChatMessage:[self patchInitMessage]];
+    //[self updateFeedRatioLabelWith:0.0f];
+    
+}
+
 -(void)startTimer {
- 
     
-        intervalTimer = [NSTimer scheduledTimerWithTimeInterval:.2
-                                                         target:self
-                                                       selector:@selector(updateGraph)
-                                                       userInfo:nil
-                                                        repeats:YES];
     
+    intervalTimer = [NSTimer scheduledTimerWithTimeInterval:.2
+                                                     target:self
+                                                   selector:@selector(updateGraph)
+                                                   userInfo:nil
+                                                    repeats:YES];
+    
+}
+
+-(void)addRFID: (NSString *)newRFID {
+    
+    if( [currentRFIDS containsObject:newRFID ] )
+        return;
+    
+    for( NSString *rfid in currentRFIDS) {
+        if( [rfid isEqualToString:newRFID]){
+            return;
+        }
+    }
+    [currentRFIDS addObject:newRFID];
+    
+}
+
+-(void)removeRFID: (NSString *)rfid {
+    if( [currentRFIDS containsObject:rfid])
+        [currentRFIDS removeObject:rfid];
 }
 
 #pragma mark - XMPP delegate methods
@@ -237,25 +326,6 @@ bool isGAME_STOPPED = NO;
     NSLog(@"message %@", msg);
 }
 
--(void)addRFID: (NSString *)newRFID {
-    
-    if( [currentRFIDS containsObject:newRFID ] )
-        return;
-    
-    for( NSString *rfid in currentRFIDS) {
-        if( [rfid isEqualToString:newRFID]){
-            return;
-        }
-    }
-    [currentRFIDS addObject:newRFID];
-
-}
-
--(void)removeRFID: (NSString *)rfid {
-    if( [currentRFIDS containsObject:rfid])
-        [currentRFIDS removeObject:rfid];
-}
-
 - (void)replyMessageTo:(NSString *)from {
     
 }
@@ -323,21 +393,22 @@ bool isGAME_STOPPED = NO;
     }
 }
 
+
+
 -(NSString *) origin {
     NSString *myJID = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID];
     NSString *origin = [[myJID componentsSeparatedByString:@"@"] objectAtIndex:0 ];
     return origin;
 }
 
--(void)resetGame {
-    [currentRFIDS removeAllObjects];
-    [ [DataStore sharedInstance] zeroOutPlayersScore];
-    feedRatio = @(0);
-    isRUNNING = NO;
-    isGAME_STOPPED = NO;
-    [self sendGroupChatMessage:[self patchInitMessage]];
-    //[self updateFeedRatioLabelWith:0.0f];
+#pragma mark - Login method
 
+- (IBAction)showLogin:(id)sender {
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPad"
+                                                             bundle: nil];
+    
+    LoginViewController *controller = (LoginViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"loginController"];
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 @end
