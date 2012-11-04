@@ -22,10 +22,7 @@
     __weak IBOutlet UILabel *timeIntervalLabel;
     __weak IBOutlet UILabel *feedRatioLabel;
 
-    NSTimer *intervalTimer;
-    NSDate *startDate;
-    NSMutableArray *currentRFIDS;
-    NSNumber *feedRatio;
+
 
 }
 
@@ -46,6 +43,8 @@ NSString *  const calorieStr = @"Each animal is getting";
 NSString *  const caloriePerMinuteStr = @"Calories per Minute";
 
 NSMutableArray *pinPointGroups;
+NSMutableArray *currentRFIDS;
+NSNumber *feedRatio;
 
 bool isRUNNING = NO;
 bool isGAME_STOPPED = NO;
@@ -66,17 +65,6 @@ bool isGAME_STOPPED = NO;
     
     currentRFIDS = [NSMutableArray array];
     pinPointGroups = [NSMutableArray array];
-//    
-//    feedRatioLabel = [[UILabel alloc] initWithFrame:CGRectMake(-475, 450, 1000, 50)];
-//    
-//    feedRatioLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:labelFontSize];
-//    
-//    feedRatioLabel.text = [[NSString alloc] initWithFormat:@"%@ 0 %@",calorieStr, caloriePerMinuteStr];
-//    [feedRatioLabel setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
-//    feedRatioLabel.backgroundColor = [UIColor clearColor];
-//    
-//    feedRatioLabel.textColor = [UIColor whiteColor];
-    //[self.view addSubview:feedRatioLabel];
     
     feedRatioLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:450];
     
@@ -200,32 +188,6 @@ bool isGAME_STOPPED = NO;
     
 }
 
-//-(CPTFill *)barFillForBarPlot:(CPTBarPlot *)barPlot
-//                  recordIndex:(NSUInteger)index {
-//
-//    
-//    if ( [barPlot.identifier isEqual:trianglePlot] ) {
-//        
-//        NSString *color = [[DataStore sharedInstance] colorForKey:index];
-//        
-//        if( [color isEqualToString:@"blank"] )
-//            return [CPTFill fillWithColor:[CPTColor clearColor]];
-//        
-//        NSString* cleanedString = [color stringByReplacingOccurrencesOfString:@"#" withString:@""];
-//
-//
-//        UIColor *myColor = [UIColor colorWithHexString:cleanedString];
-//
-//        
-//        CPTFill *fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:myColor.CGColor]];
-//        
-//        return fill;
-//        
-//    }
-//    return [CPTFill fillWithColor:[CPTColor colorWithComponentRed:1.0 green:1.0 blue:1.0 alpha:1.0]];
-//    
-//}
-
 -(void)updateFeedRatioLabelWith: (float)ratio {
     feedRatioLabel.text = @"";
     
@@ -255,17 +217,6 @@ bool isGAME_STOPPED = NO;
     
 }
 
--(void)startTimer {
-    
-    
-    intervalTimer = [NSTimer scheduledTimerWithTimeInterval:.2
-                                                     target:self
-                                                   selector:@selector(updateGraph)
-                                                   userInfo:nil
-                                                    repeats:YES];
-    
-}
-
 -(void)addRFID: (NSString *)newRFID {
     
     if( [currentRFIDS containsObject:newRFID ] )
@@ -283,6 +234,14 @@ bool isGAME_STOPPED = NO;
 -(void)removeRFID: (NSString *)rfid {
     if( [currentRFIDS containsObject:rfid])
         [currentRFIDS removeObject:rfid];
+}
+
+-(void)adjustPlayer: (NSString *)rfid isOn:(BOOL)isOn {
+    for (PinPointGroup *pg in pinPointGroups) {
+        if ([pg.player.rfid isEqualToString:rfid]) {
+            pg.pinPoint.isFILLED = isOn;
+        }
+    }
 }
 
 #pragma mark - XMPP delegate methods
@@ -348,11 +307,14 @@ bool isGAME_STOPPED = NO;
                 if( arrivals != nil && arrivals.count > 0 ) {
                     for (NSString *rfid in arrivals) {
                         [self addRFID:rfid];
+                        
+                        [self adjustPlayer:rfid isOn:YES];
+                        
+                        
                     }
                     
                     if( (isRUNNING == NO && isGAME_STOPPED == NO)) {
-                        isRUNNING = YES;
-                        [self startTimer];
+                        isRUNNING = YES;                     
                         
                     }
                 }
@@ -362,6 +324,7 @@ bool isGAME_STOPPED = NO;
                         [self sendOutScoreUpdateWith:rfid];
                         [self resetScoreByRFID: rfid];
                         [self removeRFID:rfid];
+                        [self adjustPlayer:rfid isOn:NO];
                         
                     }
                 }
