@@ -41,7 +41,6 @@
 
 @implementation RootViewController
 
-int labelFontSize = 41;
 
 NSString *  const calorieStr = @"Each animal is getting";
 NSString *  const caloriePerMinuteStr = @"Calories per Minute";
@@ -91,34 +90,33 @@ bool isGAME_STOPPED = NO;
 
 -(void) drawCircleGrid {
     
-    float widthOfLandscape = 1024.0f;
+    float landscapeWidth = 1024.0f;
     float heightOfLandscape = 768.0f;
     float labelHeight = 55.0f;
     
-    float widthOfCircle = 45.0;
-    float heightOfCircle = widthOfCircle;
+    float circleWidth = 45.0;
+    float circleHeight = circleWidth;
     
     
-    float yOfCircle = heightOfLandscape - (40 + labelHeight  + heightOfCircle );
-    float xOfCircle = 0;
+    float circleY = heightOfLandscape - (40 + labelHeight  + circleHeight );
+    float circleX = 0;
     
     float xOffset = 6.0f;
     
     
     int numOfViews = [[[DataStore sharedInstance] playersCollection] count];
+
     
-    widthOfCircle = floorf(( widthOfLandscape/ numOfViews )-xOffset);
-    heightOfCircle = widthOfCircle;
+    circleWidth = floorf(( landscapeWidth/ numOfViews )-xOffset);
+    circleHeight = circleWidth;
     
-    float totalViewWidth = ((widthOfCircle * numOfViews) + (numOfViews * xOffset));
-    
-    float outsidePadding = ( 1024.0 - totalViewWidth ) / 2;
-    
-    xOfCircle = xOffset;
+    float totalViewWidth = ((circleWidth * numOfViews) + (numOfViews * xOffset));
+        
+    circleX = xOffset;
     
     
     for (Player *player in [[DataStore sharedInstance] playersCollection]) {
-        PinPoint *dv = [[PinPoint alloc] initWithFrame:CGRectMake(xOfCircle, yOfCircle, widthOfCircle, heightOfCircle)];
+        PinPoint *dv = [[PinPoint alloc] initWithFrame:CGRectMake(circleX, circleY, circleWidth, circleHeight)];
         
         NSString* cleanedString = [player.color stringByReplacingOccurrencesOfString:@"#" withString:@""];
         UIColor *playerColor = [UIColor colorWithHexString:cleanedString];
@@ -127,9 +125,9 @@ bool isGAME_STOPPED = NO;
         dv.color = playerColor;
         
         if (player.rfid.length == 0) {
-            dv.isON = NO;
+            dv.isON = YES;
+            //dv.color = [UIColor yellowColor];
         }
-        
         
         PinPointGroup *pg = [[PinPointGroup alloc] initWithPlayer:player AndPinPoint:dv];
         
@@ -137,11 +135,60 @@ bool isGAME_STOPPED = NO;
         
         [self.view addSubview:dv];
         
-        xOfCircle = heightOfCircle + xOfCircle + xOffset;
+        circleX = circleWidth + circleX + xOffset;
         
     }
+    
+    [self createClusterLabelsWithCircleWidth:circleWidth WithPadding:xOffset];
 
 }
+
+- (void) createClusterLabelsWithCircleWidth: (float) circleWidth WithPadding: (float) xOffset {
+    
+    
+    float x = 0.0f;
+    float previousTotal = 0.0f;
+    float labelSize = 50.0f;
+    
+    int labelFontSize = 65;
+    
+    float blackCircleWidth = circleWidth;
+    float labelOffset = circleWidth/2.0f;
+    for (NSString *label in [[DataStore sharedInstance] clusterLabels]) {
+        
+        float count = [[DataStore sharedInstance] clusterCountWith:label];
+        
+        //draw the labels
+        
+        float totalViewWithOffsetWidth = ((circleWidth * count) + (count * xOffset));
+                
+        if( x == 0 )
+            x = xOffset + (totalViewWithOffsetWidth/2.0f);
+        else
+            x = x + (previousTotal/2.0f) + blackCircleWidth + xOffset + (totalViewWithOffsetWidth/2.0f);
+            
+            previousTotal = totalViewWithOffsetWidth;
+        
+        
+        UILabel *clusterLabel = [[UILabel alloc] initWithFrame:CGRectMake(x-(labelOffset + xOffset), 684, labelSize, 60)];
+        
+        clusterLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:labelFontSize];
+        //
+        clusterLabel.text = [label uppercaseString];
+        clusterLabel.backgroundColor = [UIColor clearColor];
+        clusterLabel.textColor = [UIColor whiteColor];
+        clusterLabel.textAlignment = NSTextAlignmentCenter;;
+        
+        [self.view addSubview:clusterLabel];
+
+        
+        
+    }
+    
+    
+}
+
+
 - (IBAction)changeFill:(id)sender {
     
     PinPointGroup *pg = pinPointGroups[1];
