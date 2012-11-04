@@ -14,7 +14,7 @@
 #import "XMPPBaseNewMessageDelegate.h"
 #import "SBJson.h"
 #import "PinPoint.h"
-#import "PinPointGroup.h";
+#import "PinPointGroup.h"
 #import "UIColor-Expanded.h"
 
 @interface RootViewController : UIViewController <XMPPBaseNewMessageDelegate, XMPPBaseOnlineDelegate> {
@@ -45,6 +45,8 @@ NSString *  const caloriePerMinuteStr = @"Calories per Minute";
 NSMutableArray *pinPointGroups;
 NSMutableArray *currentRFIDS;
 NSNumber *feedRatio;
+NSTimer *intervalTimer;
+
 
 bool isRUNNING = NO;
 bool isGAME_STOPPED = NO;
@@ -244,6 +246,37 @@ bool isGAME_STOPPED = NO;
     }
 }
 
+-(void)updateScore {
+    
+    if( isRUNNING && currentRFIDS.count > 0 ) {
+        
+        //adjusted feedratio for .2 msec
+        float adjustedFeedratio = [feedRatio floatValue] / 5.0f;
+        
+        float scoreIncrease =  adjustedFeedratio/ (float)currentRFIDS.count;
+        
+        [self updateFeedRatioLabelWith: ([feedRatio floatValue]/(float)currentRFIDS.count) * 60.0f];
+        
+        for (NSString *rfid in currentRFIDS) {
+            [[DataStore sharedInstance] addScore:@( scoreIncrease ) withRFID:rfid];
+        }
+    
+    } else {
+        [self updateFeedRatioLabelWith: 0.0f];
+    }
+}
+
+-(void)startTimer {
+    
+    
+    intervalTimer = [NSTimer scheduledTimerWithTimeInterval:.2
+                                                     target:self
+                                                   selector:@selector(updateScore)
+                                                   userInfo:nil
+                                                    repeats:YES];
+    
+}
+
 #pragma mark - XMPP delegate methods
 
 - (void)newMessageReceived:(NSDictionary *)messageContent{
@@ -314,7 +347,8 @@ bool isGAME_STOPPED = NO;
                     }
                     
                     if( (isRUNNING == NO && isGAME_STOPPED == NO)) {
-                        isRUNNING = YES;                     
+                        isRUNNING = YES;
+                        [self startTimer];
                         
                     }
                 }
