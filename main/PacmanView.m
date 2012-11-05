@@ -200,6 +200,7 @@
     
     _pacmanLayer.isFILLED = YES;
     _pacmanLayer.isSMILE = YES;
+    _pacmanLayer.isHAPPY= NO;
     
     [_pacmanLayer display];
     [_pacmanLayer setNeedsDisplay];

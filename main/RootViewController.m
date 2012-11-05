@@ -119,6 +119,8 @@ bool isGAME_STOPPED = NO;
         
         dv.pacmanLayer.pacColor =  playerColor;
         dv.pacmanLayer.isFILLED = NO;
+        //dv.pacmanLayer.isSMILE = YES;
+        //dv.pacmanLayer.isHAPPY = YES;
 
         if (player.rfid.length == 0) {
             dv.pacmanLayer.isON = NO;
@@ -184,54 +186,67 @@ bool isGAME_STOPPED = NO;
     
 }
 
--(void)adjustPlayer: (NSString *)rfid isOn:(BOOL)isOn {
+-(PinPointGroup *) findPinPointGroupWithRFID: (NSString *)rfid {
     for (PinPointGroup *pg in pinPointGroups) {
         if ([pg.player.rfid isEqualToString:rfid]) {
-            pg.pinPoint.pacmanLayer.isSMILE = !isOn;
-            pg.pinPoint.pacmanLayer.isFILLED = isOn;
-            [pg.pinPoint animate:isOn];
-            [pg.pinPoint.pacmanLayer setNeedsDisplay];
-            [pg.pinPoint setNeedsDisplay];
+            return pg;
         }
+    }
+    return nil;
+}
+
+-(void)adjustPlayer: (NSString *)rfid isOn:(BOOL)isOn {
+    
+    PinPointGroup *pg = [self findPinPointGroupWithRFID:rfid];
+    
+    if ( pg != nil ) {
+        pg.pinPoint.pacmanLayer.isHAPPY = !isOn;
+        pg.pinPoint.pacmanLayer.isSMILE = !isOn;
+        pg.pinPoint.pacmanLayer.isFILLED = isOn;
+        [pg.pinPoint animate:isOn];
+        [pg.pinPoint.pacmanLayer setNeedsDisplay];
+        [pg.pinPoint setNeedsDisplay];
     }
 }
 
 
 - (void)killBunnyWithRFID:(NSString * )rfid {
     
-    for (PinPointGroup *pg in pinPointGroups) {
-        if( [pg.player.rfid isEqualToString: rfid ]) {
-            [pg.pinPoint collapse];
-            [self hawkSound];
-        }
+    PinPointGroup *pg = [self findPinPointGroupWithRFID:rfid];
+    if ( pg != nil ) {
+        pg.pinPoint.pacmanLayer.isHAPPY = NO;
+        [pg.pinPoint collapse];
+        [self hawkSound];
+        
     }
-
 }
 
 -(void)resetBunnies {
     for (PinPointGroup *pg in pinPointGroups) {
-            pg.pinPoint.pacmanLayer.isSMILE = NO;
-            pg.pinPoint.pacmanLayer.isFILLED = NO;
-            [pg.pinPoint.pacmanLayer setNeedsDisplay];
-            [pg.pinPoint setNeedsDisplay];
-        }
+        pg.pinPoint.pacmanLayer.isHAPPY = NO;
+        pg.pinPoint.pacmanLayer.isSMILE = NO;
+        pg.pinPoint.pacmanLayer.isFILLED = NO;
+        [pg.pinPoint.pacmanLayer setNeedsDisplay];
+        [pg.pinPoint setNeedsDisplay];
+    }
 }
 
 - (void)resurrectBunnyWithRFID:(NSString * )rfid {
     
     if( [currentRFIDS containsObject:rfid] ) {
-        for (PinPointGroup *pg in pinPointGroups) {
-            if( [pg.player.rfid isEqualToString: rfid ]) {
-                if( pg.pinPoint.pacmanLayer.isSMILE){
-                    pg.pinPoint.pacmanLayer.isSMILE = NO;
-                    pg.pinPoint.pacmanLayer.isFILLED = YES;
-                    //[pg.pinPoint animate:YES];
-                    [pg.pinPoint.pacmanLayer setNeedsDisplay];
-                    [pg.pinPoint setNeedsDisplay];
-                }
+        
+        PinPointGroup *pg = [self findPinPointGroupWithRFID:rfid];
+        if ( pg != nil ) {
+            if( pg.pinPoint.pacmanLayer.isSMILE){
+                pg.pinPoint.pacmanLayer.isSMILE = YES;
+                pg.pinPoint.pacmanLayer.isHAPPY = YES;
+                pg.pinPoint.pacmanLayer.isFILLED = YES;
+                //[pg.pinPoint animate:YES];
+                [pg.pinPoint.pacmanLayer setNeedsDisplay];
+                [pg.pinPoint setNeedsDisplay];
             }
-        }
 
+        }
     }
         
 }
@@ -354,7 +369,12 @@ bool isGAME_STOPPED = NO;
         [self updateFeedRatioLabelWith: ([feedRatio floatValue]/(float)currentRFIDS.count) * 60.0f];
         
         for (NSString *rfid in currentRFIDS) {
-            [[DataStore sharedInstance] addScore:@( scoreIncrease ) withRFID:rfid];
+            
+            
+            PinPointGroup *pg = [self findPinPointGroupWithRFID:rfid];
+            
+            if(pg.pinPoint.pacmanLayer.isSMILE == NO)
+                [[DataStore sharedInstance] addScore:@( scoreIncrease ) withRFID:rfid];
         }
     
     } else {

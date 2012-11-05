@@ -30,6 +30,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
             self.isFILLED = other.isFILLED;
             self.isON = other.isON;
             self.pacColor = other.pacColor;
+            self.isHAPPY = other.isHAPPY;
 		}
 	}
 	return self;
@@ -169,13 +170,36 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     
     if (_isSMILE) {
         
-        
-        
-        
-        
 #define EYE_H .35
 #define EYE_V 0.2
 #define EYE_RADIUS 0.1
+        
+        if(_isHAPPY) {
+        
+            
+            
+            CGFloat faceSize = radius;
+            
+            CGPoint eyePoint;
+            eyePoint.x = centerPoint.x - faceSize * EYE_H;
+            eyePoint.y = centerPoint.y - faceSize * EYE_V;
+            
+            // move the pen to the starting point
+            CGContextMoveToPoint(ctx, eyePoint.x , eyePoint.y);
+            // draw a line to another point
+            CGContextAddLineToPoint(ctx, eyePoint.x, centerPoint.y);
+            
+            CGContextStrokePath(ctx);
+            
+            
+            eyePoint.x += faceSize * EYE_H * 2;
+            
+            // move the pen to the starting point
+            CGContextMoveToPoint(ctx, eyePoint.x , eyePoint.y);
+            CGContextAddLineToPoint(ctx, eyePoint.x, centerPoint.y);
+        } else {
+        
+
         
         
         // move the pen to the starting point
@@ -225,7 +249,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         CGContextMoveToPoint(ctx, eyePoint.x , eyePoint.y);
         CGContextAddLineToPoint(ctx, eyePoint.x-2, centerPoint.y+2);
         CGContextStrokePath(ctx);
-        
+        }
         
         //    // move the pen to the starting point
         //    CGContextMoveToPoint(ctx, eyePoint.x , eyePoint.y);

@@ -22,6 +22,7 @@
 @property (nonatomic, assign)   BOOL isFILLED;
 @property (nonatomic, assign)   BOOL isCOMPING;
 @property (nonatomic, assign)   BOOL isSMILE;
+@property (nonatomic, assign)   BOOL isHAPPY;
 
 - (id) lastValueForKey:(NSString*)key;
 
