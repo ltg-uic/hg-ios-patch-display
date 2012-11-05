@@ -92,11 +92,13 @@ float radius = 0;
     glossGradient = CGGradientCreateWithColorComponents(rgbColorspace, components, locations, num_locations);
     
     //Draw the gradient
+    
     CGPoint start = CGPointMake(_outerRadius,self.center.y);
     CGPoint end = CGPointMake(_outerRadius,self.center.y);
     CGContextDrawLinearGradient(context, glossGradient, start, end, kCGGradientDrawsBeforeStartLocation);
     
     if( ! _isFILLED ) {
+        
         //Draw the hole to make it look like doughnut
         CGContextSetFillColorWithColor( context, [UIColor clearColor].CGColor );
         CGContextSetBlendMode(context, kCGBlendModeClear);

@@ -61,6 +61,9 @@
 		700C3B3116042EB9005A9E34 /* libidn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 700C3AB716042A07005A9E34 /* libidn.a */; };
 		700C3B3816042FEE005A9E34 /* XMPPReconnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 700C3B3616042FE5005A9E34 /* XMPPReconnect.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		700C3B3A160430DA005A9E34 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700C3B39160430DA005A9E34 /* SystemConfiguration.framework */; };
+		700FCBF4164763CA001072E4 /* hawk.caf in Resources */ = {isa = PBXBuildFile; fileRef = 700FCBF3164763CA001072E4 /* hawk.caf */; };
+		700FCBF616476449001072E4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700FCBF516476449001072E4 /* AVFoundation.framework */; };
+		700FCBF816476524001072E4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700FCBF716476524001072E4 /* AudioToolbox.framework */; };
 		702CE04D162256310038EC73 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 702CE04C162256310038EC73 /* Player.m */; };
 		707C2C3916080C6A00A09AB8 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 707C2C3816080C6A00A09AB8 /* LoginViewController.m */; };
 		70878FE2160BAF6F0099DD5D /* XMPPRoom.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 70878FC0160BAF620099DD5D /* XMPPRoom.xcdatamodeld */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -88,6 +91,8 @@
 		70B2EA161645C8F200EBF6E5 /* PinPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 70B2EA111645C79200EBF6E5 /* PinPoint.m */; };
 		70B2EA191645D60E00EBF6E5 /* PinPointGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 70B2EA181645D60E00EBF6E5 /* PinPointGroup.m */; };
 		70B2EA1C1645DA6C00EBF6E5 /* UIColor-Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 70B2EA1B1645DA6C00EBF6E5 /* UIColor-Expanded.m */; };
+		70B2EA291646FF5600EBF6E5 /* PacmanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70B2EA261646FF5600EBF6E5 /* PacmanView.m */; };
+		70B2EA2A1646FF5600EBF6E5 /* PacmanLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 70B2EA281646FF5600EBF6E5 /* PacmanLayer.m */; };
 		70CE9946163B449800168670 /* Icon@2x.144.png in Resources */ = {isa = PBXBuildFile; fileRef = 70CE9945163B449800168670 /* Icon@2x.144.png */; };
 		70D22ECE162B4C090075F175 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D22EB6162B4C090075F175 /* NSObject+SBJson.m */; };
 		70D22ECF162B4C090075F175 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D22EB9162B4C090075F175 /* SBJsonParser.m */; };
@@ -209,6 +214,9 @@
 		700C3B3516042FE5005A9E34 /* XMPPReconnect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMPPReconnect.h; sourceTree = "<group>"; };
 		700C3B3616042FE5005A9E34 /* XMPPReconnect.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMPPReconnect.m; sourceTree = "<group>"; };
 		700C3B39160430DA005A9E34 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		700FCBF3164763CA001072E4 /* hawk.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = hawk.caf; sourceTree = "<group>"; };
+		700FCBF516476449001072E4 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		700FCBF716476524001072E4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		702CE04B162256310038EC73 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		702CE04C162256310038EC73 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
 		703B95F1160FEDF20012EE57 /* DataStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataStore.h; sourceTree = "<group>"; };
@@ -258,7 +266,6 @@
 		70879013160BB0510099DD5D /* XMPPDateTimeProfiles.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMPPDateTimeProfiles.m; sourceTree = "<group>"; };
 		70879018160BB0A50099DD5D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		70897C51160F80FE0058F06C /* XMPPFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XMPPFramework.h; path = main/XMPPFramework.h; sourceTree = "<group>"; };
-		70897CCA160FDA760058F06C /* libCorePlot-CocoaTouch.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libCorePlot-CocoaTouch.a"; path = "main/Graph/CorePlot/libCorePlot-CocoaTouch.a"; sourceTree = "<group>"; };
 		70897D1A160FDA9E0058F06C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		70A81246161615A900AEDDB9 /* libiconv.2.4.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.4.0.dylib; path = usr/lib/libiconv.2.4.0.dylib; sourceTree = SDKROOT; };
 		70B2EA101645C79100EBF6E5 /* PinPoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PinPoint.h; sourceTree = "<group>"; };
@@ -267,6 +274,10 @@
 		70B2EA181645D60E00EBF6E5 /* PinPointGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinPointGroup.m; sourceTree = "<group>"; };
 		70B2EA1A1645DA6C00EBF6E5 /* UIColor-Expanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor-Expanded.h"; sourceTree = "<group>"; };
 		70B2EA1B1645DA6C00EBF6E5 /* UIColor-Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor-Expanded.m"; sourceTree = "<group>"; };
+		70B2EA251646FF5600EBF6E5 /* PacmanView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PacmanView.h; sourceTree = "<group>"; };
+		70B2EA261646FF5600EBF6E5 /* PacmanView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PacmanView.m; sourceTree = "<group>"; };
+		70B2EA271646FF5600EBF6E5 /* PacmanLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PacmanLayer.h; sourceTree = "<group>"; };
+		70B2EA281646FF5600EBF6E5 /* PacmanLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PacmanLayer.m; sourceTree = "<group>"; };
 		70CE9945163B449800168670 /* Icon@2x.144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.144.png"; path = "../Icon@2x.144.png"; sourceTree = "<group>"; };
 		70D22EB5162B4C090075F175 /* NSObject+SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJson.h"; sourceTree = "<group>"; };
 		70D22EB6162B4C090075F175 /* NSObject+SBJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJson.m"; sourceTree = "<group>"; };
@@ -302,6 +313,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				700FCBF816476524001072E4 /* AudioToolbox.framework in Frameworks */,
+				700FCBF616476449001072E4 /* AVFoundation.framework in Frameworks */,
 				70A81247161615A900AEDDB9 /* libiconv.2.4.0.dylib in Frameworks */,
 				70897D1B160FDA9E0058F06C /* QuartzCore.framework in Frameworks */,
 				70879019160BB0A50099DD5D /* CoreData.framework in Frameworks */,
@@ -323,6 +336,7 @@
 		700C3A42160427DA005A9E34 = {
 			isa = PBXGroup;
 			children = (
+				700FCBF716476524001072E4 /* AudioToolbox.framework */,
 				70D22EB4162B4C090075F175 /* json */,
 				70897C4C160F7ECB0058F06C /* xmpp */,
 				700C3A57160427DA005A9E34 /* main */,
@@ -342,8 +356,8 @@
 		700C3A50160427DA005A9E34 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				700FCBF516476449001072E4 /* AVFoundation.framework */,
 				70897D1A160FDA9E0058F06C /* QuartzCore.framework */,
-				70897CCA160FDA760058F06C /* libCorePlot-CocoaTouch.a */,
 				70A81246161615A900AEDDB9 /* libiconv.2.4.0.dylib */,
 				700C3B2F16042C16005A9E34 /* libresolv.dylib */,
 				700C3B2B16042B34005A9E34 /* libxml2.dylib */,
@@ -378,6 +392,7 @@
 		700C3A58160427DA005A9E34 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				700FCBF3164763CA001072E4 /* hawk.caf */,
 				70CE9945163B449800168670 /* Icon@2x.144.png */,
 				700C3A69160427DA005A9E34 /* MainStoryboard_iPhone.storyboard */,
 				700C3A59160427DA005A9E34 /* foraging-patch-ios-client-Info.plist */,
@@ -759,6 +774,10 @@
 		70B2EA121645C7BF00EBF6E5 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				70B2EA251646FF5600EBF6E5 /* PacmanView.h */,
+				70B2EA261646FF5600EBF6E5 /* PacmanView.m */,
+				70B2EA271646FF5600EBF6E5 /* PacmanLayer.h */,
+				70B2EA281646FF5600EBF6E5 /* PacmanLayer.m */,
 				70B2EA1A1645DA6C00EBF6E5 /* UIColor-Expanded.h */,
 				70B2EA1B1645DA6C00EBF6E5 /* UIColor-Expanded.m */,
 				70B2EA101645C79100EBF6E5 /* PinPoint.h */,
@@ -891,6 +910,7 @@
 				700C3A6B160427DA005A9E34 /* MainStoryboard_iPhone.storyboard in Resources */,
 				700C3A6E160427DA005A9E34 /* MainStoryboard_iPad.storyboard in Resources */,
 				70CE9946163B449800168670 /* Icon@2x.144.png in Resources */,
+				700FCBF4164763CA001072E4 /* hawk.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -977,6 +997,8 @@
 				70D22EDD162B51FE0075F175 /* PatchMessage.m in Sources */,
 				70B2EA191645D60E00EBF6E5 /* PinPointGroup.m in Sources */,
 				70B2EA1C1645DA6C00EBF6E5 /* UIColor-Expanded.m in Sources */,
+				70B2EA291646FF5600EBF6E5 /* PacmanView.m in Sources */,
+				70B2EA2A1646FF5600EBF6E5 /* PacmanLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -20,7 +20,7 @@
     return self;
 }
 
--(id)initWithPlayer:(Player *)player AndPinPoint:(PinPoint *)pinPoint {
+-(id)initWithPlayer:(Player *)player AndPinPoint:(PacmanView *)pinPoint {
     self = [super init];
     if (self) {
         _player = player;

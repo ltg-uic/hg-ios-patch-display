@@ -16,6 +16,8 @@
 #import "PinPoint.h"
 #import "PinPointGroup.h"
 #import "UIColor-Expanded.h"
+#import "PacmanView.h"
+#import <AudioToolbox/AudioToolbox.h>
 
 @interface RootViewController : UIViewController <XMPPBaseNewMessageDelegate, XMPPBaseOnlineDelegate> {
     
@@ -70,9 +72,9 @@ bool isGAME_STOPPED = NO;
     
     feedRatioLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:450];
     
-    [[DataStore sharedInstance] addPlayerSpacing];
+  //  [[DataStore sharedInstance] addPlayerSpacing];
     
-    [self drawCircleGrid];
+    //[self drawCircleGrid];
     
 }
 
@@ -97,6 +99,7 @@ bool isGAME_STOPPED = NO;
     int numOfViews = [[[DataStore sharedInstance] playersCollection] count];
 
     
+    
     circleWidth = floorf(( landscapeWidth/ numOfViews )-xOffset);
     circleHeight = circleWidth;
     
@@ -106,25 +109,29 @@ bool isGAME_STOPPED = NO;
     
     
     for (Player *player in [[DataStore sharedInstance] playersCollection]) {
-        PinPoint *dv = [[PinPoint alloc] initWithFrame:CGRectMake(circleX, circleY, circleWidth, circleHeight)];
-        
+        PacmanView *dv = [[PacmanView alloc] initWithFrame:CGRectMake(circleX, circleY, circleWidth, circleHeight)];
         NSString* cleanedString = [player.color stringByReplacingOccurrencesOfString:@"#" withString:@""];
+        
+        dv.pacmanLayer.isSMILE = NO;
+        
         UIColor *playerColor = [UIColor colorWithHexString:cleanedString];
         
-        //dv.isFILLED = YES;
-        dv.color = playerColor;
         
+        dv.pacmanLayer.pacColor =  playerColor;
+        dv.pacmanLayer.isFILLED = NO;
+
         if (player.rfid.length == 0) {
-            dv.isON = YES;
-            //dv.color = [UIColor yellowColor];
+            dv.pacmanLayer.isON = NO;
+        
         }
-        
+//        
         PinPointGroup *pg = [[PinPointGroup alloc] initWithPlayer:player AndPinPoint:dv];
-        
+//
         [pinPointGroups addObject:pg];
         
         [self.view addSubview:dv];
         
+
         circleX = circleWidth + circleX + xOffset;
         
     }
@@ -175,18 +182,114 @@ bool isGAME_STOPPED = NO;
         
     }
     
-    
 }
 
+-(void)adjustPlayer: (NSString *)rfid isOn:(BOOL)isOn {
+    for (PinPointGroup *pg in pinPointGroups) {
+        if ([pg.player.rfid isEqualToString:rfid]) {
+            pg.pinPoint.pacmanLayer.isSMILE = !isOn;
+            pg.pinPoint.pacmanLayer.isFILLED = isOn;
+            [pg.pinPoint animate:isOn];
+            [pg.pinPoint.pacmanLayer setNeedsDisplay];
+            [pg.pinPoint setNeedsDisplay];
+        }
+    }
+}
+
+
+- (void)killBunnyWithRFID:(NSString * )rfid {
+    
+    for (PinPointGroup *pg in pinPointGroups) {
+        if( [pg.player.rfid isEqualToString: rfid ]) {
+            [pg.pinPoint collapse];
+            [self hawkSound];
+        }
+    }
+
+}
+
+-(void)resetBunnies {
+    for (PinPointGroup *pg in pinPointGroups) {
+            pg.pinPoint.pacmanLayer.isSMILE = NO;
+            pg.pinPoint.pacmanLayer.isFILLED = NO;
+            [pg.pinPoint.pacmanLayer setNeedsDisplay];
+            [pg.pinPoint setNeedsDisplay];
+        }
+}
+
+- (void)resurrectBunnyWithRFID:(NSString * )rfid {
+    
+    if( [currentRFIDS containsObject:rfid] ) {
+        for (PinPointGroup *pg in pinPointGroups) {
+            if( [pg.player.rfid isEqualToString: rfid ]) {
+                if( pg.pinPoint.pacmanLayer.isSMILE){
+                    pg.pinPoint.pacmanLayer.isSMILE = NO;
+                    pg.pinPoint.pacmanLayer.isFILLED = YES;
+                    //[pg.pinPoint animate:YES];
+                    [pg.pinPoint.pacmanLayer setNeedsDisplay];
+                    [pg.pinPoint setNeedsDisplay];
+                }
+            }
+        }
+
+    }
+        
+}
+
+-(void)hawkSound {
+    SystemSoundID _pewPewSound;
+    
+    NSString *pewPewPath = [[NSBundle mainBundle] pathForResource:@"hawk" ofType:@"caf"];
+	NSURL *pewPewURL = [NSURL fileURLWithPath:pewPewPath];
+	AudioServicesCreateSystemSoundID((__bridge CFURLRef)pewPewURL, &_pewPewSound);
+    AudioServicesPlaySystemSound(_pewPewSound);
+}
+
+- (IBAction)die:(id)sender {
+    PinPointGroup *pg = pinPointGroups[1];
+    
+    [pg.pinPoint die:YES];
+}
+- (IBAction)playHawkSound:(id)sender {
+    SystemSoundID _pewPewSound;
+    
+    NSString *pewPewPath = [[NSBundle mainBundle] pathForResource:@"hawk" ofType:@"caf"];
+	NSURL *pewPewURL = [NSURL fileURLWithPath:pewPewPath];
+	AudioServicesCreateSystemSoundID((__bridge CFURLRef)pewPewURL, &_pewPewSound);
+    AudioServicesPlaySystemSound(_pewPewSound);
+
+  
+}
+- (IBAction)close:(id)sender {
+    PinPointGroup *pg = pinPointGroups[1];
+    
+    [pg.pinPoint collapse];
+}
+
+- (IBAction)off:(id)sender {
+    PinPointGroup *pg = pinPointGroups[1];
+    
+    [pg.pinPoint animate:NO];
+}
 
 - (IBAction)changeFill:(id)sender {
     
     PinPointGroup *pg = pinPointGroups[1];
     
-    pg.pinPoint.isFILLED = YES;
+    [pg.pinPoint animate:YES];
+
+
     
-    [pg.pinPoint setNeedsDisplay];
     
+//    PinPointGroup *pg = pinPointGroups[1];
+//    PinPoint *p = pg.pinPoint;
+//    
+//   
+//    
+//    pg.pinPoint.isFILLED = YES;
+////    
+//   [pg.pinPoint setNeedsDisplay];
+//
     
 }
 
@@ -214,6 +317,7 @@ bool isGAME_STOPPED = NO;
     feedRatio = @(0);
     isRUNNING = NO;
     isGAME_STOPPED = NO;
+    [self resetBunnies];
     [self sendGroupChatMessage:[self patchInitMessage]];
     [self updateFeedRatioLabelWith:0.0f];
     
@@ -236,14 +340,6 @@ bool isGAME_STOPPED = NO;
 -(void)removeRFID: (NSString *)rfid {
     if( [currentRFIDS containsObject:rfid])
         [currentRFIDS removeObject:rfid];
-}
-
--(void)adjustPlayer: (NSString *)rfid isOn:(BOOL)isOn {
-    for (PinPointGroup *pg in pinPointGroups) {
-        if ([pg.player.rfid isEqualToString:rfid]) {
-            pg.pinPoint.isFILLED = isOn;
-        }
-    }
 }
 
 -(void)updateScore {
@@ -299,6 +395,17 @@ bool isGAME_STOPPED = NO;
         } else if( [event isEqualToString:@"game_stop"] ) {
             isRUNNING = NO;
             isGAME_STOPPED = YES;
+        } else if( [event isEqualToString:@"kill_bunny"] ) {
+            
+            NSDictionary *payload = [jsonObjects objectForKey:@"payload"];
+            NSString *rfid = [payload objectForKey:@"id"];
+            [self killBunnyWithRFID:rfid];
+            [self sendOutScoreUpdateWith:rfid];
+            [self resetScoreByRFID: rfid];
+        } else if( [event isEqualToString:@"bunny_alive"] ) {
+            NSDictionary *payload = [jsonObjects objectForKey:@"payload"];
+            NSString *rfid = [payload objectForKey:@"id"];
+            [self resurrectBunnyWithRFID:rfid];
         }
         
         if( ! [destination isEqualToString:[self origin]] )
@@ -328,6 +435,7 @@ bool isGAME_STOPPED = NO;
                 
                 [[DataStore sharedInstance] addPlayerSpacing];
                 
+                [self drawCircleGrid];
 
 
             } else if( [event isEqualToString:@"rfid_update"] ){

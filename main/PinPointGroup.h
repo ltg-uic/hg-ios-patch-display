@@ -9,13 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "PinPoint.h"
 #import "Player.h"
+#import "PacmanView.h"
 
 @interface PinPointGroup : NSObject
 
 
 @property(strong) Player *player;
-@property(strong) PinPoint *pinPoint;
+@property(strong) PacmanView *pinPoint;
 
--(id)initWithPlayer:(Player *)player AndPinPoint:(PinPoint *)pinPoint;
+-(id)initWithPlayer:(Player *)player AndPinPoint:(PacmanView *)pinPoint;
 
 @end
