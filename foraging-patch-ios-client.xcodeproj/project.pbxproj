@@ -336,7 +336,6 @@
 		700C3A42160427DA005A9E34 = {
 			isa = PBXGroup;
 			children = (
-				700FCBF716476524001072E4 /* AudioToolbox.framework */,
 				70D22EB4162B4C090075F175 /* json */,
 				70897C4C160F7ECB0058F06C /* xmpp */,
 				700C3A57160427DA005A9E34 /* main */,
@@ -356,6 +355,7 @@
 		700C3A50160427DA005A9E34 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				700FCBF716476524001072E4 /* AudioToolbox.framework */,
 				700FCBF516476449001072E4 /* AVFoundation.framework */,
 				70897D1A160FDA9E0058F06C /* QuartzCore.framework */,
 				70A81246161615A900AEDDB9 /* libiconv.2.4.0.dylib */,

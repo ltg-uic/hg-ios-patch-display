@@ -159,6 +159,7 @@
         _pacmanLayer.isCOMPING = NO;
         _pacmanLayer.isFILLED = YES;
         _pacmanLayer.isSMILE = YES;
+        _pacmanLayer.isHAPPY= NO;
         [_pacmanLayer setNeedsDisplay];
     } else {
         _pacmanLayer.isON = YES;
