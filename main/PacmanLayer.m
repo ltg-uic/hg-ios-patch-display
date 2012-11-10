@@ -126,6 +126,26 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     CGContextStrokePath(context);
 }
 
+- (UIColor *) getEyeColorFromColor:(UIColor *) newColor
+{
+    const CGFloat *componentColors = CGColorGetComponents(newColor.CGColor);
+    
+    NSLog(@"%@", [newColor hexStringFromColor]);
+          
+    CGFloat colorBrightness = ((componentColors[0] * 299) + (componentColors[1] * 587) + (componentColors[2] * 114)) / 1000;
+    if (colorBrightness < 0.5)
+    {
+        
+        NSLog(@"my color is dark");
+        return [UIColor whiteColor];
+    }
+    else
+    {
+        NSLog(@"my color is light");
+        return [UIColor blackColor];
+    }
+}
+
 - (void)drawInContext:(CGContextRef)ctx {
 	   
 
@@ -150,6 +170,9 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     CGContextClosePath(ctx);
 	
 	/* Filling it */
+    
+    
+    
 	CGContextSetFillColorWithColor(ctx, _pacColor.CGColor);
 	CGContextFillPath(ctx);
     
@@ -173,9 +196,19 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 #define EYE_H .35
 #define EYE_V 0.2
 #define EYE_RADIUS 0.1
-        
-        if(_isHAPPY) {
-        
+
+          
+            
+            CGContextSetStrokeColorWithColor(ctx, [self getEyeColorFromColor:_pacColor].CGColor);
+            
+            
+            // move the pen to the starting point
+            CGContextMoveToPoint(ctx, centerPoint.x-10, centerPoint.y+7);
+            
+            // draw a line to another point
+            CGContextAddLineToPoint(ctx, centerPoint.x+10, centerPoint.y+7);
+            CGContextStrokePath(ctx);
+            
             
             
             CGFloat faceSize = radius;
@@ -187,8 +220,16 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
             // move the pen to the starting point
             CGContextMoveToPoint(ctx, eyePoint.x , eyePoint.y);
             // draw a line to another point
-            CGContextAddLineToPoint(ctx, eyePoint.x, centerPoint.y);
+            CGContextAddLineToPoint(ctx, eyePoint.x+2, centerPoint.y+2);
             
+            CGContextMoveToPoint(ctx, eyePoint.x , eyePoint.y);
+            
+            CGContextAddLineToPoint(ctx, eyePoint.x+2, centerPoint.y-8);
+            
+            CGContextMoveToPoint(ctx, eyePoint.x , eyePoint.y);
+            CGContextAddLineToPoint(ctx, eyePoint.x-2, centerPoint.y-8);
+            CGContextMoveToPoint(ctx, eyePoint.x , eyePoint.y);
+            CGContextAddLineToPoint(ctx, eyePoint.x-2, centerPoint.y+2);
             CGContextStrokePath(ctx);
             
             
@@ -196,59 +237,41 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
             
             // move the pen to the starting point
             CGContextMoveToPoint(ctx, eyePoint.x , eyePoint.y);
-            CGContextAddLineToPoint(ctx, eyePoint.x, centerPoint.y);
-        } else {
-        
-
-        
-        
-        // move the pen to the starting point
-        CGContextMoveToPoint(ctx, centerPoint.x-10, centerPoint.y+7);
-        
-        // draw a line to another point
-        CGContextAddLineToPoint(ctx, centerPoint.x+10, centerPoint.y+7);
-        CGContextStrokePath(ctx);
-        
-        
-        
-        CGFloat faceSize = radius;
-        
-        CGPoint eyePoint;
-        eyePoint.x = centerPoint.x - faceSize * EYE_H;
-        eyePoint.y = centerPoint.y - faceSize * EYE_V;
-        
-        // move the pen to the starting point
-        CGContextMoveToPoint(ctx, eyePoint.x , eyePoint.y);
-        // draw a line to another point
-        CGContextAddLineToPoint(ctx, eyePoint.x+2, centerPoint.y+2);
-        
-        CGContextMoveToPoint(ctx, eyePoint.x , eyePoint.y);
-        
-        CGContextAddLineToPoint(ctx, eyePoint.x+2, centerPoint.y-8);
-        
-        CGContextMoveToPoint(ctx, eyePoint.x , eyePoint.y);
-        CGContextAddLineToPoint(ctx, eyePoint.x-2, centerPoint.y-8);
-        CGContextMoveToPoint(ctx, eyePoint.x , eyePoint.y);
-        CGContextAddLineToPoint(ctx, eyePoint.x-2, centerPoint.y+2);
-        CGContextStrokePath(ctx);
-        
-        
-        eyePoint.x += faceSize * EYE_H * 2;
-        
-        // move the pen to the starting point
-        CGContextMoveToPoint(ctx, eyePoint.x , eyePoint.y);
-        // draw a line to another point
-        CGContextAddLineToPoint(ctx, eyePoint.x+2, centerPoint.y+2);
-        
-        CGContextMoveToPoint(ctx, eyePoint.x , eyePoint.y);
-        
-        CGContextAddLineToPoint(ctx, eyePoint.x+2, centerPoint.y-8);
-        
-        CGContextMoveToPoint(ctx, eyePoint.x , eyePoint.y);
-        CGContextAddLineToPoint(ctx, eyePoint.x-2, centerPoint.y-8);
-        CGContextMoveToPoint(ctx, eyePoint.x , eyePoint.y);
-        CGContextAddLineToPoint(ctx, eyePoint.x-2, centerPoint.y+2);
-        CGContextStrokePath(ctx);
+            // draw a line to another point
+            CGContextAddLineToPoint(ctx, eyePoint.x+2, centerPoint.y+2);
+            
+            CGContextMoveToPoint(ctx, eyePoint.x , eyePoint.y);
+            
+            CGContextAddLineToPoint(ctx, eyePoint.x+2, centerPoint.y-8);
+            
+            CGContextMoveToPoint(ctx, eyePoint.x , eyePoint.y);
+            CGContextAddLineToPoint(ctx, eyePoint.x-2, centerPoint.y-8);
+            CGContextMoveToPoint(ctx, eyePoint.x , eyePoint.y);
+            CGContextAddLineToPoint(ctx, eyePoint.x-2, centerPoint.y+2);
+            CGContextStrokePath(ctx);
+            
+#define MOUTH_H 0.45
+#define MOUTH_V 0.40
+#define MOUTH_SMILE 0.25
+            
+            // move the pen to the starting point
+            CGContextMoveToPoint(ctx, centerPoint.x-10, centerPoint.y+7);
+            
+            // draw a line to another point
+            CGContextAddLineToPoint(ctx, centerPoint.x+10, centerPoint.y+7);
+            
+            //tongue
+            CGContextMoveToPoint(ctx, centerPoint.x+8, centerPoint.y+7);
+            
+            CGContextAddLineToPoint(ctx, centerPoint.x+8, centerPoint.y+15);
+            CGContextAddLineToPoint(ctx, centerPoint.x+1, centerPoint.y+15);
+            CGContextAddLineToPoint(ctx, centerPoint.x+1, centerPoint.y+7);
+            CGContextStrokePath(ctx);
+            
+            CGContextSetFillColorWithColor(ctx, [UIColor redColor].CGColor);
+            
+            
+            CGContextFillRect(ctx, CGRectMake(centerPoint.x+1.5, centerPoint.y+7.5, 6, 7));
         }
         
         //    // move the pen to the starting point
@@ -269,18 +292,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         
         //[self drawCircleAtPoint:eyePoint withRadius:faceSize * EYE_RADIUS inContext:ctx]; // right eye
         
-#define MOUTH_H 0.45
-#define MOUTH_V 0.40
-#define MOUTH_SMILE 0.25
-        
-        // move the pen to the starting point
-        CGContextMoveToPoint(ctx, centerPoint.x-10, centerPoint.y+7);
-        
-        // draw a line to another point
-        CGContextAddLineToPoint(ctx, centerPoint.x+10, centerPoint.y+7);
-        CGContextStrokePath(ctx);
-        
-    }
 
     
     

@@ -15,7 +15,6 @@
 #import "SBJson.h"
 #import "PinPoint.h"
 #import "PinPointGroup.h"
-#import "UIColor-Expanded.h"
 #import "PacmanView.h"
 #import <AudioToolbox/AudioToolbox.h>
 
@@ -73,8 +72,6 @@ bool isGAME_STOPPED = NO;
     currentRFIDS = [NSMutableArray array];
     pinPointGroups = [NSMutableArray array];
     killList = [NSMutableArray array];
-    [killList addObject:@"1623257"];
-    [currentRFIDS addObject:@"1623257"];
     feedRatioLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:450];
     
 //    [[DataStore sharedInstance] addPlayerSpacing];
@@ -124,7 +121,7 @@ bool isGAME_STOPPED = NO;
         
         dv.pacmanLayer.pacColor =  playerColor;
         dv.pacmanLayer.isFILLED = NO;
-        //dv.pacmanLayer.isSMILE = YES;
+        dv.pacmanLayer.isSMILE = NO;
         dv.pacmanLayer.isHAPPY = NO;
 
         if (player.rfid.length == 0) {
@@ -217,12 +214,23 @@ bool isGAME_STOPPED = NO;
     PinPointGroup *pg = [self findPinPointGroupWithRFID:rfid];
     
     if ( pg != nil ) {
-        pg.pinPoint.pacmanLayer.isHAPPY = NO;
-        pg.pinPoint.pacmanLayer.isSMILE = !isOn;
-        pg.pinPoint.pacmanLayer.isFILLED = isOn;
+        
+        if( isOn == YES) {
+            pg.pinPoint.pacmanLayer.isHAPPY = NO;
+            pg.pinPoint.pacmanLayer.isSMILE = NO;
+            pg.pinPoint.pacmanLayer.isFILLED = YES;
+        } else {
+            pg.pinPoint.pacmanLayer.isHAPPY = NO;
+            pg.pinPoint.pacmanLayer.isSMILE = NO;
+            pg.pinPoint.pacmanLayer.isFILLED = NO;
+        }
+        
         [pg.pinPoint animate:isOn];
         [pg.pinPoint.pacmanLayer setNeedsDisplay];
         [pg.pinPoint setNeedsDisplay];
+        
+    
+      
     }
 }
 
@@ -235,13 +243,15 @@ bool isGAME_STOPPED = NO;
         if( [currentRFIDS containsObject:rfid]) {
             PinPointGroup *pg = [self findPinPointGroupWithRFID:rfid];
             if ( pg != nil ) {
-                pg.pinPoint.pacmanLayer.isHAPPY = NO;
+                pg.pinPoint.pacmanLayer.isSMILE = NO;
                 [pg.pinPoint collapse];
-                [self hawkSound];
+               
                 
             }
         }
     }
+    
+    [self hawkSound];
 
 }
 
@@ -259,8 +269,7 @@ bool isGAME_STOPPED = NO;
     
     if( [killList containsObject:rfid] ) {
         [killList removeObject:rfid];
-        if( [currentRFIDS containsObject:rfid] ) {
-            
+        
             PinPointGroup *pg = [self findPinPointGroupWithRFID:rfid];
             if ( pg != nil ) {
                 if( pg.pinPoint.pacmanLayer.isSMILE){
@@ -273,10 +282,11 @@ bool isGAME_STOPPED = NO;
                 }
                 
             }
-            
-            
+        
+        
+        if( [currentRFIDS containsObject:rfid] )
             [currentRFIDS removeObject:rfid];
-        }
+        
     }
     
 }
@@ -288,17 +298,6 @@ bool isGAME_STOPPED = NO;
 	NSURL *pewPewURL = [NSURL fileURLWithPath:pewPewPath];
 	AudioServicesCreateSystemSoundID((__bridge CFURLRef)pewPewURL, &_pewPewSound);
     AudioServicesPlaySystemSound(_pewPewSound);
-}
-
-- (IBAction)playHawkSound:(id)sender {
-    SystemSoundID _pewPewSound;
-    
-    NSString *pewPewPath = [[NSBundle mainBundle] pathForResource:@"hawk" ofType:@"caf"];
-	NSURL *pewPewURL = [NSURL fileURLWithPath:pewPewPath];
-	AudioServicesCreateSystemSoundID((__bridge CFURLRef)pewPewURL, &_pewPewSound);
-    AudioServicesPlaySystemSound(_pewPewSound);
-
-  
 }
 
 
@@ -325,10 +324,9 @@ bool isGAME_STOPPED = NO;
     for (NSString *rfid in currentRFIDS) {
         PinPointGroup *pg = [self findPinPointGroupWithRFID:rfid];
         pg.pinPoint.pacmanLayer.isSMILE = NO;
-        pg.pinPoint.pacmanLayer.isHAPPY = NO;
-        pg.pinPoint.pacmanLayer.isCOMPING = NO;
+        
+        [pg.pinPoint animate:NO];
         pg.pinPoint.pacmanLayer.isFILLED = YES;
-        //[pg.pinPoint animate:YES];
         [pg.pinPoint.pacmanLayer setNeedsDisplay];
         [pg.pinPoint setNeedsDisplay];
     }
@@ -373,22 +371,28 @@ bool isGAME_STOPPED = NO;
     
     if( isRUNNING && currentRFIDS.count > 0 ) {
         
-    
-        
         
         //adjusted feedratio for .2 msec
         float adjustedFeedratio = [feedRatio floatValue] / 5.0f;
         
-        float totalCount = ((float)currentRFIDS.count - (float)killList.count);
+        int totalCount = 0;
+        for(NSString * rfid in currentRFIDS) {
+            if( [killList containsObject:rfid] == NO)
+                totalCount = totalCount + 1;
+        }
+        
         
         float scoreIncrease;
         
-        if( totalCount == 0)
+        if( totalCount == 0) {
             scoreIncrease = 0;
-        else
-            scoreIncrease =  adjustedFeedratio/ totalCount;
-            
-        [self updateFeedRatioLabelWith: ([feedRatio floatValue]/(float)currentRFIDS.count) * 60.0f];
+            [self updateFeedRatioLabelWith: 0];
+        } else {
+            scoreIncrease =  adjustedFeedratio/totalCount;
+            [self updateFeedRatioLabelWith: ([feedRatio floatValue]/totalCount) * 60.0f];
+        }
+        
+        
     
         
         for (NSString *rfid in currentRFIDS) {
@@ -528,6 +532,10 @@ bool isGAME_STOPPED = NO;
                 
                 if( departures != nil && departures.count > 0 ) {
                     for (NSString *rfid in departures) {
+                        
+                        if( [killList containsObject:rfid] == YES)
+                            return;
+                        
                         [self sendOutScoreUpdateWith:rfid];
                         [self resetScoreByRFID: rfid];
                         [self removeRFID:rfid];
