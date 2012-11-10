@@ -241,6 +241,7 @@ bool isGAME_STOPPED = NO;
         [killList addObject:rfid];
         
         if( [currentRFIDS containsObject:rfid]) {
+            [self hawkSound];
             PinPointGroup *pg = [self findPinPointGroupWithRFID:rfid];
             if ( pg != nil ) {
                 pg.pinPoint.pacmanLayer.isSMILE = NO;
@@ -251,7 +252,7 @@ bool isGAME_STOPPED = NO;
         }
     }
     
-    [self hawkSound];
+ 
 
 }
 
@@ -389,7 +390,7 @@ bool isGAME_STOPPED = NO;
             [self updateFeedRatioLabelWith: 0];
         } else {
             scoreIncrease =  adjustedFeedratio/totalCount;
-            [self updateFeedRatioLabelWith: ([feedRatio floatValue]/totalCount) * 60.0f];
+            [self updateFeedRatioLabelWith: ([feedRatio floatValue]/totalCount) * 60];
         }
         
         

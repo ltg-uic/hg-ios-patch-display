@@ -34,8 +34,8 @@ BOOL isMUC = YES;
     
     //only have this we are hardcoding the username
     
-    //[[NSUserDefaults standardUserDefaults] setObject:@"fg-patch-5@ltg.evl.uic.edu" forKey:kXMPPmyJID];
-    //[[NSUserDefaults standardUserDefaults] setObject:@"fg-patch-5" forKey:kXMPPmyPassword];
+    //[[NSUserDefaults standardUserDefaults] setObject:@"fg-patch@ltg.evl.uic.edu" forKey:kXMPPmyJID];
+    //[[NSUserDefaults standardUserDefaults] setObject:@"fg-patch" forKey:kXMPPmyPassword];
     
     // Configure logging framework
 	
