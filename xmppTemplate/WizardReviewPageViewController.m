@@ -29,7 +29,7 @@
     [super viewDidLoad];
     
     
-    [yesButton setTitle:[[_choosen_student uppercaseString] stringByAppendingString:@" - YES!!"] forState: UIControlStateNormal];
+    [yesButton setTitle:[[_choosen_student uppercaseString] stringByAppendingString:@"!!"] forState: UIControlStateNormal];
 
 	// Do any additional setup after loading the view.
 }
@@ -47,7 +47,7 @@
 - (IBAction)doLoginWithStudentName:(id)sender {
     
     
-    NSString *xmppId = [_configurationInfo.run_id stringByAppendingFormat:@"#%@",_choosen_student];
+    NSString *xmppId = [@"hg-bots" stringByAppendingFormat:@"#%@",_choosen_student];
     
     [[NSUserDefaults standardUserDefaults] setObject:[xmppId stringByAppendingString:XMPP_TAIL] forKey:kXMPPmyJID];
     

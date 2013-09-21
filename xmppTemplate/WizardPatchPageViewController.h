@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CoreDataTableViewController.h"
 
-@interface WizardStudentPageViewController : UICollectionViewController {
+@interface WizardPatchPageViewController :  UITableViewController {
    
 }
 

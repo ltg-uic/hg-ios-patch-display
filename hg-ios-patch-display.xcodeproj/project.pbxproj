@@ -14,7 +14,6 @@
 		700C3A5E160427DA005A9E34 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 700C3A5D160427DA005A9E34 /* main.m */; };
 		700C3A62160427DA005A9E34 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 700C3A61160427DA005A9E34 /* AppDelegate.m */; };
 		700C3A6E160427DA005A9E34 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 700C3A6C160427DA005A9E34 /* MainStoryboard_iPad.storyboard */; };
-		700C3A71160427DA005A9E34 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 700C3A70160427DA005A9E34 /* RootViewController.m */; };
 		700C3A9E16042944005A9E34 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700C3A9D16042944005A9E34 /* CFNetwork.framework */; };
 		700C3B2E16042BBD005A9E34 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700C3B2D16042BBD005A9E34 /* Security.framework */; };
 		700C3B3A160430DA005A9E34 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700C3B39160430DA005A9E34 /* SystemConfiguration.framework */; };
@@ -22,8 +21,8 @@
 		7012E55A17EA9A51004433BC /* PatchInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7012E55917EA9A51004433BC /* PatchInfo.m */; };
 		7012E56317EAA85D004433BC /* PlayerDataPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 7012E56217EAA85D004433BC /* PlayerDataPoint.m */; };
 		7013B01117E4CF9C00194BA5 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7013B01017E4CF9C00194BA5 /* SWRevealViewController.m */; };
-		7025949B17C3FFE7006E596B /* WizardStudentPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7025949A17C3FFE7006E596B /* WizardStudentPageViewController.m */; };
-		7025949E17C40065006E596B /* WizardStudentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7025949D17C40065006E596B /* WizardStudentCell.m */; };
+		7025949B17C3FFE7006E596B /* WizardPatchPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7025949A17C3FFE7006E596B /* WizardPatchPageViewController.m */; };
+		7025949E17C40065006E596B /* WizardPatchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7025949D17C40065006E596B /* WizardPatchCell.m */; };
 		703047E217C9DEB80043FD7B /* libiconv.2.4.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B44C1F17B3607A00C47B61 /* libiconv.2.4.0.dylib */; };
 		703D86FC17D91E0500523417 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 703D86FB17D91E0500523417 /* MapViewController.m */; };
 		703D870017D938C900523417 /* awareness.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 703D86FF17D938C900523417 /* awareness.xcassets */; };
@@ -165,7 +164,6 @@
 		707FE57117D9412B0036DBAB /* PatchMapUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 707FE57017D9412B0036DBAB /* PatchMapUIView.m */; };
 		70879019160BB0A50099DD5D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70879018160BB0A50099DD5D /* CoreData.framework */; };
 		70AAC26A17C325460018A84B /* WizardClassPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70AAC26917C325460018A84B /* WizardClassPageViewController.m */; };
-		70AFBDB917C7B9E900868211 /* GraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70AFBDB617C7B9E900868211 /* GraphViewController.m */; };
 		70AFBDD017C7E4B700868211 /* SidebarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70AFBDCF17C7E4B700868211 /* SidebarViewController.m */; };
 		70AFBDD417C7E9DF00868211 /* sidebar_icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70AFBDD317C7E9DF00868211 /* sidebar_icons.xcassets */; };
 		70B4119017B4600900F61347 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B44C1C17B35B4B00C47B61 /* libxml2.2.dylib */; };
@@ -182,7 +180,6 @@
 		70E866F417C66E8F003C5BD2 /* QuietAssertMacros.c in Sources */ = {isa = PBXBuildFile; fileRef = 70E866F317C66E8F003C5BD2 /* QuietAssertMacros.c */; };
 		70EC27D517E2287200077DF4 /* UIView+NibLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = 70EC27D417E2287200077DF4 /* UIView+NibLoading.m */; };
 		70EDB4D017B475960005E144 /* libresolv.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B44C1817B31E8D00C47B61 /* libresolv.9.dylib */; };
-		70F0F56D17CFD47C009B4E66 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F0F56C17CFD47C009B4E66 /* WebViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -198,8 +195,6 @@
 		700C3A60160427DA005A9E34 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AppDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		700C3A61160427DA005A9E34 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		700C3A6D160427DA005A9E34 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
-		700C3A6F160427DA005A9E34 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
-		700C3A70160427DA005A9E34 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		700C3A9D16042944005A9E34 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		700C3B2D16042BBD005A9E34 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		700C3B39160430DA005A9E34 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -212,10 +207,10 @@
 		7012E56217EAA85D004433BC /* PlayerDataPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerDataPoint.m; sourceTree = "<group>"; };
 		7013B00F17E4CF9C00194BA5 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		7013B01017E4CF9C00194BA5 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
-		7025949917C3FFE7006E596B /* WizardStudentPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WizardStudentPageViewController.h; sourceTree = "<group>"; };
-		7025949A17C3FFE7006E596B /* WizardStudentPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WizardStudentPageViewController.m; sourceTree = "<group>"; };
-		7025949C17C40065006E596B /* WizardStudentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WizardStudentCell.h; sourceTree = "<group>"; };
-		7025949D17C40065006E596B /* WizardStudentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WizardStudentCell.m; sourceTree = "<group>"; };
+		7025949917C3FFE7006E596B /* WizardPatchPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WizardPatchPageViewController.h; sourceTree = "<group>"; };
+		7025949A17C3FFE7006E596B /* WizardPatchPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WizardPatchPageViewController.m; sourceTree = "<group>"; };
+		7025949C17C40065006E596B /* WizardPatchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WizardPatchCell.h; sourceTree = "<group>"; };
+		7025949D17C40065006E596B /* WizardPatchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WizardPatchCell.m; sourceTree = "<group>"; };
 		703D86FA17D91E0500523417 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		703D86FB17D91E0500523417 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		703D86FF17D938C900523417 /* awareness.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = awareness.xcassets; path = ../awareness.xcassets; sourceTree = "<group>"; };
@@ -582,8 +577,6 @@
 		70AAC26517C31AE90018A84B /* wizard.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = wizard.xcassets; sourceTree = "<group>"; };
 		70AAC26817C325460018A84B /* WizardClassPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WizardClassPageViewController.h; sourceTree = "<group>"; };
 		70AAC26917C325460018A84B /* WizardClassPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WizardClassPageViewController.m; sourceTree = "<group>"; };
-		70AFBDB517C7B9E900868211 /* GraphViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphViewController.h; sourceTree = "<group>"; };
-		70AFBDB617C7B9E900868211 /* GraphViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphViewController.m; sourceTree = "<group>"; };
 		70AFBDCE17C7E4B700868211 /* SidebarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SidebarViewController.h; sourceTree = "<group>"; };
 		70AFBDCF17C7E4B700868211 /* SidebarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidebarViewController.m; sourceTree = "<group>"; };
 		70AFBDD317C7E9DF00868211 /* sidebar_icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = sidebar_icons.xcassets; sourceTree = "<group>"; };
@@ -610,8 +603,6 @@
 		70E866F317C66E8F003C5BD2 /* QuietAssertMacros.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = QuietAssertMacros.c; sourceTree = "<group>"; };
 		70EC27D317E2287200077DF4 /* UIView+NibLoading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+NibLoading.h"; sourceTree = "<group>"; };
 		70EC27D417E2287200077DF4 /* UIView+NibLoading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+NibLoading.m"; sourceTree = "<group>"; };
-		70F0F56B17CFD47C009B4E66 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
-		70F0F56C17CFD47C009B4E66 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -696,8 +687,6 @@
 		700C3A57160427DA005A9E34 /* Display */ = {
 			isa = PBXGroup;
 			children = (
-				700C3A6F160427DA005A9E34 /* RootViewController.h */,
-				700C3A70160427DA005A9E34 /* RootViewController.m */,
 				700C3A60160427DA005A9E34 /* AppDelegate.h */,
 				700C3A61160427DA005A9E34 /* AppDelegate.m */,
 				700C3A6C160427DA005A9E34 /* MainStoryboard_iPad.storyboard */,
@@ -733,10 +722,6 @@
 			isa = PBXGroup;
 			children = (
 				707FE56E17D940CC0036DBAB /* map */,
-				70AFBDB517C7B9E900868211 /* GraphViewController.h */,
-				70AFBDB617C7B9E900868211 /* GraphViewController.m */,
-				70F0F56B17CFD47C009B4E66 /* WebViewController.h */,
-				70F0F56C17CFD47C009B4E66 /* WebViewController.m */,
 			);
 			name = tabs;
 			sourceTree = "<group>";
@@ -1591,14 +1576,14 @@
 			children = (
 				70CF3D6E17C5570D006F363C /* WizardReviewPageViewController.h */,
 				70CF3D6F17C5570D006F363C /* WizardReviewPageViewController.m */,
-				7025949917C3FFE7006E596B /* WizardStudentPageViewController.h */,
-				7025949A17C3FFE7006E596B /* WizardStudentPageViewController.m */,
+				7025949917C3FFE7006E596B /* WizardPatchPageViewController.h */,
+				7025949A17C3FFE7006E596B /* WizardPatchPageViewController.m */,
 				70AAC26817C325460018A84B /* WizardClassPageViewController.h */,
 				70AAC26917C325460018A84B /* WizardClassPageViewController.m */,
 				70CF3D6B17C55296006F363C /* WizardClassCell.h */,
 				70CF3D6C17C55296006F363C /* WizardClassCell.m */,
-				7025949D17C40065006E596B /* WizardStudentCell.m */,
-				7025949C17C40065006E596B /* WizardStudentCell.h */,
+				7025949D17C40065006E596B /* WizardPatchCell.m */,
+				7025949C17C40065006E596B /* WizardPatchCell.h */,
 			);
 			name = wizard;
 			sourceTree = "<group>";
@@ -1766,9 +1751,7 @@
 				705BEE3C17EA643A0042D313 /* XMPPRoomMessageMemoryStorageObject.m in Sources */,
 				705BED0D17EA64000042D313 /* XMPPStringPrep.m in Sources */,
 				705BED0817EA64000042D313 /* DDList.m in Sources */,
-				70F0F56D17CFD47C009B4E66 /* WebViewController.m in Sources */,
 				70AFBDD017C7E4B700868211 /* SidebarViewController.m in Sources */,
-				70AFBDB917C7B9E900868211 /* GraphViewController.m in Sources */,
 				705BEE5817EA643A0042D313 /* XMPPTransports.m in Sources */,
 				705BEE5617EA643A0042D313 /* XMPPDateTimeProfiles.m in Sources */,
 				705AE0DA17D595CC005F69B7 /* SBJsonStreamTokeniser.m in Sources */,
@@ -1815,7 +1798,6 @@
 				704AA4C117E3F3E200A7FF9C /* PlayerMapUIView.m in Sources */,
 				705BED3A17EA64140042D313 /* DDTTYLogger.m in Sources */,
 				705BEE6E17EA643A0042D313 /* XEP_0223.m in Sources */,
-				700C3A71160427DA005A9E34 /* RootViewController.m in Sources */,
 				700450FF17B5C99E000A83F1 /* DataPointModel.xcdatamodeld in Sources */,
 				705BED3817EA64140042D313 /* DDFileLogger.m in Sources */,
 				705BEE4F17EA643A0042D313 /* XMPPResultSet.m in Sources */,
@@ -1825,7 +1807,7 @@
 				705BEE6917EA643A0042D313 /* XMPPAutoPing.m in Sources */,
 				705BECFE17EA64000042D313 /* NSNumber+XMPP.m in Sources */,
 				705BEE4017EA643A0042D313 /* XMPPRoom.m in Sources */,
-				7025949B17C3FFE7006E596B /* WizardStudentPageViewController.m in Sources */,
+				7025949B17C3FFE7006E596B /* WizardPatchPageViewController.m in Sources */,
 				706857E817C51A2600BF8AAF /* UIImageView+AFNetworking.m in Sources */,
 				705BEE5F17EA643A0042D313 /* XMPPMessageArchiving.xcdatamodeld in Sources */,
 				705BEE6717EA643A0042D313 /* XMPPMessage+XEP_0184.m in Sources */,
@@ -1855,7 +1837,7 @@
 				7012E54E17EA7F1B004433BC /* ConfigurationInfo.m in Sources */,
 				705BEE6617EA643A0042D313 /* XMPPPresence+XEP_0172.m in Sources */,
 				705BED0517EA64000042D313 /* XMPPParser.m in Sources */,
-				7025949E17C40065006E596B /* WizardStudentCell.m in Sources */,
+				7025949E17C40065006E596B /* WizardPatchCell.m in Sources */,
 				705BEE5A17EA643A0042D313 /* XMPPCapabilities.xcdatamodel in Sources */,
 				705BED3B17EA64140042D313 /* ContextFilterLogFormatter.m in Sources */,
 				705BEE6D17EA643A0042D313 /* NSXMLElement+XEP_0203.m in Sources */,

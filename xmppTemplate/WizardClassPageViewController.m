@@ -7,7 +7,7 @@
 //
 
 #import "WizardClassPageViewController.h"
-#import "WizardStudentPageViewController.h"
+#import "WizardPatchPageViewController.h"
 #import "WizardClassCell.h"
 #import "AFNetworking.h"
 
@@ -86,10 +86,10 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"student_segue"]) {
+    if ([segue.identifier isEqualToString:@"patch_segue"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         ConfigurationInfo *ci = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        WizardStudentPageViewController *destViewController = segue.destinationViewController;
+        WizardPatchPageViewController *destViewController = segue.destinationViewController;
         [destViewController setConfigurationInfo:ci];
     }
 }

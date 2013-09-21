@@ -6,20 +6,20 @@
 //  Copyright (c) 2013 Learning Technologies Group. All rights reserved.
 //
 
-#import "WizardStudentPageViewController.h"
+#import "WizardPatchPageViewController.h"
 #import "WizardReviewPageViewController.h"
 #import "PlayerDataPoint.h"
-#import "WizardStudentCell.h"
+#import "WizardPatchCell.h"
 #import "AFNetworking.h"
 #import "UIColor-Expanded.h"
 
-@interface WizardStudentPageViewController () {
+@interface WizardPatchPageViewController () {
     NSArray *playerPoints;
 }
 
 @end
 
-@implementation WizardStudentPageViewController
+@implementation WizardPatchPageViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -54,38 +54,37 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-   
-
-    
-
 }
--(NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [playerPoints count];
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
--(NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return playerPoints.count;
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"wizcell_patch";
+    WizardPatchCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-}
-
-
-
--(UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    WizardStudentCell *wz = [collectionView dequeueReusableCellWithReuseIdentifier:@"student_cell" forIndexPath:indexPath];
+    
+    
+    
+    if (cell == nil) {
+        cell = [[WizardPatchCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
     
     PlayerDataPoint *pdp = [playerPoints objectAtIndex:indexPath.row];
     
-    UIColor *hexColor = [UIColor colorWithHexString:[pdp.color stringByReplacingOccurrencesOfString:@"#" withString:@""]];
+    //
+    //    // Configure the cell.
+    cell.patchUILabel.text = [pdp.player_id capitalizedString] ;
     
-    wz.nameButton.backgroundColor = hexColor;
-  
-    if( !(pdp == nil || [playerPoints count] == 0) ) {
-        [wz.nameButton setTitle: pdp.player_id forState: UIControlStateNormal];
-        [wz.nameButton setTitleColor: [self getTextColor:hexColor]  forState:UIControlStateNormal];
-
-    }
-    return wz;
+    return cell;
 }
+
 
 - (UIColor *) getTextColor:(UIColor *)color
 {
@@ -106,6 +105,9 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"review_segue"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        PlayerDataPoint *pdp = [playerPoints objectAtIndex:indexPath.row];
+        _choosen_student = [pdp player_id];
         WizardReviewPageViewController *destViewController = segue.destinationViewController;
         [destViewController setConfigurationInfo:_configurationInfo];
         [destViewController setChoosen_student:_choosen_student];
@@ -125,11 +127,4 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)chooseStudent:(id)sender {
-    
-    UIButton *studentButton = (UIButton *)sender;
-    
-    _choosen_student = studentButton.titleLabel.text;
-    
-}
 @end

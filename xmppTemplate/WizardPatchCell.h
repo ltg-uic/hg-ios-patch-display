@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WizardStudentCell : UICollectionViewCell
+@interface WizardPatchCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIButton *nameButton;
+@property (weak, nonatomic) IBOutlet UILabel *patchUILabel;
 
 @end

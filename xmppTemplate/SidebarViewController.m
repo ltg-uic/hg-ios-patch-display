@@ -1,7 +1,6 @@
 
 #import "SidebarViewController.h"
 #import "SWRevealViewController.h"
-#import "GraphViewController.h"
 #import "MapViewController.h"
 #import "SideBarCell.h"
 
@@ -180,23 +179,23 @@
 	// ... and the second row (=1) corresponds to the "MapViewController".
 	else if (row == 2)
 	{
-		// Now let's see if we're not attempting to swap the current frontViewController for a new instance of ITSELF, which'd be highly redundant.
-        if ( ![frontNavigationController.topViewController isKindOfClass:[GraphViewController class]] )
-        {
-            
-           // GraphViewController *graphViewController = [_controllerMap objectForKey:@"graphController"];
-            
-           // if( graphViewController == nil ) {
-                UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPad"
-                                                                         bundle: nil];
-                   GraphViewController *graphViewController = (GraphViewController *)[mainStoryboard instantiateViewControllerWithIdentifier: @"graphViewController"];
-                
-                //[_controllerMap setObject:graphViewController forKey:@"graphViewController"];
-                
-           // }
-            
-			UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:graphViewController];
-			[revealController setFrontViewController:navigationController animated:YES];
+//		// Now let's see if we're not attempting to swap the current frontViewController for a new instance of ITSELF, which'd be highly redundant.
+//        if ( ![frontNavigationController.topViewController isKindOfClass:[GraphViewController class]] )
+//        {
+//            
+//           // GraphViewController *graphViewController = [_controllerMap objectForKey:@"graphController"];
+//            
+//           // if( graphViewController == nil ) {
+//                UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPad"
+//                                                                         bundle: nil];
+//                   GraphViewController *graphViewController = (GraphViewController *)[mainStoryboard instantiateViewControllerWithIdentifier: @"graphViewController"];
+//                
+//                //[_controllerMap setObject:graphViewController forKey:@"graphViewController"];
+//                
+//           // }
+//            
+//			UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:graphViewController];
+//			[revealController setFrontViewController:navigationController animated:YES];
 		}
         
 		// Seems the user attempts to 'switch' to exactly the same controller he came from!
@@ -204,7 +203,7 @@
 		{
 			[revealController revealToggle:self];
 		}
-	}
+
     
     
 }

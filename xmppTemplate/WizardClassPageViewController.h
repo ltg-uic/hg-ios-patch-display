@@ -16,5 +16,4 @@
 
 - (IBAction)cancelLogin:(id)sender;
 
-- (void)setupFetchedResultsController;
 @end

@@ -707,7 +707,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     [_playerDataDelegate playerDataDidUpdate];
     
     [self setupPlayerMap];
-    [self startTimer];
+
 }
 
 -(void)setupPlayerMap {
@@ -725,90 +725,6 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     }
 }
 
-#pragma mark - TIMER
-
-- (void)startTimer {
-    
-    if( timer == nil )
-        timer = [NSTimer timerWithTimeInterval:_refreshRate
-                                        target:self
-                                      selector:@selector(refreshCalorieTotals)
-                                      userInfo:nil repeats:YES];
-    [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-    
-    
-}
-
-- (void)stopTimer {
-    
-    if( timer != nil ) {
-        [timer invalidate];
-    }
-    
-    
-}
-
--(void) refreshCalorieTotals {
-    void (^simpleBlock)(void) = ^{
-        [self updateData];
-        NSLog(@"This is a block");
-    };
-    simpleBlock();
-}
-
-
--(void)updateData {
-    if( timer != nil ) {
-        
-        for(NSString * rfid_tag in patchPlayerMap) {
-           
-            
-            
-            if( [patchPlayerMap objectForKey:rfid_tag] != [NSNull null] ) {
-                 NSString *patch_id = [patchPlayerMap objectForKey:rfid_tag];
-                NSArray *pis = [_patcheInfos filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"patch_id == %@", patch_id]];
-                
-                if( pis != nil && pis.count > 0) {
-                    
-                    PatchInfo *patchInfo = [pis objectAtIndex:0];
-                    
-                    NSArray *players = [_playerDataPoints filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"currentPatch == %@", patch_id]];
-                    
-                    if( players != nil  && players.count > 0 ) {
-                        
-                        
-                        NSArray *thePlayer = [_playerDataPoints filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"rfid_tag == %@", rfid_tag]];
-                        
-                        if( thePlayer != nil && thePlayer.count > 0 ) {
-                            
-                            PlayerDataPoint *pdp = [thePlayer objectAtIndex:0];
-                            
-                            //number of the patches at the patch
-                            int numberOfPlayerAtPatches = players.count;
-                            
-                            //calculate the new score
-                            float playerOldScore = [pdp.score floatValue];
-                            
-                            //calc new richness
-                            float adjustedRichness = (patchInfo.quality_per_minute / numberOfPlayerAtPatches );
-                            
-                            //figure out the adjusted rate for the refreshrate
-                            float adjustedRate = (adjustedRichness / 60 ) * _refreshRate;
-                            
-                            pdp.score = [NSNumber numberWithFloat:(playerOldScore + adjustedRate)];
-                            
-                            NSLog(@"PLAYER %@ NEW score %f",pdp.player_id, [pdp.score floatValue]);
-                        }
-                        
-                    }
-                    
-                }
-                
-            }
-        }
-    }
-
-}
 
 
 #pragma NETWORK OPERATIONS
@@ -839,7 +755,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
                                                  NSString *starving_threshold = [someConfig objectForKey:@"starving_threshold"];
                                                  
                                                  
-                                                 ConfigurationInfo *ci = [self insertConfigurationWithRunId:run_id withHarvestCalculatorBoutLengthInMinutes:[boutLength floatValue] WithMaximumHarvest:[maximum_harvest floatValue] WithPredationPenalty: [predation_penalty_length_in_seconds floatValue] WithProperingThreshold: [prospering_threshold floatValue] WithStravingThreshold: [starving_threshold floatValue ]];
+                                                 ConfigurationInfo *ci = [self insertConfigurationWithRunId:run_id withHarvestCalculatorBoutLengthInMinutes:[boutLength floatValue] WithMaximumHarvest:[maximum_harvest floatValue] WithPredationPenalty: [predation_penalty_length_in_seconds floatValue] WithProperingThreshold: [prospering_threshold floatValue] WithStravingThreshold: [starving_threshold floatValue ] ];
                                                  
                                                  for(NSDictionary *somePatch in patches) {
                                                      
@@ -859,10 +775,27 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
                                                      [ci addPatchesObject:pi];
                                                  }
                                                  
+                                                 NSArray *bots = [someConfig objectForKey:@"bots"];
+                                                 
+                                                 for (NSString *someBot in bots) {
+                                                     
+                                                     if ([someBot rangeOfString:@"patch" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+                                                         NSArray *botNames = [someBot componentsSeparatedByString:@"#"];
+                                                         NSString *botId = [botNames objectAtIndex:1];
+                                                         
+                                                         PlayerDataPoint *pdp = [self insertPlayerDataPointWithColor:@"#db773c" WithLabel:[botId capitalizedString] WithPatch:nil WithRfid:@"rfid" WithScore:[NSNumber numberWithInt:0] WithId:botId];
+                                                         
+                                                         [ci addPlayersObject:pdp];
+                                                     } else {
+                                                         NSLog(@"not a patch");
+                                                     }
+                                                     
+                                                 
+                                                 }
+                                                 
+                                                 
                                                  [self.managedObjectContext save:nil];
                                                  
-                                                 
-                                                 [operationQueue addOperation:[self pullRosterDataWithRunId:ci WithCompletionBlock:nil]];
                                              }
                                          }
                                          
@@ -887,9 +820,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
         if ( [self hasActiveOperations: operations] ) {
             //[spinner startAnimating];
         } else {
-            //[self setupConfigurationAndRosterWithRunId:@"5ag"];
-             [self checkConnectionWithUser];
-            //[spinner stopAnimating];
+            [self checkConnectionWithUser];
         }
     }
 }
@@ -902,43 +833,6 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     }
     
     return NO;
-}
-
--(NSOperation *)pullRosterDataWithRunId:(ConfigurationInfo *)configurationInfo WithCompletionBlock:(void(^)())block  {
-    NSURL *url = [NSURL URLWithString:[@"http://ltg.evl.uic.edu:9000/runs/" stringByAppendingString:configurationInfo.run_id]];
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    //AFNetworking asynchronous url request
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation
-                                         JSONRequestOperationWithRequest:request
-                                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, id responseObject)
-                                         {
-                                             NSLog(@"JSON RESULT %@", responseObject);
-                                             
-                                             
-                                             NSDictionary *data = [responseObject objectForKey:@"data"];
-                                             NSArray *students = [data objectForKey:@"roster"];
-                                             
-                                             for (NSDictionary *someStudent in students) {
-                                                 
-                                                 
-                                                 PlayerDataPoint *pdp = [self insertPlayerDataPointWithColor:[someStudent objectForKey:@"color"] WithLabel:[someStudent objectForKey:@"label"] WithPatch:nil WithRfid:[someStudent objectForKey:@"rfid_tag"] WithScore:[NSNumber numberWithInt:0] WithId:[someStudent objectForKey:@"_id"]];
-                                                 
-                                                 [configurationInfo addPlayersObject:pdp];
-                                             }
-                                             
-
-                                             [self.managedObjectContext save:nil];
-                                             
-                                         }
-                                         failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id responseObject)
-                                         {
-                                             NSLog(@"Request Failed: %@, %@", error, error.userInfo);
-                                         }];
-    
-
-  
-    return operation;
 }
 
 

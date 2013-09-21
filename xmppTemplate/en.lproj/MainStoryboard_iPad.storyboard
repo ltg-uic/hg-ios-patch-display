@@ -9,7 +9,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="WizardClassPageViewController" autoresizesArchivedViewToFullSize="NO" title="Class Chooser" modalPresentationStyle="currentContext" id="wzZ-Et-LzK" customClass="WizardClassPageViewController" sceneMemberID="viewController">
                     <tableView key="view" autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleAspectFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="150" sectionHeaderHeight="22" sectionFooterHeight="22" id="mGa-jY-l1q">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="2660"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="980"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <inset key="scrollIndicatorInsets" minX="0.0" minY="5" maxX="0.0" maxY="5"/>
@@ -17,11 +17,11 @@
                         <inset key="separatorInset" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
                         <color key="sectionIndexTrackingBackgroundColor" red="0.26274511220000002" green="0.60784316059999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" reuseIdentifier="wizcell_class" rowHeight="150" id="O2r-Ei-HGF" customClass="WizardClassCell">
-                                <rect key="frame" x="0.0" y="66" width="1024" height="150"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" reuseIdentifier="wizcell_class" rowHeight="150" id="O2r-Ei-HGF" customClass="WizardClassCell">
+                                <rect key="frame" x="0.0" y="66" width="768" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="O2r-Ei-HGF" id="7a9-TF-SRS">
-                                    <rect key="frame" x="0.0" y="0.0" width="1024" height="150"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="735" height="150"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5w2-7c-yKc">
@@ -50,7 +50,7 @@
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="classNameLabel" destination="qOL-fy-g7T" id="n71-vF-BTk"/>
-                                    <segue destination="B93-el-CwP" kind="push" identifier="student_segue" id="eLo-Wd-G1j"/>
+                                    <segue destination="ltf-E4-o2e" kind="push" identifier="patch_segue" id="Q8i-Eb-B5B"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -67,80 +67,10 @@
                         <barButtonItem key="backBarButtonItem" title="Class" id="FAu-ti-Usi"/>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aEZ-7g-7q0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="943" y="-1978"/>
-        </scene>
-        <!--Wizard Student Page View Controller - WizardStudentPageViewController-->
-        <scene sceneID="iej-cC-o77">
-            <objects>
-                <collectionViewController autoresizesArchivedViewToFullSize="NO" title="WizardStudentPageViewController" modalPresentationStyle="currentContext" id="B93-el-CwP" customClass="WizardStudentPageViewController" sceneMemberID="viewController">
-                    <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="Ejr-No-Nvx">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="2616"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="0.0" id="TMk-tL-8Sm">
-                            <size key="itemSize" width="160" height="80"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="student_cell" id="lpg-g4-2dR" customClass="WizardStudentCell">
-                                <rect key="frame" x="10" y="54" width="160" height="80"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="160" height="80"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dcb-QL-4fr">
-                                            <rect key="frame" x="0.0" y="0.0" width="160" height="80"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="42"/>
-                                            <state key="normal" title="NPR">
-                                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="chooseStudent:" destination="B93-el-CwP" eventType="touchUpInside" id="xfC-eG-9A5"/>
-                                                <segue destination="nCa-9d-6wf" kind="push" identifier="review_segue" id="6D2-tg-W8W"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                                <color key="backgroundColor" red="0.090196080505847931" green="0.53333336114883423" blue="0.89019614458084106" alpha="1" colorSpace="deviceRGB"/>
-                                <size key="customSize" width="160" height="80"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="5"/>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <outlet property="nameButton" destination="Dcb-QL-4fr" id="Ggi-4S-dEb"/>
-                                </connections>
-                            </collectionViewCell>
-                        </cells>
-                        <connections>
-                            <outlet property="dataSource" destination="B93-el-CwP" id="foY-Mq-Y5f"/>
-                            <outlet property="delegate" destination="B93-el-CwP" id="lmi-UB-Yrg"/>
-                        </connections>
-                    </collectionView>
-                    <toolbarItems>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="lD9-bN-k0x"/>
-                        <barButtonItem title="Cancel" id="SZ3-bx-UdW">
-                            <connections>
-                                <action selector="cancelLogin:" destination="B93-el-CwP" id="9CB-gF-yAj"/>
-                            </connections>
-                        </barButtonItem>
-                    </toolbarItems>
-                    <navigationItem key="navigationItem" title="Step 2: Choose Your Name" id="WL7-OI-7tl">
-                        <barButtonItem key="backBarButtonItem" title="Student" id="Fcq-0u-QOO"/>
-                    </navigationItem>
-                    <nil key="simulatedStatusBarMetrics"/>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="05x-Lx-c3p" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2055" y="-1934"/>
+            <point key="canvasLocation" x="-609" y="-2098"/>
         </scene>
         <!--Wizard Review Page View Controller - WizardReviewPageViewController-->
         <scene sceneID="5fm-xv-0r9">
@@ -151,7 +81,7 @@
                         <viewControllerLayoutGuide type="bottom" id="88c-On-rVh"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="CR1-C1-sWK">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="2616"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="980"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <userGuides>
                             <userLayoutGuide location="259" affinity="minY"/>
@@ -197,7 +127,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zIK-FZ-qeu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3538" y="-468"/>
+            <point key="canvasLocation" x="1866" y="-2064"/>
         </scene>
         <!--Sidebar View Controller-->
         <scene sceneID="fVD-Sr-KDN">
@@ -443,7 +373,75 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BCi-cx-Bjh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="165" y="-512"/>
+            <point key="canvasLocation" x="-2029" y="-616"/>
+        </scene>
+        <!--Wizard Patch Page View Controller - Patch Chooser-->
+        <scene sceneID="keT-e6-GYI">
+            <objects>
+                <tableViewController storyboardIdentifier="WizardPatchPageViewController" autoresizesArchivedViewToFullSize="NO" title="Patch Chooser" modalPresentationStyle="currentContext" id="ltf-E4-o2e" customClass="WizardPatchPageViewController" sceneMemberID="viewController">
+                    <tableView key="view" autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleAspectFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="150" sectionHeaderHeight="22" sectionFooterHeight="22" id="u4o-BO-4pN">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="980"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <inset key="scrollIndicatorInsets" minX="0.0" minY="5" maxX="0.0" maxY="5"/>
+                        <color key="separatorColor" red="0.77647060160000003" green="0.1647058874" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <inset key="separatorInset" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
+                        <color key="sectionIndexTrackingBackgroundColor" red="0.26274511220000002" green="0.60784316059999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" reuseIdentifier="wizcell_patch" rowHeight="150" id="pWw-sp-h6N" customClass="WizardPatchCell">
+                                <rect key="frame" x="0.0" y="66" width="768" height="150"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pWw-sp-h6N" id="asi-Ps-QJh">
+                                    <rect key="frame" x="0.0" y="0.0" width="735" height="150"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RqU-E3-cEy">
+                                            <rect key="frame" x="8" y="8" width="1008" height="142"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PATCH" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k9h-qQ-dpR">
+                                                    <rect key="frame" x="37" y="48" width="541" height="45"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="38"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.79607850313186646" green="0.31372550129890442" blue="0.094117656350135803" alpha="1" colorSpace="deviceRGB"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="5"/>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="5"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="patchUILabel" destination="k9h-qQ-dpR" id="ciZ-VF-uzr"/>
+                                    <segue destination="nCa-9d-6wf" kind="push" identifier="review_segue" id="eqk-ZD-DgR"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                    </tableView>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="H1i-BV-HFo"/>
+                        <barButtonItem title="Cancel" id="edC-wb-hWg">
+                            <connections>
+                                <action selector="cancelLogin:" destination="ltf-E4-o2e" id="Kci-St-98Q"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Step 2: Choose Your Patch" id="AT0-ea-8tg">
+                        <barButtonItem key="backBarButtonItem" title="Patch" id="gyk-aZ-VXV"/>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Loa-Wg-qnf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="631" y="-2084"/>
         </scene>
     </scenes>
     <resources>
