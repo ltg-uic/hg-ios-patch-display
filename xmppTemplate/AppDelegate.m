@@ -17,7 +17,7 @@
 #import "SBJsonParser.h"
 #import "AFNetworking.h"
 #import "UIColor-Expanded.h"
-
+#import "SidebarViewController.h"
 
 // Log levels: off, error, warn, info, verbose
 #if DEBUG
@@ -26,7 +26,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 static const int ddLogLevel = LOG_LEVEL_INFO;
 #endif
 
-@interface AppDelegate() {
+@interface AppDelegate()<SWRevealViewControllerDelegate>{
 
     NSArray *patchInfos;
     NSOperationQueue *operationQueue;
@@ -52,8 +52,12 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //[self setupInterface];
     [self clearUserDefaults];
     
+    //[self pullConfigurationData];
+    //Failed to instantiate the default view controller for UIMainStoryboardFile 'MainStoryboard_iPad' - perhaps the designated entry point is not set?[self setupTestUser];
+    //[self setupConfigurationAndRosterWithRunId:@"5ag"];
     //[self customizeGlobalAppearance];
     
     
@@ -64,13 +68,16 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     [self deleteAllObjects:@"PatchInfo"];
     [self deleteAllObjects:@"ConfigurationInfo"];
     
+    
+    [self pullConfigurationData];
+    
     //[self importTestData];
   
     
     //setup test user
     //[self setupTestUser];
     
-    [self pullConfigurationData];
+   
     
     //
     
@@ -84,6 +91,41 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     
 
     return YES;
+}
+
+-(void)setupInterface {
+    UIWindow *window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	self.window = window;
+	
+    
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPad"
+                                                             bundle: nil];
+    
+    SidebarViewController *sideViewController = (SidebarViewController *)[mainStoryboard instantiateViewControllerWithIdentifier: @"sidebarViewController"];
+    
+    UIViewController *mapViewController = (UIViewController *)[mainStoryboard instantiateViewControllerWithIdentifier: @"mapViewController"];
+    
+    
+    
+	
+	UINavigationController *frontNavigationController = [[UINavigationController alloc] initWithRootViewController:mapViewController];
+    
+    [[sideViewController controllerMap] setObject:frontNavigationController forKey:@"mapViewController"];
+    
+    UINavigationController *rearNavigationController = [[UINavigationController alloc] initWithRootViewController:sideViewController];
+	
+	SWRevealViewController *revealController = [[SWRevealViewController alloc] initWithRearViewController:rearNavigationController frontViewController:frontNavigationController];
+    revealController.delegate = self;
+    
+    
+    
+    //revealController.bounceBackOnOverdraw=NO;
+    //revealController.stableDragOnOverdraw=YES;
+    
+	self.viewController = revealController;
+	
+	self.window.rootViewController = self.viewController;
+	[self.window makeKeyAndVisible];
 }
 
 -(void)checkConnectionWithUser {
@@ -523,7 +565,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
                     player.currentPatch = arrival_patch_id;
                 }
             
-                if( departure_patch_id == [NSNull null]  ) {
+                if( [departure_patch_id isEqual: [NSNull null]  ] ) {
                     [patchPlayerMap setObject: [NSNull null] forKey:player.rfid_tag];
                 }
                 
@@ -655,7 +697,10 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 -(void)setupConfigurationAndRosterWithRunId:(NSString *)run_id {
     
     _configurationInfo = [self getConfigurationInfoWithRunId:run_id];
-    _playerDataPoints  = [[_configurationInfo players] allObjects];
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"player_id" ascending:NO selector:@selector(caseInsensitiveCompare:)];
+    
+    _playerDataPoints  = [[[_configurationInfo players] allObjects] sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     _patcheInfos = [[_configurationInfo patches] allObjects];
     _refreshRate = .2f;
     
@@ -687,7 +732,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     if( timer == nil )
         timer = [NSTimer timerWithTimeInterval:_refreshRate
                                         target:self
-                                      selector:@selector(updateCalorieTotals)
+                                      selector:@selector(refreshCalorieTotals)
                                       userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
     
@@ -703,7 +748,16 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     
 }
 
--(void)updateCalorieTotals {
+-(void) refreshCalorieTotals {
+    void (^simpleBlock)(void) = ^{
+        [self updateData];
+        NSLog(@"This is a block");
+    };
+    simpleBlock();
+}
+
+
+-(void)updateData {
     if( timer != nil ) {
         
         for(NSString * rfid_tag in patchPlayerMap) {
@@ -736,7 +790,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
                             float playerOldScore = [pdp.score floatValue];
                             
                             //calc new richness
-                            float adjustedRichness = (patchInfo.richness_per_minute / numberOfPlayerAtPatches );
+                            float adjustedRichness = (patchInfo.quality_per_minute / numberOfPlayerAtPatches );
                             
                             //figure out the adjusted rate for the refreshrate
                             float adjustedRate = (adjustedRichness / 60 ) * _refreshRate;
@@ -779,19 +833,29 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
                                                  NSString *boutLength = [someConfig objectForKey:@"harvest_calculator_bout_length_in_minutes"];
                                                  NSArray *patches = [someConfig objectForKey:@"patches"];
                                                  
-                                                
-                                                 ConfigurationInfo *ci = [self insertConfigurationWithRunId:run_id withHarvestCalculatorBoutLengthInMinutes:[boutLength floatValue]];
+                                                 NSString *maximum_harvest = [someConfig objectForKey:@"maximum_harvest"];
+                                                 NSString *predation_penalty_length_in_seconds = [someConfig objectForKey:@"predation_penalty_length_in_seconds"];
+                                                 NSString *prospering_threshold = [someConfig objectForKey:@"prospering_threshold"];
+                                                 NSString *starving_threshold = [someConfig objectForKey:@"starving_threshold"];
+                                                 
+                                                 
+                                                 ConfigurationInfo *ci = [self insertConfigurationWithRunId:run_id withHarvestCalculatorBoutLengthInMinutes:[boutLength floatValue] WithMaximumHarvest:[maximum_harvest floatValue] WithPredationPenalty: [predation_penalty_length_in_seconds floatValue] WithProperingThreshold: [prospering_threshold floatValue] WithStravingThreshold: [starving_threshold floatValue ]];
                                                  
                                                  for(NSDictionary *somePatch in patches) {
                                                      
                                                      NSString *patch_id = [somePatch objectForKey:@"patch_id"];
-                                                     float richness = [[somePatch objectForKey:@"richness"] floatValue];
-                                                     float richnessPerMinute = [[somePatch objectForKey:@"richness_per_minute"] floatValue];
-                                                     float richnessPerSecond = [[somePatch objectForKey:@"richness_per_second"] floatValue];
+                                                     NSString *patch_label = [somePatch objectForKey:@"patch_label"];
+                                                     float reader_id = [[somePatch objectForKey:@"reader_id"] floatValue];
+                                                     NSString * risk_label = [somePatch objectForKey:@"risk_label"];
+                                                     float risk_percent_per_second = [[somePatch objectForKey:@"risk_percent_per_second"] floatValue];
+                                                     NSString *quality = [somePatch objectForKey:@"quality"];
+                                                     float qualityPerMinute = [[somePatch objectForKey:@"quality_per_minute"] floatValue];
+                                                     float qualityPerSecond = [[somePatch objectForKey:@"quality_per_second"] floatValue];
                                                      
-                                                
+                                            
+                                                     PatchInfo *pi = [self insertPatchInfoWithPatchId:patch_id WithPatchLabel:patch_label WithReaderId:reader_id withQuality:quality withQualityPerSecond:qualityPerSecond withQualityPerMinute:qualityPerMinute WithRiskLabel:risk_label WithRiskPercentPerSecond:risk_percent_per_second];
                                                      
-                                                     PatchInfo *pi = [self insertPatchInfoWithPatchId:patch_id withRichness:richness withRichnessPerSecond: richnessPerSecond withRichnessPerMinute:richnessPerMinute];
+                                                     
                                                      [ci addPatchesObject:pi];
                                                  }
                                                  
@@ -823,6 +887,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
         if ( [self hasActiveOperations: operations] ) {
             //[spinner startAnimating];
         } else {
+            //[self setupConfigurationAndRosterWithRunId:@"5ag"];
              [self checkConnectionWithUser];
             //[spinner stopAnimating];
         }
@@ -857,7 +922,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
                                              for (NSDictionary *someStudent in students) {
                                                  
                                                  
-                                                 PlayerDataPoint *pdp = [self insertPlayerDataPointWithColor:[someStudent objectForKey:@"color"] WithLabel:[someStudent objectForKey:@"lable"] WithPatch:nil WithRfid:[someStudent objectForKey:@"rfid_tag"] WithScore:[NSNumber numberWithInt:0] WithId:[someStudent objectForKey:@"_id"]];
+                                                 PlayerDataPoint *pdp = [self insertPlayerDataPointWithColor:[someStudent objectForKey:@"color"] WithLabel:[someStudent objectForKey:@"label"] WithPatch:nil WithRfid:[someStudent objectForKey:@"rfid_tag"] WithScore:[NSNumber numberWithInt:0] WithId:[someStudent objectForKey:@"_id"]];
                                                  
                                                  [configurationInfo addPlayersObject:pdp];
                                              }
@@ -898,28 +963,42 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     
 }
 
+
 #pragma mark CORE DATA INSERTS
 
--(PatchInfo *)insertPatchInfoWithPatchId: (NSString *)patch_id withRichness:(float) richness withRichnessPerSecond: (float)richness_per_second withRichnessPerMinute:(float)richness_per_minute {
+-(PatchInfo *)insertPatchInfoWithPatchId: (NSString *)patch_id WithPatchLabel:(NSString *)patch_label WithReaderId:(float)reader_id withQuality:(NSString*)quality withQualityPerSecond: (float)quality_per_second withQualityPerMinute:(float)quality_per_minute WithRiskLabel:(NSString*)risk_label WithRiskPercentPerSecond:(float)risk_percent_per_second {
     
     PatchInfo *pi = [NSEntityDescription insertNewObjectForEntityForName:@"PatchInfo"
                                                   inManagedObjectContext:self.managedObjectContext];
     
     pi.patch_id = patch_id;
-    pi.richness = richness;
-    pi.richness_per_second = richness_per_second;
-    pi.richness_per_minute = richness_per_minute;
+    pi.reader_id = reader_id;
+    pi.patch_label = patch_label;
+    pi.quality = quality;
+    pi.quality_per_minute = quality_per_minute;
+    pi.quality_per_second = quality_per_second;
+    pi.risk_percent_per_second = risk_percent_per_second;
     
     return pi;
 }
 
--(ConfigurationInfo *)insertConfigurationWithRunId: (NSString *)run_id withHarvestCalculatorBoutLengthInMinutes:(float)harvest_calculator_bout_length_in_minutes {
+
+
+-(ConfigurationInfo *)insertConfigurationWithRunId: (NSString *)run_id withHarvestCalculatorBoutLengthInMinutes:(float)harvest_calculator_bout_length_in_minutes WithMaximumHarvest:(float)maximum_harvest WithPredationPenalty: (float)predation_penalty_length_in_seconds WithProperingThreshold: (float)prospering_threshold WithStravingThreshold: (float)starving_threshold {
+
     
     ConfigurationInfo *ci = [NSEntityDescription insertNewObjectForEntityForName:@"ConfigurationInfo"
                                                   inManagedObjectContext:self.managedObjectContext];
     
     ci.run_id = run_id;
     ci.harvest_calculator_bout_length_in_minutes = harvest_calculator_bout_length_in_minutes;
+    //ci.maximum_harvest = maximum_harvest;
+    ci.maximum_harvest = 3000;
+    ci.prospering_threshold = 270;
+    ci.starving_threshold = 240;
+    ci.predation_penalty_length_in_seconds = predation_penalty_length_in_seconds;
+//    ci.prospering_threshold = prospering_threshold;
+//    ci.starving_threshold = starving_threshold;
     ci.players = nil;
 
     return ci;
@@ -929,10 +1008,9 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     PlayerDataPoint *pdp = [NSEntityDescription insertNewObjectForEntityForName:@"PlayerDataPoint"
                                                          inManagedObjectContext:self.managedObjectContext];
     pdp.color = color;
-    pdp.label = label;
     pdp.currentPatch = patch;
     pdp.rfid_tag = rfid_tag;
-    pdp.score = score;
+    pdp.score = [NSNumber numberWithInt:240];
     pdp.player_id = player_id;
     
     
@@ -1160,8 +1238,13 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"localdb.sqlite"];
     
     NSError *error = nil;
+    
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
+                             [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
+    
     persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error])
+    if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error])
     {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();

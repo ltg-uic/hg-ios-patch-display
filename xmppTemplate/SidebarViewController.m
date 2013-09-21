@@ -2,6 +2,7 @@
 #import "SidebarViewController.h"
 #import "SWRevealViewController.h"
 #import "GraphViewController.h"
+#import "MapViewController.h"
 #import "SideBarCell.h"
 
 @interface SidebarViewController () {
@@ -33,7 +34,7 @@
         
         onlineImage  = [UIImage imageNamed:@"on"];
         offlineImage = [UIImage imageNamed:@"off"];
-        
+        _controllerMap = [[NSMutableDictionary alloc] init];
         //self.appDelegate.xmppBaseNewMessageDelegate = self;
     }
     return self;
@@ -43,7 +44,7 @@
 {
     [super viewDidLoad];
     
-    _menuItems = @[@"viz_item", @"map_item", @"graph_item",  @"settings_title_item", @"login_item", @"blank_item"];
+    _menuItems = @[@"viz_item", @"map_item",  @"settings_title_item", @"login_item", @"blank_item"];
     self.clearsSelectionOnViewWillAppear = NO;
 }
 
@@ -94,6 +95,8 @@
     } else {
         xmppUsername = @"PRESS HERE TO LOGIN";
     }
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark - XMPP New Message Delegate
@@ -142,6 +145,68 @@
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
         return cell;
     }
+    
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    
+    // Grab a handle to the reveal controller, as if you'd do with a navigtion controller via self.navigationController.
+    SWRevealViewController *revealController = self.revealViewController;
+    
+    // We know the frontViewController is a NavigationController
+    UINavigationController *frontNavigationController = (id)revealController.frontViewController;  // <-- we know it is a NavigationController
+    NSInteger row = indexPath.row;
+    
+	// Here you'd implement some of your own logic... I simply take for granted that the first row (=0) corresponds to the "FrontViewController".
+	if (row == 1)
+	{
+		// Now let's see if we're not attempting to swap the current frontViewController for a new instance of ITSELF, which'd be highly redundant.
+        if ( ![frontNavigationController.topViewController isKindOfClass:[MapViewController class]] )
+        {
+            
+            MapViewController *frontViewController = [[MapViewController alloc] init];
+			UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:frontViewController];
+			[revealController setFrontViewController:navigationController animated:YES];
+
+        }
+		// Seems the user attempts to 'switch' to exactly the same controller he came from!
+		else
+		{
+			[revealController revealToggle:self];
+		}
+	}
+    
+	// ... and the second row (=1) corresponds to the "MapViewController".
+	else if (row == 2)
+	{
+		// Now let's see if we're not attempting to swap the current frontViewController for a new instance of ITSELF, which'd be highly redundant.
+        if ( ![frontNavigationController.topViewController isKindOfClass:[GraphViewController class]] )
+        {
+            
+           // GraphViewController *graphViewController = [_controllerMap objectForKey:@"graphController"];
+            
+           // if( graphViewController == nil ) {
+                UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPad"
+                                                                         bundle: nil];
+                   GraphViewController *graphViewController = (GraphViewController *)[mainStoryboard instantiateViewControllerWithIdentifier: @"graphViewController"];
+                
+                //[_controllerMap setObject:graphViewController forKey:@"graphViewController"];
+                
+           // }
+            
+			UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:graphViewController];
+			[revealController setFrontViewController:navigationController animated:YES];
+		}
+        
+		// Seems the user attempts to 'switch' to exactly the same controller he came from!
+		else
+		{
+			[revealController revealToggle:self];
+		}
+	}
+    
+    
 }
 
 - (AppDelegate *)appDelegate
