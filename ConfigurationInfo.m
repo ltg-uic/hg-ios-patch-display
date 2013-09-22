@@ -1,8 +1,8 @@
 //
 //  ConfigurationInfo.m
-//  hg-ios-class-display
+//  hg-ios-patch-display
 //
-//  Created by Anthony Perritano on 9/18/13.
+//  Created by Anthony Perritano on 9/21/13.
 //  Copyright (c) 2013 Learning Technologies Group. All rights reserved.
 //
 
@@ -21,5 +21,6 @@
 @dynamic starving_threshold;
 @dynamic patches;
 @dynamic players;
+@dynamic bots;
 
 @end

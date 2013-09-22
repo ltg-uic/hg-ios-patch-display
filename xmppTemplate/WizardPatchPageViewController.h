@@ -14,8 +14,6 @@
 }
 
 @property (nonatomic, retain) ConfigurationInfo *configurationInfo;
-@property (nonatomic, retain) NSString *choosen_student;
-- (IBAction)chooseStudent:(id)sender;
 
 @end
 

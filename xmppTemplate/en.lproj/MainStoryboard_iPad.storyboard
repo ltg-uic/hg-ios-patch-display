@@ -277,10 +277,10 @@
             </objects>
             <point key="canvasLocation" x="112" y="1723"/>
         </scene>
-        <!--Map View Controller - Harvest Map-->
+        <!--Patch View Controller - Harvest Map-->
         <scene sceneID="UXG-m4-02P">
             <objects>
-                <viewController storyboardIdentifier="mapViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="k2h-ak-l4V" customClass="MapViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mapViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="k2h-ak-l4V" customClass="PatchViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="kJL-LV-jcc"/>
                         <viewControllerLayoutGuide type="bottom" id="Z8N-LY-DjD"/>
@@ -299,36 +299,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gxr-GN-VVz" customClass="PatchMapUIView">
-                                <rect key="frame" x="385" y="133" width="205" height="205"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F8H-As-UTc" customClass="PatchMapUIView">
-                                <rect key="frame" x="65" y="133" width="205" height="205"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JUL-ig-5t4" customClass="PatchMapUIView">
-                                <rect key="frame" x="65" y="448" width="205" height="205"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="odp-aS-pmx" customClass="PatchMapUIView">
-                                <rect key="frame" x="385" y="448" width="205" height="205"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="chJ-eE-fvJ" customClass="PatchMapUIView">
-                                <rect key="frame" x="705" y="448" width="205" height="205"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
-                            <view contentMode="center" horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NpP-BK-9tl" customClass="PatchMapUIView">
-                                <rect key="frame" x="705" y="133" width="205" height="205"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
@@ -340,12 +310,6 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <outlet property="revealButtonItem" destination="88A-lT-JdK" id="W89-oD-1Yc"/>
-                        <outletCollection property="patchUIViews" destination="gxr-GN-VVz" id="Uoq-9L-cSM"/>
-                        <outletCollection property="patchUIViews" destination="F8H-As-UTc" id="WBP-ea-YVT"/>
-                        <outletCollection property="patchUIViews" destination="JUL-ig-5t4" id="Tlb-Zh-Rds"/>
-                        <outletCollection property="patchUIViews" destination="odp-aS-pmx" id="1Up-7M-bPC"/>
-                        <outletCollection property="patchUIViews" destination="chJ-eE-fvJ" id="dwM-sl-jUF"/>
-                        <outletCollection property="patchUIViews" destination="NpP-BK-9tl" id="2H8-M4-Snd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iyr-XE-cvq" userLabel="First Responder" sceneMemberID="firstResponder"/>

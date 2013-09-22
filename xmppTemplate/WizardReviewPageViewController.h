@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BotInfo.h"
 
 @interface WizardReviewPageViewController : UIViewController {
     
@@ -15,7 +16,7 @@
 }
 
 @property (nonatomic, retain) ConfigurationInfo *configurationInfo;
-@property (nonatomic, retain) NSString *choosen_student;
+@property (nonatomic, retain) BotInfo *botInfo;
 
 
 - (IBAction)cancelLogin:(id)sender;

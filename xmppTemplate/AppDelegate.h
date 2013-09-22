@@ -44,6 +44,7 @@
 @property (strong, nonatomic) NSArray *playerDataPoints;
 @property (strong, nonatomic) NSMutableDictionary *colorMap;
 @property (strong, nonatomic) ConfigurationInfo *configurationInfo;
+@property (strong, nonatomic) NSMutableArray *bots;
 @property (nonatomic) float refreshRate;
 
 

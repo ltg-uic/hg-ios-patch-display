@@ -1,7 +1,7 @@
 
 #import "SidebarViewController.h"
 #import "SWRevealViewController.h"
-#import "MapViewController.h"
+#import "PatchViewController.h"
 #import "SideBarCell.h"
 
 @interface SidebarViewController () {
@@ -161,10 +161,10 @@
 	if (row == 1)
 	{
 		// Now let's see if we're not attempting to swap the current frontViewController for a new instance of ITSELF, which'd be highly redundant.
-        if ( ![frontNavigationController.topViewController isKindOfClass:[MapViewController class]] )
+        if ( ![frontNavigationController.topViewController isKindOfClass:[PatchViewController class]] )
         {
             
-            MapViewController *frontViewController = [[MapViewController alloc] init];
+            PatchViewController *frontViewController = [[PatchViewController alloc] init];
 			UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:frontViewController];
 			[revealController setFrontViewController:navigationController animated:YES];
 

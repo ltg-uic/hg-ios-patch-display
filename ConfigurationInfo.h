@@ -1,8 +1,8 @@
 //
 //  ConfigurationInfo.h
-//  hg-ios-class-display
+//  hg-ios-patch-display
 //
-//  Created by Anthony Perritano on 9/18/13.
+//  Created by Anthony Perritano on 9/21/13.
 //  Copyright (c) 2013 Learning Technologies Group. All rights reserved.
 //
 
@@ -21,6 +21,7 @@
 @property (nonatomic) float starving_threshold;
 @property (nonatomic, retain) NSSet *patches;
 @property (nonatomic, retain) NSSet *players;
+@property (nonatomic, retain) NSSet *bots;
 @end
 
 @interface ConfigurationInfo (CoreDataGeneratedAccessors)
@@ -34,5 +35,10 @@
 - (void)removePlayersObject:(PlayerDataPoint *)value;
 - (void)addPlayers:(NSSet *)values;
 - (void)removePlayers:(NSSet *)values;
+
+- (void)addBotsObject:(NSManagedObject *)value;
+- (void)removeBotsObject:(NSManagedObject *)value;
+- (void)addBots:(NSSet *)values;
+- (void)removeBots:(NSSet *)values;
 
 @end

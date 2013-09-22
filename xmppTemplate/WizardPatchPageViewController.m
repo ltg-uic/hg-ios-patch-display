@@ -12,9 +12,10 @@
 #import "WizardPatchCell.h"
 #import "AFNetworking.h"
 #import "UIColor-Expanded.h"
+#import "BotInfo.h"
 
 @interface WizardPatchPageViewController () {
-    NSArray *playerPoints;
+    NSArray *bots;
 }
 
 @end
@@ -44,11 +45,11 @@
 {
     [super viewDidLoad];
     
-    playerPoints = [[_configurationInfo players] allObjects];
+    bots = [[_configurationInfo bots] allObjects];
     
-    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"player_id" ascending:YES selector:@selector(caseInsensitiveCompare:)];
+    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(caseInsensitiveCompare:)];
     
-    playerPoints = [playerPoints sortedArrayUsingDescriptors:@[sort]];
+    bots = [bots sortedArrayUsingDescriptors:@[sort]];
 	
 }
 
@@ -57,7 +58,7 @@
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [playerPoints count];
+    return [bots count];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -69,18 +70,13 @@
     static NSString *CellIdentifier = @"wizcell_patch";
     WizardPatchCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    
-    
-    
     if (cell == nil) {
         cell = [[WizardPatchCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    PlayerDataPoint *pdp = [playerPoints objectAtIndex:indexPath.row];
-    
-    //
-    //    // Configure the cell.
-    cell.patchUILabel.text = [pdp.player_id capitalizedString] ;
+    BotInfo *bot = [bots objectAtIndex:indexPath.row];
+
+    cell.patchUILabel.text = [bot.name capitalizedString];
     
     return cell;
 }
@@ -106,21 +102,15 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"review_segue"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        PlayerDataPoint *pdp = [playerPoints objectAtIndex:indexPath.row];
-        _choosen_student = [pdp player_id];
+        BotInfo *bot = [bots objectAtIndex:indexPath.row];
         WizardReviewPageViewController *destViewController = segue.destinationViewController;
         [destViewController setConfigurationInfo:_configurationInfo];
-        [destViewController setChoosen_student:_choosen_student];
+        [destViewController setBotInfo:bot];
     }
 }
 
-
-
-
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (IBAction)cancelLogin:(id)sender {

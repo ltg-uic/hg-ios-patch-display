@@ -18,6 +18,7 @@
 #import "AFNetworking.h"
 #import "UIColor-Expanded.h"
 #import "SidebarViewController.h"
+#import "BotInfo.h"
 
 // Log levels: off, error, warn, info, verbose
 #if DEBUG
@@ -775,17 +776,19 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
                                                      [ci addPatchesObject:pi];
                                                  }
                                                  
-                                                 NSArray *bots = [someConfig objectForKey:@"bots"];
+                                                 NSArray *bs = [someConfig objectForKey:@"bots"];
                                                  
-                                                 for (NSString *someBot in bots) {
+                                                 for (NSString *someBot in bs) {
                                                      
                                                      if ([someBot rangeOfString:@"patch" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+                                                         
+                                                         
                                                          NSArray *botNames = [someBot componentsSeparatedByString:@"#"];
                                                          NSString *botId = [botNames objectAtIndex:1];
                                                          
-                                                         PlayerDataPoint *pdp = [self insertPlayerDataPointWithColor:@"#db773c" WithLabel:[botId capitalizedString] WithPatch:nil WithRfid:@"rfid" WithScore:[NSNumber numberWithInt:0] WithId:botId];
+                                                         BotInfo *bi = [self insertBotWithName:botId WithXMPPName:someBot];
                                                          
-                                                         [ci addPlayersObject:pdp];
+                                                         [ci addBotsObject:bi];
                                                      } else {
                                                          NSLog(@"not a patch");
                                                      }
@@ -795,6 +798,8 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
                                                  
                                                  
                                                  [self.managedObjectContext save:nil];
+                                                 
+                                                  [operationQueue addOperation:[self pullRosterDataWithRunId:ci WithCompletionBlock:nil]];
                                                  
                                              }
                                          }
@@ -811,6 +816,44 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     [operationQueue addObserver: self forKeyPath: @"operations" options: NSKeyValueObservingOptionNew context: NULL];
    
 }
+
+-(NSOperation *)pullRosterDataWithRunId:(ConfigurationInfo *)configurationInfo WithCompletionBlock:(void(^)())block  {
+    NSURL *url = [NSURL URLWithString:[@"http://ltg.evl.uic.edu:9000/runs/" stringByAppendingString:configurationInfo.run_id]];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    //AFNetworking asynchronous url request
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation
+                                         JSONRequestOperationWithRequest:request
+                                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, id responseObject)
+                                         {
+                                             NSLog(@"JSON RESULT %@", responseObject);
+                                             
+                                             
+                                             NSDictionary *data = [responseObject objectForKey:@"data"];
+                                             NSArray *students = [data objectForKey:@"roster"];
+                                             
+                                             for (NSDictionary *someStudent in students) {
+                                                 
+                                                 
+                                                 PlayerDataPoint *pdp = [self insertPlayerDataPointWithColor:[someStudent objectForKey:@"color"] WithLabel:[someStudent objectForKey:@"label"] WithPatch:nil WithRfid:[someStudent objectForKey:@"rfid_tag"] WithScore:[NSNumber numberWithInt:0] WithId:[someStudent objectForKey:@"_id"]];
+                                                 
+                                                 [configurationInfo addPlayersObject:pdp];
+                                             }
+                                             
+                                             
+                                             [self.managedObjectContext save:nil];
+                                             
+                                         }
+                                         failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id responseObject)
+                                         {
+                                             NSLog(@"Request Failed: %@, %@", error, error.userInfo);
+                                         }];
+    
+    
+    
+    return operation;
+}
+
 
 - (void) observeValueForKeyPath:(NSString *) keyPath ofObject:(id) object change:(NSDictionary *) change context:(void *) context {
     if ( object == operationQueue && [@"operations" isEqual: keyPath]
@@ -896,6 +939,18 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     ci.players = nil;
 
     return ci;
+}
+
+
+-(BotInfo *)insertBotWithName:(NSString *)name WithXMPPName:(NSString *)xmppName {
+    BotInfo *bi = [NSEntityDescription insertNewObjectForEntityForName:@"BotInfo"
+                                                         inManagedObjectContext:self.managedObjectContext];
+    
+    bi.name = name;
+    bi.xmppName = xmppName;
+    
+    return bi;
+    
 }
 
 -(PlayerDataPoint *)insertPlayerDataPointWithColor:(NSString *)color WithLabel:(NSString *)label WithPatch:(NSString *)patch WithRfid:(NSString *)rfid_tag WithScore:(NSNumber *)score WithId: (NSString *)player_id {
