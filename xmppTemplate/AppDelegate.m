@@ -57,7 +57,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     [self clearUserDefaults];
     
     //[self pullConfigurationData];
-    //Failed to instantiate the default view controller for UIMainStoryboardFile 'MainStoryboard_iPad' - perhaps the designated entry point is not set?[self setupTestUser];
+ 
     //[self setupConfigurationAndRosterWithRunId:@"5ag"];
     //[self customizeGlobalAppearance];
     
@@ -65,9 +65,10 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     isMultiUserChat = YES;
     //setup test data
     
+    [self deleteAllObjects:@"ConfigurationInfo"];
     [self deleteAllObjects:@"PlayerDataPoint"];
     [self deleteAllObjects:@"PatchInfo"];
-    [self deleteAllObjects:@"ConfigurationInfo"];
+   
     
     
     [self pullConfigurationData];
@@ -88,7 +89,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     
     // Setup the XMPP stream
     
-	[self setupStream];
+
     
 
     return YES;
@@ -130,7 +131,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 }
 
 -(void)checkConnectionWithUser {
-    if (![self connect])
+    if (![self connect] || _xmppStream == nil )
 	{
 		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_SEC);
 		dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -238,9 +239,9 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     
     if( isMultiUserChat ) {
     //setup of room
-        XMPPJID *roomJID = [XMPPJID jidWithString:ROOM_JID];
-    
-        _xmppRoom = [[XMPPRoom alloc] initWithRoomStorage:self jid:roomJID];
+        
+        _xmppRoom = [[XMPPRoom alloc] initWithRoomStorage:self jid:[self getRoomJID]];
+
         [_xmppRoom  activate:_xmppStream];
         [_xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
     }
@@ -254,6 +255,12 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 	// You may need to alter these settings depending on the server you're connecting to
 	allowSelfSignedCertificates = NO;
 	allowSSLHostNameMismatch = NO;
+}
+
+-(XMPPJID *) getRoomJID {
+    NSString *roomJID = [[NSUserDefaults standardUserDefaults] objectForKey:kXMPProomJID];
+    XMPPJID *fullRoomJID = [XMPPJID jidWithString:[roomJID stringByAppendingString:XMPP_CONFERENCE_TAIL]];
+    return fullRoomJID;
 }
 
 - (void)teardownStream
@@ -555,6 +562,9 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
                 NSString *arrival_patch_id = [payload objectForKey:@"arrival"];
                 NSString *departure_patch_id = [payload objectForKey:@"departure"];
                 
+                
+                //[NSUserDefaults]
+                
                  PlayerDataPoint *player = [[_playerDataPoints filteredArrayUsingPredicate: [NSPredicate predicateWithFormat:@"rfid_tag == %@", rfid_tag] ] objectAtIndex:0];
                 
                
@@ -695,7 +705,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 
 #pragma CONFIGURATION SETUP
 
--(void)setupConfigurationAndRosterWithRunId:(NSString *)run_id {
+-(void)setupConfigurationAndRosterWithRunId:(NSString *)run_id WithPatchId: (NSString*)currentPatchId {
     
     _configurationInfo = [self getConfigurationInfoWithRunId:run_id];
     
@@ -703,11 +713,27 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     
     _playerDataPoints  = [[[_configurationInfo players] allObjects] sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     _patcheInfos = [[_configurationInfo patches] allObjects];
+    
+    NSArray *searches = [[[_configurationInfo patches] allObjects] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"patch_id == %@", currentPatchId]];
+    if( searches != nil && searches.count > 0 ) {
+        _currentPatchInfo = [searches objectAtIndex:0];
+    }
+    
+    
     _refreshRate = .2f;
     
     [_playerDataDelegate playerDataDidUpdate];
     
     [self setupPlayerMap];
+    
+    if( _xmppStream == nil ) {
+        [self setupStream];
+    } else {
+        [_xmppRoom deactivate];
+        _xmppRoom = [[XMPPRoom alloc] initWithRoomStorage:self jid:[self getRoomJID]];
+        [_xmppRoom  activate:_xmppStream];
+        
+    }
 
 }
 
@@ -1069,7 +1095,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     
     [self importCoreDataDefaultGraphWithConfigurationInfo:ci];
     
-    [self setupConfigurationAndRosterWithRunId:@"test-run"];
+    //[self setupConfigurationAndRosterWithRunId:@"test-run"];
     
     
 //    [self insertDataPointWith:@"Obama" To:@"Biden" WithMessage:@"Don't fuck up"];

@@ -46,10 +46,10 @@
     <fetchRequest name="configurationInfoWithRunId" entity="ConfigurationInfo" predicateString="run_id == run_id"/>
     <fetchRequest name="playerDataPointWithRFID" entity="PlayerDataPoint" predicateString="rfid == rfid"/>
     <elements>
+        <element name="BotInfo" positionX="160" positionY="192" width="128" height="73"/>
         <element name="ConfigurationInfo" positionX="351" positionY="-99" width="128" height="178"/>
         <element name="EventInfo" positionX="0" positionY="0" width="128" height="105"/>
         <element name="PatchInfo" positionX="-18" positionY="-315" width="128" height="180"/>
         <element name="PlayerDataPoint" positionX="214" positionY="-378" width="128" height="135"/>
-        <element name="BotInfo" positionX="160" positionY="192" width="128" height="73"/>
     </elements>
 </model>

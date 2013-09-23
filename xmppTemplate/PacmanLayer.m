@@ -186,7 +186,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
             CGContextClosePath(ctx);
     
             /* Filling it */
-            CGContextSetFillColorWithColor(ctx, [UIColor blackColor].CGColor);
+            CGContextSetFillColorWithColor(ctx, [UIColor whiteColor].CGColor);
             CGContextFillPath(ctx);
     }
  

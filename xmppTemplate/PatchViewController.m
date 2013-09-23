@@ -16,7 +16,7 @@
 
 @interface PatchViewController () {
     NSArray *patchInfos;
-    NSMutableDictionary *playerPacmanView;
+    NSMutableDictionary *playerPacmanViews;
 }
 
 @end
@@ -27,7 +27,7 @@
     if(self = [super initWithCoder:aDecoder])
     {
         self.appDelegate.playerDataDelegate = self;
-        playerPacmanView = [[NSMutableDictionary alloc] init];
+        playerPacmanViews = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -36,7 +36,7 @@
 #pragma mark - PLAYER DATA DELEGATE
 
 -(void)playerDataDidUpdate {
-    
+    [self drawCircleGrid];
 }
 
 #pragma mark - Drawing methods
@@ -92,7 +92,7 @@
         //
         //[pinPointGroups addObject:pg];
         
-        [playerPacmanView setObject:dv forKey:player.rfid_tag];
+        [playerPacmanViews setObject:dv forKey:player.rfid_tag];
         
         [self.view addSubview:dv];
         
@@ -140,7 +140,7 @@
 
 -(void)adjustPlayer: (NSString *)rfid isOn:(BOOL)isOn {
     
-    PacmanView *pc = [playerPacmanView objectForKey:rfid];
+    PacmanView *pc = [playerPacmanViews objectForKey:rfid];
     
     
     

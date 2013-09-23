@@ -48,14 +48,22 @@
     
     
     NSString *xmppId = _botInfo.xmppName;
+    NSString *currentPatchId = [_botInfo.name lowercaseString];
     
     [[NSUserDefaults standardUserDefaults] setObject:[xmppId stringByAppendingString:XMPP_TAIL] forKey:kXMPPmyJID];
     
     [[NSUserDefaults standardUserDefaults] setObject:xmppId forKey:kXMPPmyPassword];
     
+    [[NSUserDefaults standardUserDefaults] setObject:_configurationInfo.run_id forKey:kXMPProomJID];
+
+    //[[NSUserDefaults standardUserDefaults] setObject:_botInfo.name forKey:current_patch_id];
+    
     [self dismissViewControllerAnimated:YES completion:^(void){
         
-        [[self appDelegate] setupConfigurationAndRosterWithRunId:_configurationInfo.run_id];
+        [[self appDelegate] setupConfigurationAndRosterWithRunId:_configurationInfo.run_id WithPatchId:currentPatchId];
+        
+        
+        
         [[self appDelegate] disconnect];
         [[self appDelegate] connect];
     }];

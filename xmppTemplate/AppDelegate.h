@@ -41,6 +41,7 @@
 
 
 @property (strong, nonatomic) NSArray *patcheInfos;
+@property (strong, nonatomic) PatchInfo *currentPatchInfo;
 @property (strong, nonatomic) NSArray *playerDataPoints;
 @property (strong, nonatomic) NSMutableDictionary *colorMap;
 @property (strong, nonatomic) ConfigurationInfo *configurationInfo;
@@ -62,7 +63,7 @@
 - (void)goOnline;
 - (void)goOffline;
 
--(void)setupConfigurationAndRosterWithRunId:(NSString *)run_id;
+-(void)setupConfigurationAndRosterWithRunId:(NSString *)run_id WithPatchId:(NSString*)current_patchId;
 
 
 @end
