@@ -542,7 +542,6 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 
 	}
 }
-
 -(void)processXmppMessage: (NSString *)msg {
     SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
     
@@ -554,30 +553,43 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
         NSString *event = [jsonObjects objectForKey:@"event"];
         
         if( event != nil) {
-            if( [event isEqualToString:@"rfid_update"] ){
+            if( [event isEqualToString:@"game_reset"] ) {
+                _isGameRunning = NO;
+                
+                for (PlayerDataPoint *pdp in _playerDataPoints) {
+                    pdp.score = [NSNumber numberWithInt:0];
+                }
+                
+                [self.managedObjectContext save:nil];
+                
+                _hasReset = YES;
+            } else if([event isEqualToString:@"game_start"] ) {
+                _isGameRunning = YES;
+                _hasReset = NO;
+            } else if( [event isEqualToString:@"game_stop"] ) {
+                _isGameRunning = NO;
+                _hasReset = NO;
+            } else if( [event isEqualToString:@"rfid_update"] && (_isGameRunning == YES) ){
                 
                 
                 NSDictionary *payload = [jsonObjects objectForKey:@"payload"];
-                NSString *rfid_tag = [payload objectForKey:@"id"];
+                NSString *player_id = [payload objectForKey:@"id"];
                 NSString *arrival_patch_id = [payload objectForKey:@"arrival"];
                 NSString *departure_patch_id = [payload objectForKey:@"departure"];
                 
+                PlayerDataPoint *player = [[_playerDataPoints filteredArrayUsingPredicate: [NSPredicate predicateWithFormat:@"player_id == %@", player_id] ] objectAtIndex:0];
                 
-                //[NSUserDefaults]
                 
-                 PlayerDataPoint *player = [[_playerDataPoints filteredArrayUsingPredicate: [NSPredicate predicateWithFormat:@"rfid_tag == %@", rfid_tag] ] objectAtIndex:0];
-                
-               
                 if( [arrival_patch_id isEqualToString:@"null"] && [departure_patch_id isEqualToString:@"null"]) {
-                    [patchPlayerMap setObject:[NSNull null] forKey:player.rfid_tag];
+                    [patchPlayerMap setObject:[NSNull null] forKey:player.player_id];
                     player.currentPatch = nil;
                 } else if( ![arrival_patch_id isEqualToString:@"null"] ) {
-                    [patchPlayerMap setObject:arrival_patch_id forKey:player.rfid_tag];
+                    [patchPlayerMap setObject:arrival_patch_id forKey:player.player_id];
                     player.currentPatch = arrival_patch_id;
                 }
-            
+                
                 if( [departure_patch_id isEqual: [NSNull null]  ] ) {
-                    [patchPlayerMap setObject: [NSNull null] forKey:player.rfid_tag];
+                    [patchPlayerMap setObject: [NSNull null] forKey:player.player_id];
                 }
                 
                 [_playerDataDelegate playerDataDidUpdateWithArrival:arrival_patch_id WithDeparture:departure_patch_id WithPlayerDataPoint:player];
@@ -588,10 +600,9 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     }
     
     NSLog(@"message %@", msg);
-
-
+    
+    
 }
-
 
 
 - (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence {
@@ -744,9 +755,9 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
         
         for( PlayerDataPoint *pdp in _playerDataPoints ) {
             if( pdp.currentPatch == nil ) {
-                [patchPlayerMap setObject:[NSNull null] forKey:pdp.rfid_tag];
+                [patchPlayerMap setObject:[NSNull null] forKey:pdp.player_id];
             } else {
-                [patchPlayerMap setObject:pdp.currentPatch forKey:pdp.rfid_tag];
+                [patchPlayerMap setObject:pdp.currentPatch forKey:pdp.player_id];
             }
         }
     }
@@ -955,13 +966,13 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     
     ci.run_id = run_id;
     ci.harvest_calculator_bout_length_in_minutes = harvest_calculator_bout_length_in_minutes;
-    //ci.maximum_harvest = maximum_harvest;
-    ci.maximum_harvest = 3000;
-    ci.prospering_threshold = 270;
-    ci.starving_threshold = 240;
+    ci.maximum_harvest = maximum_harvest;
+    //ci.maximum_harvest = 3000;
+    //ci.prospering_threshold = 270;
+    //ci.starving_threshold = 240;
     ci.predation_penalty_length_in_seconds = predation_penalty_length_in_seconds;
-//    ci.prospering_threshold = prospering_threshold;
-//    ci.starving_threshold = starving_threshold;
+    ci.prospering_threshold = prospering_threshold;
+    ci.starving_threshold = starving_threshold;
     ci.players = nil;
 
     return ci;
