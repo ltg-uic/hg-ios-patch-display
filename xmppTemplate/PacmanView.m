@@ -191,6 +191,66 @@
 	[CATransaction commit];
 }
 
+- (void) collapseLeave {
+	
+	
+	animating = NO;
+	
+	
+	[CATransaction begin];
+	[CATransaction setAnimationDuration:3.5];
+	[CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+	[CATransaction setCompletionBlock:^{
+		
+        [self afterCollapseLeave];
+	}];
+	[self _animateToAngle:PAC_KILL];
+	[CATransaction commit];
+}
+
+
+-(void) afterCollapseLeave {
+    
+    // pl.startAngle = PAC_OPEN;
+    //pl.endAngle = 360.0 - PAC_OPEN;
+    
+    [_pacmanLayer setValue:[NSNumber numberWithFloat:0] forKey:@"startAngle"];
+    [_pacmanLayer setValue:[NSNumber numberWithFloat:360] forKey:@"endAngle"];
+    
+     [self resetPacmanView];
+//    _pacmanLayer.isSMILE = NO;
+//    //pacman.pacmanLayer.pacColor =  [UIColor whiteColor];
+//    _pacmanLayer.isFILLED = NO;
+//    _pacmanLayer.isSMILE = NO;
+//    _pacmanLayer.isHAPPY = NO;
+//    _pacmanLayer.isON = NO;
+//
+//    [_pacmanLayer display];
+//    [_pacmanLayer setNeedsDisplay];
+//    [self setNeedsDisplay];
+//
+//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC));
+//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//       
+//     });
+//    
+
+}
+
+-(void)resetPacmanView {
+    
+    self.pacmanLayer.isSMILE = NO;
+    //pacman.pacmanLayer.pacColor =  [UIColor whiteColor];
+    self.pacmanLayer.isFILLED = NO;
+    self.pacmanLayer.isSMILE = NO;
+    self.pacmanLayer.isHAPPY = NO;
+    self.pacmanLayer.isON = NO;
+    self.player_id = nil;
+    [self animate:NO];
+    self.hidden = YES;
+    //[pacman setNeedsDisplay];
+}
+
 -(void) afterCollapse {
     
    // pl.startAngle = PAC_OPEN;

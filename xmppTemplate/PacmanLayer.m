@@ -177,8 +177,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 	CGContextFillPath(ctx);
     
     
-    CGFloat _innerRadius = radius - 3.0f;
-    
     if( _isFILLED == NO ) {
     
             CGContextMoveToPoint(ctx, centerPoint.x, centerPoint.y);

@@ -553,7 +553,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
         NSString *event = [jsonObjects objectForKey:@"event"];
         
         if( event != nil) {
-            if( [event isEqualToString:@"game_reset"] ) {
+            if( [event isEqualToString:@"bout_reset"] ) {
                 _isGameRunning = NO;
                 
                 for (PlayerDataPoint *pdp in _playerDataPoints) {
@@ -563,12 +563,15 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
                 [self.managedObjectContext save:nil];
                 
                 _hasReset = YES;
-            } else if([event isEqualToString:@"game_start"] ) {
+                [_playerDataDelegate boutReset];
+            } else if([event isEqualToString:@"bout_start"] ) {
                 _isGameRunning = YES;
                 _hasReset = NO;
-            } else if( [event isEqualToString:@"game_stop"] ) {
+                [_playerDataDelegate boutStart];
+            } else if( [event isEqualToString:@"bout_stop"] ) {
                 _isGameRunning = NO;
                 _hasReset = NO;
+                [_playerDataDelegate boutStop];
             } else if( [event isEqualToString:@"rfid_update"] && (_isGameRunning == YES) ){
                 
                 
@@ -577,22 +580,16 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
                 NSString *arrival_patch_id = [payload objectForKey:@"arrival"];
                 NSString *departure_patch_id = [payload objectForKey:@"departure"];
                 
-                PlayerDataPoint *player = [[_playerDataPoints filteredArrayUsingPredicate: [NSPredicate predicateWithFormat:@"player_id == %@", player_id] ] objectAtIndex:0];
-                
-                
-                if( [arrival_patch_id isEqualToString:@"null"] && [departure_patch_id isEqualToString:@"null"]) {
-                    [patchPlayerMap setObject:[NSNull null] forKey:player.player_id];
-                    player.currentPatch = nil;
-                } else if( ![arrival_patch_id isEqualToString:@"null"] ) {
-                    [patchPlayerMap setObject:arrival_patch_id forKey:player.player_id];
-                    player.currentPatch = arrival_patch_id;
+                if( [arrival_patch_id isEqualToString:_currentPatchInfo.patch_id]) {
+
+                    [_playerDataDelegate playerDidArrive:player_id];
                 }
                 
-                if( [departure_patch_id isEqual: [NSNull null]  ] ) {
-                    [patchPlayerMap setObject: [NSNull null] forKey:player.player_id];
+                if( [departure_patch_id isEqual:_currentPatchInfo.patch_id] ) {
+                    [_playerDataDelegate playerDidLeave:player_id];
                 }
                 
-                [_playerDataDelegate playerDataDidUpdateWithArrival:arrival_patch_id WithDeparture:departure_patch_id WithPlayerDataPoint:player];
+                
             }
             
             
@@ -733,7 +730,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     
     _refreshRate = .2f;
     
-    [_playerDataDelegate playerDataDidUpdate];
+    //[_playerDataDelegate playerDataDidUpdate];
     
     [self setupPlayerMap];
     

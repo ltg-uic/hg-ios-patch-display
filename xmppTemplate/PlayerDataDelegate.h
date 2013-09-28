@@ -10,11 +10,9 @@
 
 @protocol PlayerDataDelegate
 
-
-
--(void)playerDataDidUpdate;
-
--(void)playerDataDidUpdateWithArrival:(NSString *)arrival_patch_id WithDeparture:(NSString *)departure_patch_id WithPlayerDataPoint:(PlayerDataPoint *)playerDataPoint;
-
-
+-(void)playerDidLeave: (NSString *)player_id;
+-(void)playerDidArrive: (NSString *)player_id;
+-(void)boutReset;
+-(void)boutStart;
+-(void)boutStop;
 @end
