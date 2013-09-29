@@ -19,6 +19,7 @@
     NSMutableArray *playerPacmanViews;
     NSMutableArray *playersAtPatch;
     NSTimer *timer;
+    int extraPlayersNum;
 }
 
 @end
@@ -44,52 +45,127 @@
 
 -(void)playerDidLeave: (NSString *)player_id {
     
+    if( ![playersAtPatch containsObject:player_id] )
+        return;
+    
     NSArray *pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == %@", player_id]];
     
+    
+    PacmanView *oldPacmanView;
     if( pacmansSearch.count > 0 ) {
-        PacmanView *pacman = [pacmansSearch objectAtIndex:0];
+        oldPacmanView = [pacmansSearch objectAtIndex:0];
+        [playersAtPatch removeObject:player_id];
+        [self updateCalorieLabel];
+        [oldPacmanView collapseLeave];
+        [oldPacmanView setNeedsDisplay];
+        [oldPacmanView.pacmanLayer setNeedsDisplay];
         
-        [pacman collapseLeave];
-         [playersAtPatch removeObject:player_id];
+        [NSTimer scheduledTimerWithTimeInterval: 1.8
+                                          target: self
+                                        selector: @selector(checkForFreeSlot)
+                                        userInfo: nil
+                                         repeats: NO];
+
         
     }
     
+
+    
+    
+    
+ }
+
+
+-(void)checkForFreeSlot {
+    if( extraPlayersNum > 0 ) {
+        
+        
+        //find all the pacmanviews with player ids
+        NSArray *pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id != nil"]];
+        
+            NSArray *pacViewPlayerIds = [pacmansSearch valueForKey:@"player_id"];
+            
+            //find all the player ids in players patch
+            
+            for( NSString *p_id in playersAtPatch) {
+                if( ![pacViewPlayerIds containsObject:p_id] ) {
+                    pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == nil"]];
+                    PacmanView *pacman = [pacmansSearch objectAtIndex:0];
+                    
+                    [self showPlayerChompingWith:p_id With:pacman];
+                    
+                    
+                    [pacman setNeedsDisplay];
+                    [self.view setNeedsDisplay];
+                    pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id != nil"]];
+                    
+                    [self updateExtraPlayerLabel: extraPlayersNum-1];
+                    return;
+                }
+                
+            }
+
+        
+        
+    }
+    
+
+
 }
 
+
 -(void)playerDidArrive: (NSString *)player_id {
+    
+    if( [playersAtPatch containsObject:player_id ])
+        return;
+    
     [playersAtPatch addObject:player_id];
     
     NSArray *pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == nil"]];
-    NSArray *players = [[self.appDelegate playerDataPoints] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == %@",player_id ]];
+   
 
-    if( pacmansSearch.count > 0 && players.count > 0 ) {
+    if( pacmansSearch.count > 0 ) {
         PacmanView *pacman = [pacmansSearch objectAtIndex:0];
-        NSString *aColor = [[players objectAtIndex:0] color];
-         UIColor *hexColor = [UIColor colorWithHexString:[aColor stringByReplacingOccurrencesOfString:@"#" withString:@""]];
-        pacman.hidden = NO;
-        pacman.player_id = player_id;
-        pacman.pacmanLayer.pacColor =  hexColor;
-
-        pacman.layer.shadowColor = [[UIColor blackColor] CGColor];
-        pacman.layer.shadowOffset = CGSizeMake(1.0, 1.0);
-        pacman.layer.shadowOpacity = 0.30;
-        [pacman animate:YES];
-        [pacman setNeedsDisplay];
+        [self showPlayerChompingWith:player_id With:pacman];
         [self updateCalorieLabel];
-        
+    } else {
+        pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id != nil"]];
+        [self updateExtraPlayerLabel: abs(pacmansSearch.count-playersAtPatch.count)];
     }
+}
+
+-(void)showPlayerChompingWith:(NSString*)player_id With:(PacmanView*)pacman {
+    
+    NSArray *players = [[self.appDelegate playerDataPoints] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == %@",player_id ]];
+    
+    PlayerDataPoint *pdp = [players objectAtIndex:0];
+    NSString *aColor = pdp.color;
+    UIColor *hexColor = [UIColor colorWithHexString:[aColor stringByReplacingOccurrencesOfString:@"#" withString:@""]];
+    pacman.hidden = NO;
+    pacman.player_id = player_id;
+    pacman.color = hexColor;
+    pacman.pacmanLayer.pacColor =  hexColor;
+    
+    pacman.layer.shadowColor = [[UIColor blackColor] CGColor];
+    pacman.layer.shadowOffset = CGSizeMake(1.0, 1.0);
+    pacman.layer.shadowOpacity = 0.30;
+   
+    [pacman animate:YES];
+    [pacman setNeedsDisplay];
+   
+
 }
 
 -(void)boutReset {
     for (PacmanView *pacman in playerPacmanViews) {
         [pacman resetPacmanView];
-        
     }
+    [self updateExtraPlayerLabel:0];
 }
 
 -(void)boutStart {
     [self updateCalorieLabel];
-    [self drawCircleGrid];
+    [self updateExtraPlayerLabel:0];
 }
 
 -(void)boutStop {
@@ -97,6 +173,18 @@
         [pacmanView animate:NO];
     }
     [self updateCalorieLabel];
+}
+
+
+-(void)updateExtraPlayerLabel:(int) numOfExtraPlayers {
+    
+    extraPlayersNum = numOfExtraPlayers;
+    if ( numOfExtraPlayers == 0 ) {
+        extraPlayersLabel.text = @"";
+    } else {
+        extraPlayersLabel.text = [NSString stringWithFormat:@"+%d others not shown",extraPlayersNum];
+    }
+
 }
 
 -(void)playerDataDidUpdateWithArrival:(NSString *)arrival_patch_id WithDeparture:(NSString *)departure_patch_id WithPlayerDataPoint:(PlayerDataPoint *)playerDataPoint {
@@ -120,7 +208,7 @@
     float xOffset = 6.0f;
     
     
-    int numOfViews = 14;
+    int numOfViews = 1;
     
     
     
@@ -197,7 +285,7 @@
     // Set the gesture
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     
-    //[self drawCircleGrid];
+    [self drawCircleGrid];
 }
 
 - (AppDelegate *)appDelegate

@@ -11,6 +11,7 @@
 
 @interface PatchViewController : UIViewController<PlayerDataDelegate> {
     __weak IBOutlet UILabel *currentYieldLabel;
+    __weak IBOutlet UILabel *extraPlayersLabel;
 }
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *revealButtonItem;
 @property(nonatomic) BOOL hasInitialized;

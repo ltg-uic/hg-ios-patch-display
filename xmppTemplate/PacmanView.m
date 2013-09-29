@@ -38,6 +38,7 @@
         self.backgroundColor = [UIColor clearColor];
         self.opaque = YES;
         animating = NO;
+        _isFinished = NO;
         
         PacmanLayer *pl = [[PacmanLayer alloc] init];
         pl.needsDisplayOnBoundsChange = YES;
@@ -195,14 +196,16 @@
 	
 	
 	animating = NO;
-	
+	_isFinished = NO;
 	
 	[CATransaction begin];
-	[CATransaction setAnimationDuration:3.5];
+	[CATransaction setAnimationDuration:1.5];
 	[CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
 	[CATransaction setCompletionBlock:^{
 		
         [self afterCollapseLeave];
+      
+        
 	}];
 	[self _animateToAngle:PAC_KILL];
 	[CATransaction commit];
@@ -217,30 +220,14 @@
     [_pacmanLayer setValue:[NSNumber numberWithFloat:0] forKey:@"startAngle"];
     [_pacmanLayer setValue:[NSNumber numberWithFloat:360] forKey:@"endAngle"];
     
-     [self resetPacmanView];
-//    _pacmanLayer.isSMILE = NO;
-//    //pacman.pacmanLayer.pacColor =  [UIColor whiteColor];
-//    _pacmanLayer.isFILLED = NO;
-//    _pacmanLayer.isSMILE = NO;
-//    _pacmanLayer.isHAPPY = NO;
-//    _pacmanLayer.isON = NO;
-//
-//    [_pacmanLayer display];
-//    [_pacmanLayer setNeedsDisplay];
-//    [self setNeedsDisplay];
-//
-//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC));
-//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-//       
-//     });
-//    
+    [self resetPacmanView];
+       _isFinished = YES;
 
 }
 
 -(void)resetPacmanView {
     
     self.pacmanLayer.isSMILE = NO;
-    //pacman.pacmanLayer.pacColor =  [UIColor whiteColor];
     self.pacmanLayer.isFILLED = NO;
     self.pacmanLayer.isSMILE = NO;
     self.pacmanLayer.isHAPPY = NO;
@@ -248,7 +235,7 @@
     self.player_id = nil;
     [self animate:NO];
     self.hidden = YES;
-    //[pacman setNeedsDisplay];
+ 
 }
 
 -(void) afterCollapse {

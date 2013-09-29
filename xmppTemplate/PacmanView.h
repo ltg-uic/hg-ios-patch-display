@@ -18,10 +18,12 @@
 }
 
 @property (nonatomic, assign) BOOL isON;
+@property (nonatomic, assign) BOOL isFinished;
 @property (nonatomic, assign) BOOL isFILLED;
 @property (nonatomic, retain) UIColor *color;
 @property (nonatomic, retain) PacmanLayer *pacmanLayer;
 @property (nonatomic, retain) NSString *player_id;
+
 
 - (void) animate:(BOOL)animate;
 - (void) collapse;
