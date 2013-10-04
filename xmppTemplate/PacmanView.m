@@ -211,6 +211,24 @@
 	[CATransaction commit];
 }
 
+- (void) collapseDead {
+	
+	
+	animating = NO;
+	
+	
+	[CATransaction begin];
+	[CATransaction setAnimationDuration:1.5];
+	[CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+	[CATransaction setCompletionBlock:^{
+		
+        [self afterCollapseLeave];
+        
+        
+	}];
+	[self _animateToAngle:PAC_KILL];
+	[CATransaction commit];
+}
 
 -(void) afterCollapseLeave {
     

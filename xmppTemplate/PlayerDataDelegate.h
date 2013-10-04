@@ -12,6 +12,7 @@
 
 -(void)playerDidLeave: (NSString *)player_id;
 -(void)playerDidArrive: (NSString *)player_id;
+-(void)playerDidGetKilled: (NSString *)player_id;
 -(void)boutReset;
 -(void)boutStart;
 -(void)boutStop;

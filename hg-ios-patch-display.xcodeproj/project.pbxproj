@@ -16,6 +16,7 @@
 		700C3A9E16042944005A9E34 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700C3A9D16042944005A9E34 /* CFNetwork.framework */; };
 		700C3B2E16042BBD005A9E34 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700C3B2D16042BBD005A9E34 /* Security.framework */; };
 		700C3B3A160430DA005A9E34 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700C3B39160430DA005A9E34 /* SystemConfiguration.framework */; };
+		701231C917F8E82C001E4E20 /* hawk.caf in Resources */ = {isa = PBXBuildFile; fileRef = 701231C817F8E82C001E4E20 /* hawk.caf */; };
 		7012E55A17EA9A51004433BC /* PatchInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7012E55917EA9A51004433BC /* PatchInfo.m */; };
 		7012E56317EAA85D004433BC /* PlayerDataPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 7012E56217EAA85D004433BC /* PlayerDataPoint.m */; };
 		7013B01117E4CF9C00194BA5 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7013B01017E4CF9C00194BA5 /* SWRevealViewController.m */; };
@@ -198,6 +199,7 @@
 		700C3A9D16042944005A9E34 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		700C3B2D16042BBD005A9E34 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		700C3B39160430DA005A9E34 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		701231C817F8E82C001E4E20 /* hawk.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = hawk.caf; sourceTree = "<group>"; };
 		7012E55817EA9A51004433BC /* PatchInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PatchInfo.h; sourceTree = "<group>"; };
 		7012E55917EA9A51004433BC /* PatchInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PatchInfo.m; sourceTree = "<group>"; };
 		7012E56117EAA85D004433BC /* PlayerDataPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerDataPoint.h; sourceTree = "<group>"; };
@@ -713,6 +715,7 @@
 			children = (
 				703D86FF17D938C900523417 /* awareness.xcassets */,
 				70AFBDD317C7E9DF00868211 /* sidebar_icons.xcassets */,
+				701231C817F8E82C001E4E20 /* hawk.caf */,
 				70CD9B3517B49BF2008625BF /* logon_sound.aif */,
 				70CEF76317C8443A00ED0CBE /* Default-568h@2x.png */,
 				700C3A59160427DA005A9E34 /* hg-ios-patch-display-Info.plist */,
@@ -1719,6 +1722,7 @@
 				705BED3D17EA64140042D313 /* README.txt in Resources */,
 				70CD9B3617B49BF2008625BF /* logon_sound.aif in Resources */,
 				707FE67417F6707900DBEB25 /* patch_images.xcassets in Resources */,
+				701231C917F8E82C001E4E20 /* hawk.caf in Resources */,
 				705BED4217EA64140042D313 /* build-libidn.sh in Resources */,
 				70CEF76417C8443A00ED0CBE /* Default-568h@2x.png in Resources */,
 				700C3A6E160427DA005A9E34 /* MainStoryboard_iPad.storyboard in Resources */,

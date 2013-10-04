@@ -552,6 +552,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
         
         NSString *event = [jsonObjects objectForKey:@"event"];
         
+        
         if( event != nil) {
             if( [event isEqualToString:@"bout_reset"] ) {
                 _isGameRunning = NO;
@@ -572,6 +573,16 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
                 _isGameRunning = NO;
                 _hasReset = NO;
                 [_playerDataDelegate boutStop];
+            } else if( [event isEqualToString:@"kill_bunny"] && (_isGameRunning == YES) ) {
+                NSString *patchKilledAt = [jsonObjects objectForKey:@"destination"];
+                if( [patchKilledAt isEqualToString:_currentPatchInfo.patch_id]) {
+                    NSDictionary *payload = [jsonObjects objectForKey:@"payload"];
+
+                     NSString *player_id = [payload objectForKey:@"id"];
+                     [_playerDataDelegate playerDidGetKilled:player_id];
+                }
+                
+
             } else if( [event isEqualToString:@"rfid_update"] && (_isGameRunning == YES) ){
                 
                 
