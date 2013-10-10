@@ -157,8 +157,8 @@
 		706857E717C51A2600BF8AAF /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 706857DD17C51A2600BF8AAF /* AFXMLRequestOperation.m */; };
 		706857E817C51A2600BF8AAF /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 706857DF17C51A2600BF8AAF /* UIImageView+AFNetworking.m */; };
 		706857EA17C51A7400BF8AAF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 706857E917C51A7400BF8AAF /* MobileCoreServices.framework */; };
-		707FE67417F6707900DBEB25 /* patch_images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 707FE67317F6707900DBEB25 /* patch_images.xcassets */; };
 		70879019160BB0A50099DD5D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70879018160BB0A50099DD5D /* CoreData.framework */; };
+		70A2E567180753D900218EB8 /* patch.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70A2E566180753D900218EB8 /* patch.xcassets */; };
 		70AAC26A17C325460018A84B /* WizardClassPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70AAC26917C325460018A84B /* WizardClassPageViewController.m */; };
 		70AFBDD017C7E4B700868211 /* SidebarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70AFBDCF17C7E4B700868211 /* SidebarViewController.m */; };
 		70AFBDD417C7E9DF00868211 /* sidebar_icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70AFBDD317C7E9DF00868211 /* sidebar_icons.xcassets */; };
@@ -564,8 +564,8 @@
 		706857DE17C51A2600BF8AAF /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		706857DF17C51A2600BF8AAF /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		706857E917C51A7400BF8AAF /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		707FE67317F6707900DBEB25 /* patch_images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = patch_images.xcassets; sourceTree = "<group>"; };
 		70879018160BB0A50099DD5D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		70A2E566180753D900218EB8 /* patch.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = patch.xcassets; sourceTree = "<group>"; };
 		70A97B6E1618E73900148530 /* XMPPBaseNewMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPBaseNewMessageDelegate.h; sourceTree = "<group>"; };
 		70AAC26817C325460018A84B /* WizardClassPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WizardClassPageViewController.h; sourceTree = "<group>"; };
 		70AAC26917C325460018A84B /* WizardClassPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WizardClassPageViewController.m; sourceTree = "<group>"; };
@@ -715,6 +715,7 @@
 			children = (
 				703D86FF17D938C900523417 /* awareness.xcassets */,
 				70AFBDD317C7E9DF00868211 /* sidebar_icons.xcassets */,
+				70A2E566180753D900218EB8 /* patch.xcassets */,
 				701231C817F8E82C001E4E20 /* hawk.caf */,
 				70CD9B3517B49BF2008625BF /* logon_sound.aif */,
 				70CEF76317C8443A00ED0CBE /* Default-568h@2x.png */,
@@ -722,7 +723,6 @@
 				70CE9A1517ED6E3500D1083B /* InfoPlist.strings */,
 				700C3A5D160427DA005A9E34 /* main.m */,
 				700C3A5F160427DA005A9E34 /* hg-ios-patch-display-Prefix.pch */,
-				707FE67317F6707900DBEB25 /* patch_images.xcassets */,
 			);
 			name = supporting;
 			sourceTree = "<group>";
@@ -1719,9 +1719,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70A2E567180753D900218EB8 /* patch.xcassets in Resources */,
 				705BED3D17EA64140042D313 /* README.txt in Resources */,
 				70CD9B3617B49BF2008625BF /* logon_sound.aif in Resources */,
-				707FE67417F6707900DBEB25 /* patch_images.xcassets in Resources */,
 				701231C917F8E82C001E4E20 /* hawk.caf in Resources */,
 				705BED4217EA64140042D313 /* build-libidn.sh in Resources */,
 				70CEF76417C8443A00ED0CBE /* Default-568h@2x.png in Resources */,

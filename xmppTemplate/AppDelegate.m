@@ -953,9 +953,9 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     PatchInfo *pi = [NSEntityDescription insertNewObjectForEntityForName:@"PatchInfo"
                                                   inManagedObjectContext:self.managedObjectContext];
     
-    pi.patch_id = patch_id;
+    pi.patch_id = [patch_id uppercaseString];
     pi.reader_id = reader_id;
-    pi.patch_label = patch_label;
+    pi.patch_label = [patch_label uppercaseString];
     pi.quality = quality;
     pi.quality_per_minute = quality_per_minute;
     pi.quality_per_second = quality_per_second;
@@ -972,7 +972,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     ConfigurationInfo *ci = [NSEntityDescription insertNewObjectForEntityForName:@"ConfigurationInfo"
                                                   inManagedObjectContext:self.managedObjectContext];
     
-    ci.run_id = run_id;
+    ci.run_id = [run_id uppercaseString];
     ci.harvest_calculator_bout_length_in_minutes = harvest_calculator_bout_length_in_minutes;
     ci.maximum_harvest = maximum_harvest;
     //ci.maximum_harvest = 3000;
@@ -1005,7 +1005,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     pdp.currentPatch = patch;
     pdp.rfid_tag = rfid_tag;
     pdp.score = [NSNumber numberWithInt:240];
-    pdp.player_id = player_id;
+    pdp.player_id = [player_id uppercaseString];
     
     
     UIColor *hexColor = [UIColor colorWithHexString:[color stringByReplacingOccurrencesOfString:@"#" withString:@""]];

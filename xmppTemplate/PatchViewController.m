@@ -40,7 +40,7 @@
 #pragma mark - PLAYER DATA DELEGATE
 
 -(void)playerDataDidUpdate {
-  
+    
 }
 
 -(void)playerDidLeave: (NSString *)player_id {
@@ -60,16 +60,19 @@
         [oldPacmanView setNeedsDisplay];
         [oldPacmanView.pacmanLayer setNeedsDisplay];
         
-        [NSTimer scheduledTimerWithTimeInterval: 2.2
-                                          target: self
-                                        selector: @selector(checkForFreeSlot)
-                                        userInfo: nil
-                                         repeats: NO];
-
+        [NSTimer scheduledTimerWithTimeInterval: 3.0
+                                         target: self
+                                       selector: @selector(checkForFreeSlot)
+                                       userInfo: nil
+                                        repeats: NO];
         
+        
+    } else {
+        [playersAtPatch removeObject:player_id];
+        [self updateExtraPlayerLabel: playersAtPatch.count];
     }
     
- }
+}
 
 -(void)playerDidGetKilled: (NSString *)player_id {
     [self hawkKillWithPlayerId:player_id];
@@ -85,8 +88,8 @@
     [playersAtPatch addObject:player_id];
     
     NSArray *pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == nil"]];
-   
-
+    
+    
     if( pacmansSearch.count > 0 ) {
         PacmanView *pacman = [pacmansSearch objectAtIndex:0];
         [self showPlayerChompingWith:player_id With:pacman];
@@ -112,11 +115,11 @@
     pacman.layer.shadowColor = [[UIColor blackColor] CGColor];
     pacman.layer.shadowOffset = CGSizeMake(1.0, 1.0);
     pacman.layer.shadowOpacity = 0.30;
-   
+    
     [pacman animate:YES];
     [pacman setNeedsDisplay];
-   
-
+    
+    
 }
 
 -(void)checkForFreeSlot {
@@ -133,16 +136,19 @@
         for( NSString *p_id in playersAtPatch) {
             if( ![pacViewPlayerIds containsObject:p_id] ) {
                 pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == nil"]];
-                PacmanView *pacman = [pacmansSearch objectAtIndex:0];
                 
-                [self showPlayerChompingWith:p_id With:pacman];
-                
-                
-                [pacman setNeedsDisplay];
-                [self.view setNeedsDisplay];
-                pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id != nil"]];
-                
-                [self updateExtraPlayerLabel: extraPlayersNum-1];
+                if( pacmansSearch.count > 0 ) {
+                    PacmanView *pacman = [pacmansSearch objectAtIndex:0];
+                    
+                    [self showPlayerChompingWith:p_id With:pacman];
+                    
+                    
+                    [pacman setNeedsDisplay];
+                    [self.view setNeedsDisplay];
+                    pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id != nil"]];
+                    
+                    [self updateExtraPlayerLabel: extraPlayersNum-1];
+                }
                 return;
             }
             
@@ -174,7 +180,7 @@
         [self updateCalorieLabel];
         
         [pacmanView animate:NO];
-         pacmanView.pacmanLayer.isFILLED = YES;
+        pacmanView.pacmanLayer.isFILLED = YES;
         pacmanView.pacmanLayer.isSMILE = YES;
         pacmanView.pacmanLayer.isHAPPY = NO;
         [pacmanView setNeedsDisplay];
@@ -226,7 +232,7 @@
     } else {
         extraPlayersLabel.text = [NSString stringWithFormat:@"+%d others not shown",extraPlayersNum];
     }
-
+    
 }
 
 -(void)playerDataDidUpdateWithArrival:(NSString *)arrival_patch_id WithDeparture:(NSString *)departure_patch_id WithPlayerDataPoint:(PlayerDataPoint *)playerDataPoint {
@@ -274,10 +280,10 @@
         
         
         pacman = [[PacmanView alloc] initWithFrame:rect];
-
+        
         [pacman resetPacmanView];
         [playerPacmanViews addObject:pacman];
-       
+        
         [pacman.pacmanLayer setNeedsDisplay];
         circleX = circleWidth + circleX + xOffset;
         

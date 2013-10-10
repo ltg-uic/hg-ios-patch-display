@@ -76,7 +76,7 @@
     
     BotInfo *bot = [bots objectAtIndex:indexPath.row];
 
-    cell.patchUILabel.text = [bot.name capitalizedString];
+    cell.patchUILabel.text = [bot.name uppercaseString];
     
     return cell;
 }
