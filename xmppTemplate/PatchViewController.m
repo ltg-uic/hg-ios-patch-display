@@ -15,7 +15,6 @@
 #import <AudioToolbox/AudioToolbox.h>
 
 @interface PatchViewController () {
-    NSArray *patchInfos;
     NSMutableArray *playerPacmanViews;
     NSMutableArray *playersAtPatch;
     NSTimer *timer;
@@ -209,11 +208,13 @@
         [pacman resetPacmanView];
     }
     [self updateExtraPlayerLabel:0];
+    [self showAcorns:NO];
 }
 
 -(void)boutStart {
     [self updateCalorieLabel];
     [self updateExtraPlayerLabel:0];
+    [self showAcorns:YES];
 }
 
 -(void)boutStop {
@@ -223,6 +224,19 @@
     [self updateCalorieLabel];
 }
 
+-(void)showAcorns: (BOOL)update {
+    if( update ) {
+        int numOfAcorns = (self.appDelegate.currentPatchInfo.quality_per_minute/ 300);
+        for (int i = 0; i <= numOfAcorns; i++) {
+            UIImageView *ac = acorns[i];
+            ac.hidden = NO;
+        }
+    } else {
+        for( UIImageView *acorn in acorns ) {
+            acorn.hidden = YES;
+        }
+    }
+}
 
 -(void)updateExtraPlayerLabel:(int) numOfExtraPlayers {
     
@@ -336,6 +350,9 @@
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     
     [self drawCircleGrid];
+    
+    
+    
 }
 
 - (AppDelegate *)appDelegate

@@ -33,6 +33,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     NSOperationQueue *operationQueue;
     NSTimer *timer;
     NSMutableDictionary *patchPlayerMap;
+    NSMutableArray *killList;
 
 
 }
@@ -573,13 +574,19 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
                 _isGameRunning = NO;
                 _hasReset = NO;
                 [_playerDataDelegate boutStop];
-            } else if( [event isEqualToString:@"kill_bunny"] && (_isGameRunning == YES) ) {
+            } else if( [event isEqualToString:@"resurrect_tag"]) {
+                NSDictionary *payload = [jsonObjects objectForKey:@"payload"];
+                NSString *player_id = [payload objectForKey:@"id"];
+                [killList removeObject:player_id];
+
+            } else if( [event isEqualToString:@"kill_tag"] && (_isGameRunning == YES) ) {
                 NSString *patchKilledAt = [jsonObjects objectForKey:@"destination"];
                 if( [patchKilledAt isEqualToString:_currentPatchInfo.patch_id]) {
                     NSDictionary *payload = [jsonObjects objectForKey:@"payload"];
 
                      NSString *player_id = [payload objectForKey:@"id"];
                      [_playerDataDelegate playerDidGetKilled:player_id];
+                    [killList addObject:player_id];
                 }
                 
 
@@ -821,25 +828,25 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
                                                      [ci addPatchesObject:pi];
                                                  }
                                                  
-                                                 NSArray *bs = [someConfig objectForKey:@"bots"];
-                                                 
-                                                 for (NSString *someBot in bs) {
-                                                     
-                                                     if ([someBot rangeOfString:@"patch" options:NSCaseInsensitiveSearch].location != NSNotFound) {
-                                                         
-                                                         
-                                                         NSArray *botNames = [someBot componentsSeparatedByString:@"#"];
-                                                         NSString *botId = [botNames objectAtIndex:1];
-                                                         
-                                                         BotInfo *bi = [self insertBotWithName:botId WithXMPPName:someBot];
-                                                         
-                                                         [ci addBotsObject:bi];
-                                                     } else {
-                                                         NSLog(@"not a patch");
-                                                     }
-                                                     
-                                                 
-                                                 }
+//                                                 NSArray *bs = [someConfig objectForKey:@"bots"];
+//                                                 
+//                                                 for (NSString *someBot in bs) {
+//                                                     
+//                                                     if ([someBot rangeOfString:@"patch" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+//                                                         
+//                                                         
+//                                                         NSArray *botNames = [someBot componentsSeparatedByString:@"#"];
+//                                                         NSString *botId = [botNames objectAtIndex:1];
+//                                                         
+//                                                         BotInfo *bi = [self insertBotWithName:botId WithXMPPName:someBot];
+//                                                         
+//                                                         [ci addBotsObject:bi];
+//                                                     } else {
+//                                                         NSLog(@"not a patch");
+//                                                     }
+//                                                     
+//                                                 
+//                                                 }
                                                  
                                                  
                                                  [self.managedObjectContext save:nil];
@@ -847,6 +854,12 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
                                                   [operationQueue addOperation:[self pullRosterDataWithRunId:ci WithCompletionBlock:nil]];
                                                  
                                              }
+                                             
+                                             [operationQueue addOperationWithBlock:^{
+                                                 
+                                                 [self checkConnectionWithUser];
+                                                 
+                                             }];
                                          }
                                          
                                          failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id responseObject)
@@ -858,8 +871,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     [operationQueue setMaxConcurrentOperationCount:1];
     [operationQueue addOperation:operation1];
 
-    [operationQueue addObserver: self forKeyPath: @"operations" options: NSKeyValueObservingOptionNew context: NULL];
-   
+
 }
 
 -(NSOperation *)pullRosterDataWithRunId:(ConfigurationInfo *)configurationInfo WithCompletionBlock:(void(^)())block  {
@@ -899,29 +911,6 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     return operation;
 }
 
-
-- (void) observeValueForKeyPath:(NSString *) keyPath ofObject:(id) object change:(NSDictionary *) change context:(void *) context {
-    if ( object == operationQueue && [@"operations" isEqual: keyPath]
-        ) {
-        NSArray *operations = [change objectForKey:NSKeyValueChangeNewKey];
-        
-        if ( [self hasActiveOperations: operations] ) {
-            //[spinner startAnimating];
-        } else {
-            [self checkConnectionWithUser];
-        }
-    }
-}
-
-- (BOOL) hasActiveOperations:(NSArray *) operations {
-    for ( id operation in operations ) {
-        if ( [operation isExecuting] && ! [operation isCancelled] ) {
-            return YES;
-        }
-    }
-    
-    return NO;
-}
 
 
 #pragma mark CORE DATA DELETES
@@ -1130,6 +1119,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 -(void)clearUserDefaults {
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kXMPPmyJID];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kXMPPmyPassword];
+    killList = [[NSMutableArray alloc] init];
 }
 
 #pragma mark XMPPRoomStorage PROTOCOL

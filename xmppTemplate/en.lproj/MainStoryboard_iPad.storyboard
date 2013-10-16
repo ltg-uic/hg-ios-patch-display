@@ -338,19 +338,19 @@
                                 <color key="textColor" red="0.08235294118" green="0.4941176471" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="patch_acorn_01" translatesAutoresizingMaskIntoConstraints="NO" id="138-d2-6Sa">
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="patch_acorn_01" translatesAutoresizingMaskIntoConstraints="NO" id="138-d2-6Sa">
                                 <rect key="frame" x="772" y="573" width="51" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="patch_acorn_03" translatesAutoresizingMaskIntoConstraints="NO" id="du6-2d-9Mb">
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="patch_acorn_03" translatesAutoresizingMaskIntoConstraints="NO" id="du6-2d-9Mb">
                                 <rect key="frame" x="831" y="577" width="51" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="patch_acorn_02" translatesAutoresizingMaskIntoConstraints="NO" id="eIq-NM-BXF">
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="patch_acorn_02" translatesAutoresizingMaskIntoConstraints="NO" id="eIq-NM-BXF">
                                 <rect key="frame" x="893" y="575" width="53" height="43"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="patch_acorn_04" translatesAutoresizingMaskIntoConstraints="NO" id="pJn-9I-yKp">
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="patch_acorn_04" translatesAutoresizingMaskIntoConstraints="NO" id="pJn-9I-yKp">
                                 <rect key="frame" x="959" y="578" width="46" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -367,6 +367,10 @@
                         <outlet property="currentYieldLabel" destination="ZSC-0I-nSe" id="wpb-9I-JSd"/>
                         <outlet property="extraPlayersLabel" destination="cFf-RQ-feq" id="atb-Vv-TN4"/>
                         <outlet property="revealButtonItem" destination="88A-lT-JdK" id="W89-oD-1Yc"/>
+                        <outletCollection property="acorns" destination="138-d2-6Sa" id="Gkp-HM-wCS"/>
+                        <outletCollection property="acorns" destination="du6-2d-9Mb" id="5lT-ng-Ews"/>
+                        <outletCollection property="acorns" destination="eIq-NM-BXF" id="tqh-xj-O4P"/>
+                        <outletCollection property="acorns" destination="pJn-9I-yKp" id="oSG-eD-WKR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iyr-XE-cvq" userLabel="First Responder" sceneMemberID="firstResponder"/>
