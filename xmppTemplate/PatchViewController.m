@@ -44,8 +44,30 @@
 
 -(void)playerDidLeave: (NSString *)player_id {
     
-    if( ![playersAtPatch containsObject:player_id] )
+    if( [[self killList] containsObject:player_id] ) {
+        NSArray *pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == %@", player_id]];
+        
+        
+        PacmanView *oldPacmanView;
+        if( pacmansSearch.count > 0 ) {
+            oldPacmanView = [pacmansSearch objectAtIndex:0];
+            [playersAtPatch removeObject:player_id];
+            [self updateCalorieLabel];
+            [oldPacmanView collapseLeave];
+            [oldPacmanView setNeedsDisplay];
+            [oldPacmanView.pacmanLayer setNeedsDisplay];
+            
+            [NSTimer scheduledTimerWithTimeInterval: 3.0
+                                             target: self
+                                           selector: @selector(checkForFreeSlot)
+                                           userInfo: nil
+                                            repeats: NO];
+            
+            return;
+        }
+    } else if( ![playersAtPatch containsObject:player_id] ) {
         return;
+    }
     
     NSArray *pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == %@", player_id]];
     
@@ -73,16 +95,47 @@
     
 }
 
+-(void)playerDidGetResurrected: (NSString *)player_id {
+    NSArray *pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == %@",player_id]];
+    
+    if( pacmansSearch.count > 0 ) {
+        [playersAtPatch addObject:player_id];
+        PacmanView *pacman = [pacmansSearch objectAtIndex:0];
+        
+        [self showPlayerChompingWith:player_id With:pacman];
+        [self updateCalorieLabel];
+    }
+
+}
+
+
 -(void)playerDidGetKilled: (NSString *)player_id {
-    [self hawkKillWithPlayerId:player_id];
+    
+     NSArray *pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == %@",player_id]];
+    
+    if( pacmansSearch.count > 0 ) {
+        [playersAtPatch removeObject:player_id];
+        [self hawkKillWithPlayerId:player_id];
+    }
 }
 
 
 
 -(void)playerDidArrive: (NSString *)player_id {
     
-    if( [playersAtPatch containsObject:player_id ])
+    if( [[self killList] containsObject:player_id] ) {
+        NSArray *pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == %@",player_id]];
+        
+        if( pacmansSearch.count == 0 ) {
+            NSArray *pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == nil"]];
+        
+            PacmanView *pacman = [pacmansSearch objectAtIndex:0];
+            [self showPlayerDeadWith:player_id With:pacman];
+            return;
+        }
+    } else if( [playersAtPatch containsObject:player_id] ) {
         return;
+    }
     
     [playersAtPatch addObject:player_id];
     
@@ -110,13 +163,32 @@
     pacman.player_id = player_id;
     pacman.color = hexColor;
     pacman.pacmanLayer.pacColor =  hexColor;
-    
+    pacman.pacmanLayer.isFILLED = NO;
+    pacman.pacmanLayer.isSMILE = NO;
+
     pacman.layer.shadowColor = [[UIColor blackColor] CGColor];
     pacman.layer.shadowOffset = CGSizeMake(1.0, 1.0);
     pacman.layer.shadowOpacity = 0.30;
     
     [pacman animate:YES];
     [pacman setNeedsDisplay];
+    
+    
+}
+
+-(void)showPlayerDeadWith:(NSString*)player_id With:(PacmanView*)pacman {
+    
+    NSArray *players = [[self.appDelegate playerDataPoints] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == %@",player_id ]];
+    
+    PlayerDataPoint *pdp = [players objectAtIndex:0];
+    NSString *aColor = pdp.color;
+    UIColor *hexColor = [UIColor colorWithHexString:[aColor stringByReplacingOccurrencesOfString:@"#" withString:@""]];
+   
+    pacman.hidden = NO;
+    pacman.player_id = player_id;
+    pacman.color = hexColor;
+    pacman.pacmanLayer.pacColor =  hexColor;
+    [pacman die:YES];
     
     
 }
@@ -182,15 +254,18 @@
         pacmanView.pacmanLayer.isFILLED = YES;
         pacmanView.pacmanLayer.isSMILE = YES;
         pacmanView.pacmanLayer.isHAPPY = NO;
+        pacmanView.layer.shadowColor = [[UIColor blackColor] CGColor];
+        pacmanView.layer.shadowOffset = CGSizeMake(1.0, 1.0);
+        pacmanView.layer.shadowOpacity = 0.30;
         [pacmanView setNeedsDisplay];
         
-        NSArray *params = @[pacmanView];
-        
-        [NSTimer scheduledTimerWithTimeInterval: 2
-                                         target: self
-                                       selector: @selector(hawkPlayerDied:)
-                                       userInfo: params
-                                        repeats: NO];
+//        NSArray *params = @[pacmanView];
+//        
+//        [NSTimer scheduledTimerWithTimeInterval: 2
+//                                         target: self
+//                                       selector: @selector(hawkPlayerDied:)
+//                                       userInfo: params
+//                                        repeats: NO];
         
         
     }
@@ -224,10 +299,16 @@
     [self updateCalorieLabel];
 }
 
+-(void)initConnection {
+    [self updateCalorieLabel];
+    [self updateExtraPlayerLabel:0];
+    [self showAcorns:YES];
+}
+
 -(void)showAcorns: (BOOL)update {
     if( update ) {
         int numOfAcorns = (self.appDelegate.currentPatchInfo.quality_per_minute/ 300);
-        for (int i = 0; i <= numOfAcorns; i++) {
+        for (int i = 0; i < numOfAcorns; i++) {
             UIImageView *ac = acorns[i];
             ac.hidden = NO;
         }
@@ -362,9 +443,13 @@
 
 -(NSArray *)playerDataPoints {
     
-    return [[[[self appDelegate] configurationInfo ] players ] allObjects];
+    return [[self appDelegate] playerDataPoints];
 }
 
+-(NSArray *)killList {
+    
+    return [[self appDelegate] killList ];
+}
 
 - (void)didReceiveMemoryWarning
 {

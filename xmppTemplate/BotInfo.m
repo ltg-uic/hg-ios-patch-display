@@ -2,7 +2,7 @@
 //  BotInfo.m
 //  hg-ios-patch-display
 //
-//  Created by Anthony Perritano on 9/21/13.
+//  Created by Anthony Perritano on 10/20/13.
 //  Copyright (c) 2013 Learning Technologies Group. All rights reserved.
 //
 
@@ -12,6 +12,6 @@
 @implementation BotInfo
 
 @dynamic name;
-@dynamic xmppName;
+@dynamic xmpp;
 
 @end

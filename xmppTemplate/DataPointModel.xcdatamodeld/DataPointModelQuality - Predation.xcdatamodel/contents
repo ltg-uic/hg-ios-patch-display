@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3396" systemVersion="12F45" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="BotInfo" representedClassName="BotInfo" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="xmpp" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="ConfigurationInfo" representedClassName="ConfigurationInfo" syncable="YES">
         <attribute name="harvest_calculator_bout_length_in_minutes" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="maximum_harvest" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -7,6 +11,7 @@
         <attribute name="prospering_threshold" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="run_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="starving_threshold" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="bots" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BotInfo" syncable="YES"/>
         <relationship name="patches" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PatchInfo" inverseName="configurationInfo" inverseEntity="PatchInfo" syncable="YES"/>
         <relationship name="players" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PlayerDataPoint" inverseName="configurationInfo" inverseEntity="PlayerDataPoint" syncable="YES"/>
     </entity>
@@ -46,5 +51,6 @@
         <element name="EventInfo" positionX="0" positionY="0" width="0" height="0"/>
         <element name="PatchInfo" positionX="0" positionY="0" width="0" height="0"/>
         <element name="PlayerDataPoint" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="BotInfo" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

@@ -49,6 +49,7 @@
 @property (nonatomic) BOOL isGameRunning;
 @property (nonatomic) BOOL hasReset;
 @property (nonatomic) float refreshRate;
+@property (nonatomic) NSMutableArray *killList;
 
 
 

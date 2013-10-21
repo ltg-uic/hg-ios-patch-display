@@ -2,14 +2,14 @@
 //  ConfigurationInfo.h
 //  hg-ios-patch-display
 //
-//  Created by Anthony Perritano on 9/21/13.
+//  Created by Anthony Perritano on 10/20/13.
 //  Copyright (c) 2013 Learning Technologies Group. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class PatchInfo, PlayerDataPoint;
+@class BotInfo, PatchInfo, PlayerDataPoint;
 
 @interface ConfigurationInfo : NSManagedObject
 
@@ -36,8 +36,8 @@
 - (void)addPlayers:(NSSet *)values;
 - (void)removePlayers:(NSSet *)values;
 
-- (void)addBotsObject:(NSManagedObject *)value;
-- (void)removeBotsObject:(NSManagedObject *)value;
+- (void)addBotsObject:(BotInfo *)value;
+- (void)removeBotsObject:(BotInfo *)value;
 - (void)addBots:(NSSet *)values;
 - (void)removeBots:(NSSet *)values;
 

@@ -13,4 +13,6 @@
 
 - (void)replyMessageTo:(NSString *)from;
 
+-(void)initConnection;
+
 @end

@@ -2,7 +2,7 @@
 //  BotInfo.h
 //  hg-ios-patch-display
 //
-//  Created by Anthony Perritano on 9/21/13.
+//  Created by Anthony Perritano on 10/20/13.
 //  Copyright (c) 2013 Learning Technologies Group. All rights reserved.
 //
 
@@ -13,6 +13,6 @@
 @interface BotInfo : NSManagedObject
 
 @property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSString * xmppName;
+@property (nonatomic, retain) NSString * xmpp;
 
 @end

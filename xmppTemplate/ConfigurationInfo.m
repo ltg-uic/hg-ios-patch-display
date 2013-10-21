@@ -2,11 +2,12 @@
 //  ConfigurationInfo.m
 //  hg-ios-patch-display
 //
-//  Created by Anthony Perritano on 9/21/13.
+//  Created by Anthony Perritano on 10/20/13.
 //  Copyright (c) 2013 Learning Technologies Group. All rights reserved.
 //
 
 #import "ConfigurationInfo.h"
+#import "BotInfo.h"
 #import "PatchInfo.h"
 #import "PlayerDataPoint.h"
 

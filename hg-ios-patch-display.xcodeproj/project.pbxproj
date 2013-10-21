@@ -160,6 +160,8 @@
 		7077DB091808561500B46828 /* PlayerDataPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 7077DB081808561500B46828 /* PlayerDataPoint.m */; };
 		70879019160BB0A50099DD5D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70879018160BB0A50099DD5D /* CoreData.framework */; };
 		70A2E567180753D900218EB8 /* patch.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70A2E566180753D900218EB8 /* patch.xcassets */; };
+		70A3E7B71814AAA9006F718C /* BotInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A3E7B61814AAA9006F718C /* BotInfo.m */; };
+		70A3E7BA1814AAAA006F718C /* ConfigurationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A3E7B91814AAAA006F718C /* ConfigurationInfo.m */; };
 		70AAC26A17C325460018A84B /* WizardClassPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70AAC26917C325460018A84B /* WizardClassPageViewController.m */; };
 		70AFBDD017C7E4B700868211 /* SidebarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70AFBDCF17C7E4B700868211 /* SidebarViewController.m */; };
 		70AFBDD417C7E9DF00868211 /* sidebar_icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70AFBDD317C7E9DF00868211 /* sidebar_icons.xcassets */; };
@@ -175,8 +177,6 @@
 		70DD405717EE475200F1FB18 /* PacmanLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DD405417EE475200F1FB18 /* PacmanLayer.m */; };
 		70DD405817EE475200F1FB18 /* PacmanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DD405617EE475200F1FB18 /* PacmanView.m */; };
 		70DD406217EE764300F1FB18 /* PinPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DD406117EE764300F1FB18 /* PinPoint.m */; };
-		70DD406B17EE7F7D00F1FB18 /* ConfigurationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DD406A17EE7F7D00F1FB18 /* ConfigurationInfo.m */; };
-		70DD406E17EE7FFE00F1FB18 /* BotInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DD406D17EE7FFE00F1FB18 /* BotInfo.m */; };
 		70DF2EA117DE8EC300AFC798 /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DF2EA017DE8EC300AFC798 /* CoreDataTableViewController.m */; };
 		70E866F217C66E76003C5BD2 /* fishhook.c in Sources */ = {isa = PBXBuildFile; fileRef = 70E866F017C66E76003C5BD2 /* fishhook.c */; };
 		70E866F417C66E8F003C5BD2 /* QuietAssertMacros.c in Sources */ = {isa = PBXBuildFile; fileRef = 70E866F317C66E8F003C5BD2 /* QuietAssertMacros.c */; };
@@ -569,6 +569,10 @@
 		7077DB081808561500B46828 /* PlayerDataPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerDataPoint.m; sourceTree = "<group>"; };
 		70879018160BB0A50099DD5D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		70A2E566180753D900218EB8 /* patch.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = patch.xcassets; sourceTree = "<group>"; };
+		70A3E7B51814AAA9006F718C /* BotInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BotInfo.h; sourceTree = "<group>"; };
+		70A3E7B61814AAA9006F718C /* BotInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BotInfo.m; sourceTree = "<group>"; };
+		70A3E7B81814AAAA006F718C /* ConfigurationInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationInfo.h; sourceTree = "<group>"; };
+		70A3E7B91814AAAA006F718C /* ConfigurationInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigurationInfo.m; sourceTree = "<group>"; };
 		70A97B6E1618E73900148530 /* XMPPBaseNewMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPBaseNewMessageDelegate.h; sourceTree = "<group>"; };
 		70AAC26817C325460018A84B /* WizardClassPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WizardClassPageViewController.h; sourceTree = "<group>"; };
 		70AAC26917C325460018A84B /* WizardClassPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WizardClassPageViewController.m; sourceTree = "<group>"; };
@@ -596,10 +600,6 @@
 		70DD405617EE475200F1FB18 /* PacmanView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PacmanView.m; sourceTree = "<group>"; };
 		70DD406017EE764300F1FB18 /* PinPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinPoint.h; sourceTree = "<group>"; };
 		70DD406117EE764300F1FB18 /* PinPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinPoint.m; sourceTree = "<group>"; };
-		70DD406917EE7F7D00F1FB18 /* ConfigurationInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConfigurationInfo.h; path = ../ConfigurationInfo.h; sourceTree = "<group>"; };
-		70DD406A17EE7F7D00F1FB18 /* ConfigurationInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConfigurationInfo.m; path = ../ConfigurationInfo.m; sourceTree = "<group>"; };
-		70DD406C17EE7FFE00F1FB18 /* BotInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BotInfo.h; sourceTree = "<group>"; };
-		70DD406D17EE7FFE00F1FB18 /* BotInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BotInfo.m; sourceTree = "<group>"; };
 		70DF2E9F17DE8EC300AFC798 /* CoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataTableViewController.h; sourceTree = "<group>"; };
 		70DF2EA017DE8EC300AFC798 /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
 		70E866EF17C66279003C5BD2 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = ../Constants.h; sourceTree = "<group>"; };
@@ -640,14 +640,14 @@
 			isa = PBXGroup;
 			children = (
 				7077DB02180855CE00B46828 /* DataPointModel.xcdatamodeld */,
+				70A3E7B81814AAAA006F718C /* ConfigurationInfo.h */,
+				70A3E7B91814AAAA006F718C /* ConfigurationInfo.m */,
+				70A3E7B51814AAA9006F718C /* BotInfo.h */,
+				70A3E7B61814AAA9006F718C /* BotInfo.m */,
 				7077DB071808561500B46828 /* PlayerDataPoint.h */,
 				7077DB081808561500B46828 /* PlayerDataPoint.m */,
-				70DD406C17EE7FFE00F1FB18 /* BotInfo.h */,
-				70DD406D17EE7FFE00F1FB18 /* BotInfo.m */,
 				705AE0BC17D5949A005F69B7 /* EventInfo.h */,
 				705AE0BD17D5949A005F69B7 /* EventInfo.m */,
-				70DD406917EE7F7D00F1FB18 /* ConfigurationInfo.h */,
-				70DD406A17EE7F7D00F1FB18 /* ConfigurationInfo.m */,
 				7012E55817EA9A51004433BC /* PatchInfo.h */,
 				7012E55917EA9A51004433BC /* PatchInfo.m */,
 			);
@@ -696,9 +696,10 @@
 			children = (
 				700C3A60160427DA005A9E34 /* AppDelegate.h */,
 				700C3A61160427DA005A9E34 /* AppDelegate.m */,
+				703D86FA17D91E0500523417 /* PatchViewController.h */,
+				703D86FB17D91E0500523417 /* PatchViewController.m */,
 				700C3A6C160427DA005A9E34 /* MainStoryboard_iPad.storyboard */,
 				70DD405917EE476400F1FB18 /* PatchAnimation */,
-				703047E017C9DC3E0043FD7B /* PatchGraphics */,
 				70AAC26417C319030018A84B /* Wizard */,
 				7004510317B5CA4E000A83F1 /* Entity */,
 				705FC2B617CC22DB009D42B6 /* Sidebar */,
@@ -725,15 +726,6 @@
 				700C3A5F160427DA005A9E34 /* hg-ios-patch-display-Prefix.pch */,
 			);
 			name = supporting;
-			sourceTree = "<group>";
-		};
-		703047E017C9DC3E0043FD7B /* PatchGraphics */ = {
-			isa = PBXGroup;
-			children = (
-				703D86FA17D91E0500523417 /* PatchViewController.h */,
-				703D86FB17D91E0500523417 /* PatchViewController.m */,
-			);
-			name = PatchGraphics;
 			sourceTree = "<group>";
 		};
 		705620AF17C9D70A007D117B /* Core-plot */ = {
@@ -1789,8 +1781,8 @@
 				705BED3517EA64140042D313 /* GCDAsyncSocket.m in Sources */,
 				705BEE5017EA643A0042D313 /* XMPPIQ+XEP_0060.m in Sources */,
 				705BEE2517EA643A0042D313 /* XMPPRoster.xcdatamodel in Sources */,
-				70DD406E17EE7FFE00F1FB18 /* BotInfo.m in Sources */,
 				70DD405717EE475200F1FB18 /* PacmanLayer.m in Sources */,
+				70A3E7B71814AAA9006F718C /* BotInfo.m in Sources */,
 				70DD406217EE764300F1FB18 /* PinPoint.m in Sources */,
 				705BEE6217EA643A0042D313 /* XMPPMessageArchivingCoreDataStorage.m in Sources */,
 				705BEE5C17EA643A0042D313 /* XMPPCapsCoreDataStorageObject.m in Sources */,
@@ -1831,7 +1823,6 @@
 				705BEE6017EA643A0042D313 /* XMPPMessageArchiving_Contact_CoreDataObject.m in Sources */,
 				705BEE6517EA643A0042D313 /* XMPPMessage+XEP_0172.m in Sources */,
 				705BEE3717EA643A0042D313 /* XMPPRoomHybrid.xcdatamodeld in Sources */,
-				70DD406B17EE7F7D00F1FB18 /* ConfigurationInfo.m in Sources */,
 				705BECD417EA63EF0042D313 /* XMPPXFacebookPlatformAuthentication.m in Sources */,
 				705BED0A17EA64000042D313 /* RFImageToDataTransformer.m in Sources */,
 				706857E617C51A2600BF8AAF /* AFURLConnectionOperation.m in Sources */,
@@ -1846,6 +1837,7 @@
 				705BED3E17EA64140042D313 /* NSString+DDXML.m in Sources */,
 				705BEE6617EA643A0042D313 /* XMPPPresence+XEP_0172.m in Sources */,
 				7077DB06180855CE00B46828 /* DataPointModel.xcdatamodeld in Sources */,
+				70A3E7BA1814AAAA006F718C /* ConfigurationInfo.m in Sources */,
 				705BED0517EA64000042D313 /* XMPPParser.m in Sources */,
 				7025949E17C40065006E596B /* WizardPatchCell.m in Sources */,
 				705BEE5A17EA643A0042D313 /* XMPPCapabilities.xcdatamodel in Sources */,

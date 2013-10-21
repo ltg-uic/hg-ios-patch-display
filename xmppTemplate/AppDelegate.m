@@ -33,7 +33,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     NSOperationQueue *operationQueue;
     NSTimer *timer;
     NSMutableDictionary *patchPlayerMap;
-    NSMutableArray *killList;
+    
 
 
 }
@@ -576,18 +576,18 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
                 [_playerDataDelegate boutStop];
             } else if( [event isEqualToString:@"resurrect_tag"]) {
                 NSDictionary *payload = [jsonObjects objectForKey:@"payload"];
-                NSString *player_id = [payload objectForKey:@"id"];
-                [killList removeObject:player_id];
-
+                NSString *player_id = [[payload objectForKey:@"id"] uppercaseString];
+                [_killList removeObject:player_id];
+                [_playerDataDelegate playerDidGetResurrected:player_id];
             } else if( [event isEqualToString:@"kill_tag"] && (_isGameRunning == YES) ) {
-                NSString *patchKilledAt = [jsonObjects objectForKey:@"destination"];
-                if( [patchKilledAt isEqualToString:_currentPatchInfo.patch_id]) {
-                    NSDictionary *payload = [jsonObjects objectForKey:@"payload"];
-
-                     NSString *player_id = [payload objectForKey:@"id"];
-                     [_playerDataDelegate playerDidGetKilled:player_id];
-                    [killList addObject:player_id];
-                }
+       
+                NSDictionary *payload = [jsonObjects objectForKey:@"payload"];
+                
+                NSString *player_id = [[payload objectForKey:@"id"] uppercaseString];
+                [_killList addObject:player_id];
+                [_playerDataDelegate playerDidGetKilled:player_id];
+                
+                
                 
 
             } else if( [event isEqualToString:@"rfid_update"] && (_isGameRunning == YES) ){
@@ -598,13 +598,13 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
                 NSString *arrival_patch_id = [payload objectForKey:@"arrival"];
                 NSString *departure_patch_id = [payload objectForKey:@"departure"];
                 
-                if( [arrival_patch_id isEqualToString:_currentPatchInfo.patch_id]) {
+                if( ![[NSNull null] isEqual: arrival_patch_id ] && [[arrival_patch_id uppercaseString] isEqualToString:_currentPatchInfo.patch_id]) {
 
-                    [_playerDataDelegate playerDidArrive:player_id];
+                    [_playerDataDelegate playerDidArrive:[player_id uppercaseString]];
                 }
                 
-                if( [departure_patch_id isEqual:_currentPatchInfo.patch_id] ) {
-                    [_playerDataDelegate playerDidLeave:player_id];
+                if( ![[NSNull null] isEqual: departure_patch_id ] &&[[departure_patch_id uppercaseString] isEqual:_currentPatchInfo.patch_id] ) {
+                    [_playerDataDelegate playerDidLeave:[player_id uppercaseString]];
                 }
                 
                 
@@ -740,7 +740,8 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     _playerDataPoints  = [[[_configurationInfo players] allObjects] sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     _patcheInfos = [[_configurationInfo patches] allObjects];
     
-    NSArray *searches = [[[_configurationInfo patches] allObjects] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"patch_id == %@", currentPatchId]];
+    NSArray *searches = [_patcheInfos filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"patch_id == %@", [currentPatchId uppercaseString] ] ];
+    
     if( searches != nil && searches.count > 0 ) {
         _currentPatchInfo = [searches objectAtIndex:0];
     }
@@ -761,6 +762,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
         
     }
 
+    [_playerDataDelegate initConnection];
 }
 
 -(void)setupPlayerMap {
@@ -828,31 +830,31 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
                                                      [ci addPatchesObject:pi];
                                                  }
                                                  
-//                                                 NSArray *bs = [someConfig objectForKey:@"bots"];
-//                                                 
-//                                                 for (NSString *someBot in bs) {
-//                                                     
-//                                                     if ([someBot rangeOfString:@"patch" options:NSCaseInsensitiveSearch].location != NSNotFound) {
-//                                                         
-//                                                         
-//                                                         NSArray *botNames = [someBot componentsSeparatedByString:@"#"];
-//                                                         NSString *botId = [botNames objectAtIndex:1];
-//                                                         
-//                                                         BotInfo *bi = [self insertBotWithName:botId WithXMPPName:someBot];
-//                                                         
-//                                                         [ci addBotsObject:bi];
-//                                                     } else {
-//                                                         NSLog(@"not a patch");
-//                                                     }
-//                                                     
-//                                                 
-//                                                 }
+                                                 NSArray *bs = [someConfig objectForKey:@"bots"];
+                                                 
+                                                 for (NSString *someBot in bs) {
+                                                     
+                                                     if ([someBot rangeOfString:@"patch" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+                                                         
+                                                         
+                                                         NSArray *botNames = [someBot componentsSeparatedByString:@"#"];
+                                                         NSString *botId = [botNames objectAtIndex:1];
+                                                         
+                                                         BotInfo *bi = [self insertBotWithName:botId WithXMPPName:someBot];
+                                                         
+                                                         [ci addBotsObject:bi];
+                                                     } else {
+                                                         NSLog(@"not a patch");
+                                                     }
+                                                     
+                                                 
+                                                 }
                                                  
                                                  
-                                                 [self.managedObjectContext save:nil];
+                                                 
                                                  
                                                   [operationQueue addOperation:[self pullRosterDataWithRunId:ci WithCompletionBlock:nil]];
-                                                 
+                                                 [self.managedObjectContext save:nil];
                                              }
                                              
                                              [operationQueue addOperationWithBlock:^{
@@ -875,7 +877,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 }
 
 -(NSOperation *)pullRosterDataWithRunId:(ConfigurationInfo *)configurationInfo WithCompletionBlock:(void(^)())block  {
-    NSURL *url = [NSURL URLWithString:[@"http://ltg.evl.uic.edu:9000/runs/" stringByAppendingString:configurationInfo.run_id]];
+    NSURL *url = [NSURL URLWithString:[@"http://ltg.evl.uic.edu:9000/runs/" stringByAppendingString:[configurationInfo.run_id lowercaseString]]];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     //AFNetworking asynchronous url request
@@ -981,7 +983,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
                                                          inManagedObjectContext:self.managedObjectContext];
     
     bi.name = name;
-    bi.xmppName = xmppName;
+    bi.xmpp = xmppName;
     
     return bi;
     
@@ -1119,7 +1121,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 -(void)clearUserDefaults {
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kXMPPmyJID];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kXMPPmyPassword];
-    killList = [[NSMutableArray alloc] init];
+    _killList = [[NSMutableArray alloc] init];
 }
 
 #pragma mark XMPPRoomStorage PROTOCOL
