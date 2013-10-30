@@ -54,6 +54,31 @@
     return self;
 }
 
+- (id) initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if( self ) {
+        self.backgroundColor = [UIColor clearColor];
+        self.opaque = YES;
+        animating = NO;
+        _isFinished = NO;
+        
+        _pacmanLayer = [[PacmanLayer alloc] init];
+        _pacmanLayer.needsDisplayOnBoundsChange = YES;
+        _pacmanLayer.frame = self.bounds;
+        _pacmanLayer.startAngle = PAC_OPEN;
+        _pacmanLayer.endAngle = 360.0 - PAC_OPEN;
+        
+        
+        [self.layer addSublayer:_pacmanLayer];
+        //[self die:YES];
+        //[self setNeedsDisplay];
+        
+    }
+    return self;
+}
+
+
 
 
 #pragma mark -
@@ -199,7 +224,7 @@
 	_isFinished = NO;
 	
 	[CATransaction begin];
-	[CATransaction setAnimationDuration:1.5];
+	[CATransaction setAnimationDuration:.8];
 	[CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
 	[CATransaction setCompletionBlock:^{
 		

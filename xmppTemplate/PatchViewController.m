@@ -15,9 +15,8 @@
 #import <AudioToolbox/AudioToolbox.h>
 
 @interface PatchViewController () {
-    NSMutableArray *playerPacmanViews;
     NSMutableArray *playersAtPatch;
-    NSTimer *timer;
+    NSMutableDictionary *playersToLabels;
     int extraPlayersNum;
 }
 
@@ -29,8 +28,9 @@
     if(self = [super initWithCoder:aDecoder])
     {
         self.appDelegate.playerDataDelegate = self;
-        playerPacmanViews = [[NSMutableArray alloc] init];
+        _playerPacmanViews = [[NSMutableArray alloc] init];
         playersAtPatch = [[NSMutableArray alloc] init];
+        playersToLabels = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -45,7 +45,7 @@
 -(void)playerDidLeave: (NSString *)player_id {
     
     if( [[self killList] containsObject:player_id] ) {
-        NSArray *pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == %@", player_id]];
+        NSArray *pacmansSearch = [_playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == %@", player_id]];
         
         
         PacmanView *oldPacmanView;
@@ -57,7 +57,7 @@
             [oldPacmanView setNeedsDisplay];
             [oldPacmanView.pacmanLayer setNeedsDisplay];
             
-            [NSTimer scheduledTimerWithTimeInterval: 3.0
+            [NSTimer scheduledTimerWithTimeInterval: 1.5
                                              target: self
                                            selector: @selector(checkForFreeSlot)
                                            userInfo: nil
@@ -69,7 +69,7 @@
         return;
     }
     
-    NSArray *pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == %@", player_id]];
+    NSArray *pacmansSearch = [_playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == %@", player_id]];
     
     
     PacmanView *oldPacmanView;
@@ -81,7 +81,7 @@
         [oldPacmanView setNeedsDisplay];
         [oldPacmanView.pacmanLayer setNeedsDisplay];
         
-        [NSTimer scheduledTimerWithTimeInterval: 3.0
+        [NSTimer scheduledTimerWithTimeInterval: 1.5
                                          target: self
                                        selector: @selector(checkForFreeSlot)
                                        userInfo: nil
@@ -90,13 +90,13 @@
         
     } else {
         [playersAtPatch removeObject:player_id];
-        [self updateExtraPlayerLabel: playersAtPatch.count];
+        //[self updateExtraPlayerLabel: playersAtPatch.count];
     }
     
 }
 
 -(void)playerDidGetResurrected: (NSString *)player_id {
-    NSArray *pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == %@",player_id]];
+    NSArray *pacmansSearch = [_playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == %@",player_id]];
     
     if( pacmansSearch.count > 0 ) {
         [playersAtPatch addObject:player_id];
@@ -111,7 +111,7 @@
 
 -(void)playerDidGetKilled: (NSString *)player_id {
     
-     NSArray *pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == %@",player_id]];
+     NSArray *pacmansSearch = [_playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == %@",player_id]];
     
     if( pacmansSearch.count > 0 ) {
         [playersAtPatch removeObject:player_id];
@@ -124,13 +124,17 @@
 -(void)playerDidArrive: (NSString *)player_id {
     
     if( [[self killList] containsObject:player_id] ) {
-        NSArray *pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == %@",player_id]];
+        NSArray *pacmansSearch = [_playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == %@",player_id]];
         
         if( pacmansSearch.count == 0 ) {
-            NSArray *pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == nil"]];
+            NSArray *pacmansSearch = [_playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == nil"]];
         
-            PacmanView *pacman = [pacmansSearch objectAtIndex:0];
-            [self showPlayerDeadWith:player_id With:pacman];
+            if( pacmansSearch.count > 0 ) {
+                PacmanView *pacman = [pacmansSearch objectAtIndex:0];
+                [self showPlayerDeadWith:player_id With:pacman];
+                [self updateNameLabelWithPacman:pacman];
+
+            }
             return;
         }
     } else if( [playersAtPatch containsObject:player_id] ) {
@@ -139,17 +143,23 @@
     
     [playersAtPatch addObject:player_id];
     
-    NSArray *pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == nil"]];
+    NSArray *pacmansSearch = [_playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == nil"]];
     
     
     if( pacmansSearch.count > 0 ) {
         PacmanView *pacman = [pacmansSearch objectAtIndex:0];
         [self showPlayerChompingWith:player_id With:pacman];
         [self updateCalorieLabel];
-    } else {
-        pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id != nil"]];
-        [self updateExtraPlayerLabel: abs(pacmansSearch.count-playersAtPatch.count)];
+        //[self updateNameLabelWithPacman:pacman];
     }
+}
+
+-(void)updateNameLabelWithPacman:(PacmanView *)pacman {
+    
+//    NSString *tag = pacman.tag;
+//    UILabel *label = [playersToLabels objectForKey:tag];
+//    label.text = pacman.player_id;
+//    label.hidden = NO;
 }
 
 -(void)showPlayerChompingWith:(NSString*)player_id With:(PacmanView*)pacman {
@@ -206,7 +216,7 @@
         
         for( NSString *p_id in playersAtPatch) {
             if( ![pacViewPlayerIds containsObject:p_id] ) {
-                pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == nil"]];
+                pacmansSearch = [_playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == nil"]];
                 
                 if( pacmansSearch.count > 0 ) {
                     PacmanView *pacman = [pacmansSearch objectAtIndex:0];
@@ -216,7 +226,7 @@
                     
                     [pacman setNeedsDisplay];
                     [self.view setNeedsDisplay];
-                    pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id != nil"]];
+                    pacmansSearch = [_playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id != nil"]];
                     
                     [self updateExtraPlayerLabel: extraPlayersNum-1];
                 }
@@ -242,7 +252,7 @@
 }
 
 -(void)hawkKillWithPlayerId:(NSString *)player_id {
-    NSArray *pacmansSearch = [playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == %@", player_id]];
+    NSArray *pacmansSearch = [_playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == %@", player_id]];
     
     if( pacmansSearch.count > 0) {
         [self hawkSound];
@@ -279,9 +289,12 @@
 }
 
 -(void)boutReset {
-    for (PacmanView *pacman in playerPacmanViews) {
+    for (PacmanView *pacman in _playerPacmanViews) {
         [pacman resetPacmanView];
     }
+    
+    [playersAtPatch removeAllObjects];
+    [self updateCalorieLabel];
     [self updateExtraPlayerLabel:0];
     [self showAcorns:NO];
 }
@@ -293,7 +306,7 @@
 }
 
 -(void)boutStop {
-    for (PacmanView *pacmanView in playerPacmanViews) {
+    for (PacmanView *pacmanView in _playerPacmanViews) {
         [pacmanView animate:NO];
     }
     [self updateCalorieLabel];
@@ -337,59 +350,16 @@
 
 #pragma mark - Drawing methods
 
--(void) drawCircleGrid {
+-(void) setupPacmanViews {
     
-    float landscapeWidth = 1024.0f;
-    float heightOfLandscape = 768.0f;
-    float labelHeight = 55.0f;
-    
-    float circleWidth = 96.0;
-    float circleHeight = circleWidth;
-    
-    
-    float circleY = heightOfLandscape - (80+circleHeight );
-    float circleX = 0;
-    
-    float xOffset = 6.0f;
-    
-    
-    int numOfViews = 10;
-    
-    
-    
-    //circleWidth = floorf(( landscapeWidth/ numOfViews )-xOffset);
-    circleHeight = circleWidth;
-    
-    // float totalViewWidth = ((circleWidth * numOfViews) + (numOfViews * xOffset));
-    
-    circleX = xOffset;
-    
-    
-    for (int i = 0; i < numOfViews; i++) {
-        // UIColor *playerColor = [self.appDelegate.colorMap objectForKey:player_id];
+    for( int i = 0; i < _playerPacmanViews.count; i++ ) {
         
-        // PacmanView *pacman = [playerPacmanViews objectForKey:player_id];
-        
-        PacmanView *pacman;
-        CGRect rect = CGRectMake(circleX, circleY, circleWidth, circleHeight);
-        
-        
-        pacman = [[PacmanView alloc] initWithFrame:rect];
-        
-        [pacman resetPacmanView];
-        [playerPacmanViews addObject:pacman];
-        
-        [pacman.pacmanLayer setNeedsDisplay];
-        circleX = circleWidth + circleX + xOffset;
-        
-        [self.view addSubview:pacman];
-        [self.view setNeedsDisplay];
-        
+        PacmanView *pc = _playerPacmanViews[i];
+        NSString *tag = [NSString stringWithFormat:@"%d", i];
+
+        pc.tag = tag;
+        [playersToLabels setObject:_nameLabels[i] forKey:tag];
     }
-    
-    
-    //[self createClusterLabelsWithCircleWidth:circleWidth WithPadding:xOffset];
-    
 }
 
 -(void)updateCalorieLabel {
@@ -405,6 +375,8 @@
     currentYieldLabel.text = [NSString stringWithFormat:@"%.0f", adjustedRichness];
     
 }
+
+
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -430,8 +402,8 @@
     // Set the gesture
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     
-    [self drawCircleGrid];
-    
+    [self setupPacmanViews];
+    [self.view setNeedsDisplay];
     
     
 }

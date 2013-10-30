@@ -555,7 +555,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
         
         
         if( event != nil) {
-            if( [event isEqualToString:@"bout_reset"] ) {
+            if( [event isEqualToString:@"reset_bout"] ) {
                 _isGameRunning = NO;
                 
                 for (PlayerDataPoint *pdp in _playerDataPoints) {
@@ -565,12 +565,13 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
                 [self.managedObjectContext save:nil];
                 
                 _hasReset = YES;
-                [_playerDataDelegate boutReset];
-            } else if([event isEqualToString:@"bout_start"] ) {
+                
+                [self resetGame];
+            } else if([event isEqualToString:@"start_bout"] ) {
                 _isGameRunning = YES;
                 _hasReset = NO;
                 [_playerDataDelegate boutStart];
-            } else if( [event isEqualToString:@"bout_stop"] ) {
+            } else if( [event isEqualToString:@"stop_bout"] ) {
                 _isGameRunning = NO;
                 _hasReset = NO;
                 [_playerDataDelegate boutStop];
@@ -597,6 +598,14 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
                 NSString *player_id = [payload objectForKey:@"id"];
                 NSString *arrival_patch_id = [payload objectForKey:@"arrival"];
                 NSString *departure_patch_id = [payload objectForKey:@"departure"];
+                
+                
+                if( ![[NSNull null] isEqual: arrival_patch_id ] && ![[NSNull null] isEqual: departure_patch_id ] ) {
+                    if( [arrival_patch_id isEqual: departure_patch_id ] ) {
+                        return;
+                    }
+                }
+                
                 
                 if( ![[NSNull null] isEqual: arrival_patch_id ] && [[arrival_patch_id uppercaseString] isEqualToString:_currentPatchInfo.patch_id]) {
 
@@ -780,7 +789,38 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     }
 }
 
+-(void)resetPlayerMap {
+    [patchPlayerMap enumerateKeysAndObjectsUsingBlock:^(NSString *player_id, id patch_id, BOOL *stop){
+        patch_id = [NSNull null];
+    }];
+}
 
+
+
+-(void)resetGame {
+    
+        NSArray *players = [[_configurationInfo players] allObjects];
+        
+        for(PlayerDataPoint *pdp in players) {
+            pdp.score = [NSNumber numberWithFloat:0];
+            pdp.currentPatch = nil;
+        }
+        
+        [self.managedObjectContext save:nil];
+        
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"player_id" ascending:NO selector:@selector(caseInsensitiveCompare:)];
+        
+        _playerDataPoints  = [[[_configurationInfo players] allObjects] sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    
+    
+        [_killList removeAllObjects];
+        [self resetPlayerMap];
+        
+        [self setupPlayerMap];
+    
+        [_playerDataDelegate boutReset];
+    
+}
 
 #pragma NETWORK OPERATIONS
 
