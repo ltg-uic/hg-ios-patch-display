@@ -166,7 +166,7 @@
                                             <rect key="frame" x="25" y="15" width="30" height="30"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Patch" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2sC-oI-u1X">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="hg-ios-patch-display" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2sC-oI-u1X">
                                             <rect key="frame" x="65" y="15" width="200" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
@@ -522,10 +522,10 @@
             </objects>
             <point key="canvasLocation" x="-2029" y="-616"/>
         </scene>
-        <!--Wizard Patch Page View Controller - Patch Chooser-->
+        <!--Wizard Patch Page View Controller - hg-ios-patch-display Chooser-->
         <scene sceneID="keT-e6-GYI">
             <objects>
-                <tableViewController storyboardIdentifier="WizardPatchPageViewController" autoresizesArchivedViewToFullSize="NO" title="Patch Chooser" modalPresentationStyle="currentContext" id="ltf-E4-o2e" customClass="WizardPatchPageViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="WizardPatchPageViewController" autoresizesArchivedViewToFullSize="NO" title="hg-ios-patch-display Chooser" modalPresentationStyle="currentContext" id="ltf-E4-o2e" customClass="WizardPatchPageViewController" sceneMemberID="viewController">
                     <tableView key="view" autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleAspectFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="150" sectionHeaderHeight="22" sectionFooterHeight="22" id="u4o-BO-4pN">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="980"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -581,8 +581,8 @@
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="Step 2: Choose Your Patch" id="AT0-ea-8tg">
-                        <barButtonItem key="backBarButtonItem" title="Patch" id="gyk-aZ-VXV"/>
+                    <navigationItem key="navigationItem" title="Step 2: Choose Your hg-ios-patch-display" id="AT0-ea-8tg">
+                        <barButtonItem key="backBarButtonItem" title="hg-ios-patch-display" id="gyk-aZ-VXV"/>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                 </tableViewController>

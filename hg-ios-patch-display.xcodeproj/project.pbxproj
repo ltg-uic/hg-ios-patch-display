@@ -191,13 +191,13 @@
 
 /* Begin PBXFileReference section */
 		700B8B2C17DBD885001E1C0A /* PlayerDataDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerDataDelegate.h; sourceTree = "<group>"; };
-		700C3A4D160427DA005A9E34 /* Patch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Patch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		700C3A4D160427DA005A9E34 /* hg-ios-patch-display.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "hg-ios-patch-display.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		700C3A51160427DA005A9E34 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		700C3A53160427DA005A9E34 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		700C3A55160427DA005A9E34 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		700C3A59160427DA005A9E34 /* Patch-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Patch-Info.plist"; sourceTree = "<group>"; };
+		700C3A59160427DA005A9E34 /* hg-ios-patch-display-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "hg-ios-patch-display-Info.plist"; sourceTree = "<group>"; };
 		700C3A5D160427DA005A9E34 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		700C3A5F160427DA005A9E34 /* Patch-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Patch-Prefix.pch"; sourceTree = "<group>"; };
+		700C3A5F160427DA005A9E34 /* hg-ios-patch-display-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "hg-ios-patch-display-Prefix.pch"; sourceTree = "<group>"; };
 		700C3A60160427DA005A9E34 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AppDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		700C3A61160427DA005A9E34 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		700C3A6D160427DA005A9E34 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
@@ -677,7 +677,7 @@
 		700C3A4E160427DA005A9E34 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				700C3A4D160427DA005A9E34 /* Patch.app */,
+				700C3A4D160427DA005A9E34 /* hg-ios-patch-display.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -737,10 +737,10 @@
 				701231C817F8E82C001E4E20 /* hawk.caf */,
 				70CD9B3517B49BF2008625BF /* logon_sound.aif */,
 				70CEF76317C8443A00ED0CBE /* Default-568h@2x.png */,
-				700C3A59160427DA005A9E34 /* Patch-Info.plist */,
+				700C3A59160427DA005A9E34 /* hg-ios-patch-display-Info.plist */,
 				70CE9A1517ED6E3500D1083B /* InfoPlist.strings */,
 				700C3A5D160427DA005A9E34 /* main.m */,
-				700C3A5F160427DA005A9E34 /* Patch-Prefix.pch */,
+				700C3A5F160427DA005A9E34 /* hg-ios-patch-display-Prefix.pch */,
 			);
 			name = supporting;
 			sourceTree = "<group>";
@@ -1670,9 +1670,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		700C3A4C160427DA005A9E34 /* Patch */ = {
+		700C3A4C160427DA005A9E34 /* hg-ios-patch-display */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 700C3A74160427DA005A9E34 /* Build configuration list for PBXNativeTarget "Patch" */;
+			buildConfigurationList = 700C3A74160427DA005A9E34 /* Build configuration list for PBXNativeTarget "hg-ios-patch-display" */;
 			buildPhases = (
 				700C3A49160427DA005A9E34 /* Sources */,
 				700C3A4A160427DA005A9E34 /* Frameworks */,
@@ -1682,9 +1682,9 @@
 			);
 			dependencies = (
 			);
-			name = Patch;
+			name = "hg-ios-patch-display";
 			productName = xmppTemplate;
-			productReference = 700C3A4D160427DA005A9E34 /* Patch.app */;
+			productReference = 700C3A4D160427DA005A9E34 /* hg-ios-patch-display.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1706,7 +1706,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 700C3A47160427DA005A9E34 /* Build configuration list for PBXProject "Patch" */;
+			buildConfigurationList = 700C3A47160427DA005A9E34 /* Build configuration list for PBXProject "hg-ios-patch-display" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1718,7 +1718,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				700C3A4C160427DA005A9E34 /* Patch */,
+				700C3A4C160427DA005A9E34 /* hg-ios-patch-display */,
 			);
 		};
 /* End PBXProject section */
@@ -1989,9 +1989,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "xmppTemplate/Patch-Prefix.pch";
+				GCC_PREFIX_HEADER = "xmppTemplate/hg-ios-patch-display-Prefix.pch";
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
-				INFOPLIST_FILE = "xmppTemplate/Patch-Info.plist";
+				INFOPLIST_FILE = "xmppTemplate/hg-ios-patch-display-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"/Users/aperritano/dev/hunger\\ games/hg-ios-class-display/XMPPFramework/Vendor/libidn",
 					"$(inherited)",
@@ -2003,7 +2003,7 @@
 					"-objc",
 					"-all_load",
 				);
-				PRODUCT_NAME = Patch;
+				PRODUCT_NAME = "hg-ios-patch-display";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -2019,9 +2019,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "xmppTemplate/Patch-Prefix.pch";
+				GCC_PREFIX_HEADER = "xmppTemplate/hg-ios-patch-display-Prefix.pch";
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
-				INFOPLIST_FILE = "xmppTemplate/Patch-Info.plist";
+				INFOPLIST_FILE = "xmppTemplate/hg-ios-patch-display-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"/Users/aperritano/dev/hunger\\ games/hg-ios-class-display/XMPPFramework/Vendor/libidn",
 					"$(inherited)",
@@ -2033,7 +2033,7 @@
 					"-objc",
 					"-all_load",
 				);
-				PRODUCT_NAME = Patch;
+				PRODUCT_NAME = "hg-ios-patch-display";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -2044,7 +2044,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		700C3A47160427DA005A9E34 /* Build configuration list for PBXProject "Patch" */ = {
+		700C3A47160427DA005A9E34 /* Build configuration list for PBXProject "hg-ios-patch-display" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				700C3A72160427DA005A9E34 /* Debug */,
@@ -2053,7 +2053,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		700C3A74160427DA005A9E34 /* Build configuration list for PBXNativeTarget "Patch" */ = {
+		700C3A74160427DA005A9E34 /* Build configuration list for PBXNativeTarget "hg-ios-patch-display" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				700C3A75160427DA005A9E34 /* Debug */,
