@@ -28,9 +28,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 			self.endAngle = other.endAngle;
             self.isCOMPING = other.isCOMPING;
             self.isFILLED = other.isFILLED;
-            self.isON = other.isON;
             self.pacColor = other.pacColor;
-            self.isHAPPY = other.isHAPPY;
 		}
 	}
 	return self;
@@ -60,72 +58,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 
--(void)drawSmiley: (CGContextRef) context {
-    
-#define DEFAULT_SCALE 0.2
-
-    CGFloat scale = DEFAULT_SCALE;
-    
-    CGFloat radius = fmin(self.bounds.size.width, self.bounds.size.height)/2;
-    
-	CGPoint midpoint = CGPointMake(CGRectGetWidth(self.bounds)/2, CGRectGetHeight(self.bounds)/2);
-    
-   
-    CGFloat faceSize;
-    if (self.bounds.size.width < self.bounds.size.height) {
-        faceSize = self.bounds.size.width / 2 * scale;
-    } else {
-        faceSize = self.bounds.size.height / 2 * scale;
-    }
-    
-    CGContextSetLineWidth(context, 5);
-    [[UIColor blueColor] setStroke];
-    
-    CGContextAddArc(context, midpoint.x, midpoint.y, 30, 0, 360, 0);
-    
-    //[self drawCircleAtPoint:midpoint withRadius:30 inContext:context];
-    
-#define EYE_H 0.35
-#define EYE_V 0.35
-#define EYE_RADIUS 0.10
-    
-    CGPoint eyePoint;
-    eyePoint.x = midpoint.x - faceSize * EYE_H;
-    eyePoint.y = midpoint.y - faceSize * EYE_V;
-    
-    [self drawCircleAtPoint:eyePoint withRadius:faceSize * EYE_RADIUS inContext:context]; // left eye
-    eyePoint.x += faceSize * EYE_H * 2;
-    [self drawCircleAtPoint:eyePoint withRadius:faceSize * EYE_RADIUS inContext:context]; // right eye
-    
-#define MOUTH_H 0.45
-#define MOUTH_V 0.40
-#define MOUTH_SMILE 0.25
-    
-    CGPoint mouthStart;
-    mouthStart.x = midpoint.x - MOUTH_H * faceSize;
-    mouthStart.y = midpoint.y + MOUTH_V * faceSize;
-    CGPoint mouthEnd = mouthStart;
-    mouthEnd.x += MOUTH_H * faceSize * 2;
-    CGPoint mouthCP1 = mouthStart;
-    mouthCP1.x += MOUTH_H * faceSize * 2/3;
-    CGPoint mouthCP2 = mouthEnd;
-    mouthCP2.x -= MOUTH_H * faceSize * 2/3;
-    
-   // float smile = [self.dataSource smileForFaceView:self];
-    //if (smile < -1) smile = -1;
-    //if (smile > 1) smile = 1;
-    
-    float smile = 1;
-    
-    CGFloat smileOffset = MOUTH_SMILE * faceSize * smile;
-    mouthCP1.y += smileOffset;
-    mouthCP2.y += smileOffset;
-    
-    CGContextBeginPath(context);
-    CGContextMoveToPoint(context, mouthStart.x, mouthStart.y);
-    CGContextAddCurveToPoint(context, mouthCP1.x, mouthCP2.y, mouthCP2.x, mouthCP2.y, mouthEnd.x, mouthEnd.y); // bezier curve
-    CGContextStrokePath(context);
-}
 
 - (UIColor *) getEyeColorFromColor:(UIColor *) newColor
 {
@@ -185,7 +117,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
             CGContextClosePath(ctx);
     
             /* Filling it */
-            CGContextSetFillColorWithColor(ctx, [UIColor whiteColor].CGColor);
+            CGContextSetFillColorWithColor(ctx, _pacColor.CGColor);
             CGContextFillPath(ctx);
     }
  

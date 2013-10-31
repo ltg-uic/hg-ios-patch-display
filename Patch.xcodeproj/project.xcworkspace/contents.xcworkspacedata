@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:hg-ios-patch-display.xcodeproj">
+      location = "self:Patch.xcodeproj">
    </FileRef>
 </Workspace>

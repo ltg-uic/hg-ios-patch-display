@@ -9,13 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "PlayerDataDelegate.h"
 #import "PacmanView.h"
+#import "UIView+Animation.h"
 
 @interface PatchViewController : UIViewController<PlayerDataDelegate> {
     __weak IBOutlet UILabel *currentYieldLabel;
     __weak IBOutlet UILabel *extraPlayersLabel;
     IBOutletCollection(UIImageView) NSArray *acorns;
-    IBOutletCollection(PacmanView) NSArray *playerPacmanViews;
-    IBOutletCollection(UILabel) NSArray *nameLabels;
+
 
 }
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *revealButtonItem;

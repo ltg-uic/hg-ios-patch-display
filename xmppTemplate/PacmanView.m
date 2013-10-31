@@ -64,6 +64,7 @@
         _isFinished = NO;
         
         _pacmanLayer = [[PacmanLayer alloc] init];
+        _pacmanLayer.pacColor = [UIColor clearColor];
         _pacmanLayer.needsDisplayOnBoundsChange = YES;
         _pacmanLayer.frame = self.bounds;
         _pacmanLayer.startAngle = PAC_OPEN;
@@ -161,14 +162,12 @@
 	animating = animate;
 	
     if(animate == YES) {
-        _pacmanLayer.isON = YES;
         _pacmanLayer.isCOMPING = YES;
         _pacmanLayer.isFILLED = YES;
         //[_pacmanLayer display];
     } else {
-        _pacmanLayer.isON = YES;
         _pacmanLayer.isCOMPING = NO;
-        _pacmanLayer.isFILLED = NO;
+        _pacmanLayer.isFILLED = YES;
         
     }
     
@@ -181,11 +180,10 @@
 	
 	
     if(isDead) {
-        _pacmanLayer.isON = YES;
+        [self animate:NO];
         _pacmanLayer.isCOMPING = NO;
         _pacmanLayer.isFILLED = YES;
         _pacmanLayer.isSMILE = YES;
-        _pacmanLayer.isHAPPY= NO;
         [_pacmanLayer setNeedsDisplay];
     } else {
         _pacmanLayer.isON = YES;
@@ -270,14 +268,15 @@
 
 -(void)resetPacmanView {
     
+    [self animate:NO];
     self.pacmanLayer.isSMILE = NO;
     self.pacmanLayer.isFILLED = NO;
     self.pacmanLayer.isSMILE = NO;
     self.pacmanLayer.isHAPPY = NO;
     self.pacmanLayer.isON = NO;
     self.player_id = nil;
-    [self animate:NO];
-    self.hidden = YES;
+    self.alpha = 0;
+    self.hidden = NO;
  
 }
 
