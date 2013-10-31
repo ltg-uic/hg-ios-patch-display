@@ -72,8 +72,7 @@
         [playersAtPatch removeObject:player_id];
         [self updateCalorieLabel];
         [oldPacmanView collapseLeave];
-        [oldPacmanView setNeedsDisplay];
-        [oldPacmanView.pacmanLayer setNeedsDisplay];
+       
         
         [self hideNameLabelWithPacmanView:oldPacmanView];
 
@@ -88,9 +87,9 @@
 
 -(void)playerDidGetResurrected: (NSString *)player_id {
     
-    if( [[self killList] containsObject:player_id] ) {
-        
-        NSArray *pacmansSearch = [_playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == %@",player_id]];
+     if( [[self killList] containsObject:player_id] ) {
+        [[self killList] removeObject:player_id];
+         NSArray *pacmansSearch = [_playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == %@",player_id]];
         
         if( pacmansSearch.count > 0 ) {
             [playersAtPatch addObject:player_id];
@@ -99,7 +98,8 @@
             [self showPlayerChompingWith:player_id With:pacman];
             [self updateCalorieLabel];
         }
-    }
+
+     }
 }
 
 
@@ -381,7 +381,7 @@
     return [[self appDelegate] playerDataPoints];
 }
 
--(NSArray *)killList {
+-(NSMutableArray *)killList {
     
     return [[self appDelegate] killList ];
 }

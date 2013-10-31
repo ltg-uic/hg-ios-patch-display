@@ -577,8 +577,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
                 [_playerDataDelegate boutStop];
             } else if( [event isEqualToString:@"resurrect_tag"]) {
                 NSDictionary *payload = [jsonObjects objectForKey:@"payload"];
-                NSString *player_id = [[payload objectForKey:@"id"] uppercaseString];
-                [_killList removeObject:player_id];
+                NSString *player_id = [[payload objectForKey:@"id"] uppercaseString];              
                 [_playerDataDelegate playerDidGetResurrected:player_id];
             } else if( [event isEqualToString:@"kill_tag"] && (_isGameRunning == YES) ) {
        

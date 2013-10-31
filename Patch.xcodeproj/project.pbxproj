@@ -182,11 +182,11 @@
 		70E866F417C66E8F003C5BD2 /* QuietAssertMacros.c in Sources */ = {isa = PBXBuildFile; fileRef = 70E866F317C66E8F003C5BD2 /* QuietAssertMacros.c */; };
 		70EC27D517E2287200077DF4 /* UIView+NibLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = 70EC27D417E2287200077DF4 /* UIView+NibLoading.m */; };
 		70EDB4D017B475960005E144 /* libresolv.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B44C1817B31E8D00C47B61 /* libresolv.9.dylib */; };
-		70F5C283181EBBA300487669 /* HG_appIcon_leaf.png in Resources */ = {isa = PBXBuildFile; fileRef = 70F5C281181EBBA300487669 /* HG_appIcon_leaf.png */; };
-		70F5C284181EBBA300487669 /* HG_appIcon_leaf@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70F5C282181EBBA300487669 /* HG_appIcon_leaf@2x.png */; };
 		70FFD20B1821A98A002354CE /* LaunchScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 70FFD2091821A98A002354CE /* LaunchScreen.png */; };
 		70FFD20C1821A98A002354CE /* LaunchScreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70FFD20A1821A98A002354CE /* LaunchScreen@2x.png */; };
 		70FFD20F1821DFAF002354CE /* UIView+Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 70FFD20E1821DFAF002354CE /* UIView+Animation.m */; };
+		70FFD21218220BE0002354CE /* HG_appIcon_leaf.png in Resources */ = {isa = PBXBuildFile; fileRef = 70FFD21018220BE0002354CE /* HG_appIcon_leaf.png */; };
+		70FFD21318220BE0002354CE /* HG_appIcon_leaf@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70FFD21118220BE0002354CE /* HG_appIcon_leaf@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -613,12 +613,12 @@
 		70E866F317C66E8F003C5BD2 /* QuietAssertMacros.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = QuietAssertMacros.c; sourceTree = "<group>"; };
 		70EC27D317E2287200077DF4 /* UIView+NibLoading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+NibLoading.h"; sourceTree = "<group>"; };
 		70EC27D417E2287200077DF4 /* UIView+NibLoading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+NibLoading.m"; sourceTree = "<group>"; };
-		70F5C281181EBBA300487669 /* HG_appIcon_leaf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HG_appIcon_leaf.png; sourceTree = "<group>"; };
-		70F5C282181EBBA300487669 /* HG_appIcon_leaf@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HG_appIcon_leaf@2x.png"; sourceTree = "<group>"; };
 		70FFD2091821A98A002354CE /* LaunchScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchScreen.png; sourceTree = "<group>"; };
 		70FFD20A1821A98A002354CE /* LaunchScreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LaunchScreen@2x.png"; sourceTree = "<group>"; };
 		70FFD20D1821DFAF002354CE /* UIView+Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Animation.h"; sourceTree = "<group>"; };
 		70FFD20E1821DFAF002354CE /* UIView+Animation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Animation.m"; sourceTree = "<group>"; };
+		70FFD21018220BE0002354CE /* HG_appIcon_leaf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HG_appIcon_leaf.png; sourceTree = "<group>"; };
+		70FFD21118220BE0002354CE /* HG_appIcon_leaf@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HG_appIcon_leaf@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -729,8 +729,8 @@
 				70FFD20E1821DFAF002354CE /* UIView+Animation.m */,
 				70FFD2091821A98A002354CE /* LaunchScreen.png */,
 				70FFD20A1821A98A002354CE /* LaunchScreen@2x.png */,
-				70F5C281181EBBA300487669 /* HG_appIcon_leaf.png */,
-				70F5C282181EBBA300487669 /* HG_appIcon_leaf@2x.png */,
+				70FFD21018220BE0002354CE /* HG_appIcon_leaf.png */,
+				70FFD21118220BE0002354CE /* HG_appIcon_leaf@2x.png */,
 				703D86FF17D938C900523417 /* awareness.xcassets */,
 				70AFBDD317C7E9DF00868211 /* sidebar_icons.xcassets */,
 				70A2E566180753D900218EB8 /* patch.xcassets */,
@@ -1732,15 +1732,15 @@
 				70FFD20C1821A98A002354CE /* LaunchScreen@2x.png in Resources */,
 				705BED3D17EA64140042D313 /* README.txt in Resources */,
 				70CD9B3617B49BF2008625BF /* logon_sound.aif in Resources */,
-				70F5C283181EBBA300487669 /* HG_appIcon_leaf.png in Resources */,
 				701231C917F8E82C001E4E20 /* hawk.caf in Resources */,
+				70FFD21218220BE0002354CE /* HG_appIcon_leaf.png in Resources */,
+				70FFD21318220BE0002354CE /* HG_appIcon_leaf@2x.png in Resources */,
 				705BED4217EA64140042D313 /* build-libidn.sh in Resources */,
 				70FFD20B1821A98A002354CE /* LaunchScreen.png in Resources */,
 				70CEF76417C8443A00ED0CBE /* Default-568h@2x.png in Resources */,
 				700C3A6E160427DA005A9E34 /* MainStoryboard_iPad.storyboard in Resources */,
 				70AFBDD417C7E9DF00868211 /* sidebar_icons.xcassets in Resources */,
 				70CE9A1617ED6E3500D1083B /* InfoPlist.strings in Resources */,
-				70F5C284181EBBA300487669 /* HG_appIcon_leaf@2x.png in Resources */,
 				703D870017D938C900523417 /* awareness.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
