@@ -162,12 +162,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="768" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon_map" translatesAutoresizingMaskIntoConstraints="NO" id="x6J-nI-ia7">
-                                            <rect key="frame" x="25" y="15" width="30" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        </imageView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="hg-ios-patch-display" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2sC-oI-u1X">
-                                            <rect key="frame" x="65" y="15" width="200" height="30"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Patch" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2sC-oI-u1X">
+                                            <rect key="frame" x="20" y="15" width="200" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
                                             <nil key="highlightedColor"/>
@@ -593,7 +589,6 @@
     </scenes>
     <resources>
         <image name="Squirrel" width="111" height="97"/>
-        <image name="icon_map" width="61" height="67"/>
         <image name="off" width="30" height="30"/>
         <image name="patchScreen_Tree" width="1100" height="1223"/>
         <image name="patch_acorn_01" width="107" height="89"/>
@@ -608,6 +603,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="30Y-qO-Q1V"/>
+        <segue reference="9oT-dm-IdH"/>
     </inferredMetricsTieBreakers>
 </document>
