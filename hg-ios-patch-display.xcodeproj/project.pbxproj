@@ -182,6 +182,7 @@
 		70E866F417C66E8F003C5BD2 /* QuietAssertMacros.c in Sources */ = {isa = PBXBuildFile; fileRef = 70E866F317C66E8F003C5BD2 /* QuietAssertMacros.c */; };
 		70EC27D517E2287200077DF4 /* UIView+NibLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = 70EC27D417E2287200077DF4 /* UIView+NibLoading.m */; };
 		70EDB4D017B475960005E144 /* libresolv.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B44C1817B31E8D00C47B61 /* libresolv.9.dylib */; };
+		70F9C87C182482AE00110580 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F9C87B182482AE00110580 /* Reachability.m */; };
 		70FFD20B1821A98A002354CE /* LaunchScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 70FFD2091821A98A002354CE /* LaunchScreen.png */; };
 		70FFD20C1821A98A002354CE /* LaunchScreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70FFD20A1821A98A002354CE /* LaunchScreen@2x.png */; };
 		70FFD20F1821DFAF002354CE /* UIView+Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 70FFD20E1821DFAF002354CE /* UIView+Animation.m */; };
@@ -613,6 +614,8 @@
 		70E866F317C66E8F003C5BD2 /* QuietAssertMacros.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = QuietAssertMacros.c; sourceTree = "<group>"; };
 		70EC27D317E2287200077DF4 /* UIView+NibLoading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+NibLoading.h"; sourceTree = "<group>"; };
 		70EC27D417E2287200077DF4 /* UIView+NibLoading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+NibLoading.m"; sourceTree = "<group>"; };
+		70F9C87A182482AE00110580 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		70F9C87B182482AE00110580 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		70FFD2091821A98A002354CE /* LaunchScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchScreen.png; sourceTree = "<group>"; };
 		70FFD20A1821A98A002354CE /* LaunchScreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LaunchScreen@2x.png"; sourceTree = "<group>"; };
 		70FFD20D1821DFAF002354CE /* UIView+Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Animation.h"; sourceTree = "<group>"; };
@@ -1607,6 +1610,8 @@
 				70E866EF17C66279003C5BD2 /* Constants.h */,
 				70DF2E9F17DE8EC300AFC798 /* CoreDataTableViewController.h */,
 				70DF2EA017DE8EC300AFC798 /* CoreDataTableViewController.m */,
+				70F9C87A182482AE00110580 /* Reachability.h */,
+				70F9C87B182482AE00110580 /* Reachability.m */,
 			);
 			name = library;
 			sourceTree = "<group>";
@@ -1762,6 +1767,7 @@
 				705BEE2F17EA643A0042D313 /* XMPPJabberRPCModule.m in Sources */,
 				706857E017C51A2600BF8AAF /* AFHTTPClient.m in Sources */,
 				705AE0D517D595CC005F69B7 /* SBJsonParser.m in Sources */,
+				70F9C87C182482AE00110580 /* Reachability.m in Sources */,
 				705BED0617EA64000042D313 /* XMPPPresence.m in Sources */,
 				705BEE5317EA643A0042D313 /* XMPPIQ+XEP_0066.m in Sources */,
 				706857E217C51A2600BF8AAF /* AFImageRequestOperation.m in Sources */,

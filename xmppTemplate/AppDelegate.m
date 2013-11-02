@@ -19,6 +19,7 @@
 #import "UIColor-Expanded.h"
 #import "SidebarViewController.h"
 #import "BotInfo.h"
+#import "Reachability.h"
 
 // Log levels: off, error, warn, info, verbose
 #if DEBUG
@@ -82,18 +83,68 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     
    
     
-    //
+    //set reachability
+    [self setReachability];
     
     // Configure logging framework
 	
 	[DDLog addLogger:[DDTTYLogger sharedInstance]];
     
     // Setup the XMPP stream
+    // Configure CocoaLumberjack
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    [DDLog addLogger:[DDASLLogger sharedInstance]];
+    // Initialize File Logger
+    // _fileLogger = [[DDFileLogger alloc] init];
+    // Configure File Logger
+    _fileLogger.logFileManager.maximumNumberOfLogFiles = 30;
+    //    [_fileLogger setRollingFrequency:(3600.0 * 24.0)];
+    [_fileLogger setMaximumFileSize:0];
+    [self.fileLogger setLogFormatter:[[DDLogFileFormatterDefault alloc]init]];
     
+    [DDLog addLogger:_fileLogger];
 
     
 
     return YES;
+}
+
+-(void)setReachability {
+    // Allocate a reachability object
+    Reachability* reach = [Reachability reachabilityWithHostname:@"www.google.com"];
+    
+    // Tell the reachability that we DON'T want to be reachable on 3G/EDGE/CDMA
+    reach.reachableOnWWAN = NO;
+    
+    // Here we set up a NSNotification observer. The Reachability that caused the notification
+    // is passed in the object parameter
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reachabilityChanged:)
+                                                 name:kReachabilityChangedNotification
+                                               object:nil];
+    
+    [reach startNotifier];
+}
+
+-(void)reachabilityChanged:(NSNotification*)note
+{
+    Reachability * reach = [note object];
+    
+    if([reach isReachable])
+    {
+        //@"Notification Says Reachable";
+    }
+    else
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Network out"
+                                                            message:@"Hello how are you? Network is out"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"Ok"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+        
+    }
+    
 }
 
 -(void)setupInterface {
@@ -737,7 +788,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     [_xmppBaseOnlineDelegate isAvailable:NO];
 }
 
-#pragma CONFIGURATION SETUP
+#pragma mark - CONFIGURATION SETUP
 
 -(void)setupConfigurationAndRosterWithRunId:(NSString *)run_id WithPatchId: (NSString*)currentPatchId {
     
@@ -755,17 +806,21 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     }
     
     
-    _refreshRate = .2f;
-    
-    //[_playerDataDelegate playerDataDidUpdate];
-    
     [self setupPlayerMap];
     
     if( _xmppStream == nil ) {
         [self setupStream];
+        [self connect];
+        
     } else {
+        [_xmppRoom leaveRoom];
         [_xmppRoom deactivate];
-        _xmppRoom = [[XMPPRoom alloc] initWithRoomStorage:self jid:[self getRoomJID]];
+        [_xmppRoom removeDelegate:self];
+        
+        [self disconnect];
+        [self connect];
+        
+        [_xmppRoom addDelegate:self delegateQueue:dispatch_get_main_queue()];
         [_xmppRoom  activate:_xmppStream];
         
     }

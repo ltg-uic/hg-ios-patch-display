@@ -9,6 +9,8 @@
 #import "ConfigurationInfo.h"
 #import "PlayerDataDelegate.h"
 #import "XMPPFramework.h"
+#import "DDFileLogger.h"
+#import "DDASLLogger.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, XMPPRoomStorage> {
     NSString *password;
@@ -48,8 +50,9 @@
 @property (strong, nonatomic) NSMutableArray *bots;
 @property (nonatomic) BOOL isGameRunning;
 @property (nonatomic) BOOL hasReset;
-@property (nonatomic) float refreshRate;
 @property (nonatomic) NSMutableArray *killList;
+@property (nonatomic) DDFileLogger *fileLogger;
+
 
 
 

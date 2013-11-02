@@ -62,10 +62,6 @@
         
         [[self appDelegate] setupConfigurationAndRosterWithRunId:_configurationInfo.run_id WithPatchId:currentPatchId];
         
-        
-        
-        [[self appDelegate] disconnect];
-        [[self appDelegate] connect];
     }];
     
     
