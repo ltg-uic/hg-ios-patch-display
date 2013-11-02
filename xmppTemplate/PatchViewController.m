@@ -24,6 +24,9 @@
 
 @implementation PatchViewController
 
+float animationDuration = .4f;
+
+
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if(self = [super initWithCoder:aDecoder])
     {
@@ -49,15 +52,12 @@
         
         
         if( pacmansSearch.count > 0 ) {
-            PacmanView *oldPacmanView = [pacmansSearch objectAtIndex:0];
-            oldPacmanView.player_id = nil;
+            PacmanView *pacman = [pacmansSearch objectAtIndex:0];
+            pacman.player_id = nil;
+            [self.view hideViewWithFadeAnimation:pacman duration:animationDuration option:nil];
+            [self hideNameLabelWithPacmanView:pacman];
             [playersAtPatch removeObject:player_id];
             [self updateCalorieLabel];
-            
-            [self.view hideViewWithFadeAnimation:oldPacmanView duration:.8 option:nil];
-            [self hideNameLabelWithPacmanView:oldPacmanView];
-
-            
             return;
         }
         return;
@@ -68,21 +68,13 @@
     NSArray *pacmansSearch = [_playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == %@", player_id]];
     
     if( pacmansSearch.count > 0 ) {
-        PacmanView *oldPacmanView = [pacmansSearch objectAtIndex:0];
-        [playersAtPatch removeObject:player_id];
-        [self updateCalorieLabel];
-        [oldPacmanView collapseLeave];
-       
-        
-        [self hideNameLabelWithPacmanView:oldPacmanView];
-
-        
-        
-    } else {
-        [playersAtPatch removeObject:player_id];
-        
+        PacmanView *pacman = [pacmansSearch objectAtIndex:0];
+        [pacman collapseLeave];
+        [self hideNameLabelWithPacmanView:pacman];
     }
-    
+    [playersAtPatch removeObject:player_id];
+    [self updateCalorieLabel];
+
 }
 
 -(void)playerDidGetResurrected: (NSString *)player_id {
@@ -136,18 +128,21 @@
         return;
     }
     
-    [playersAtPatch addObject:player_id];
+ 
     
     NSArray *pacmansSearch = [_playerPacmanViews filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"player_id == nil"]];
     
     
     if( pacmansSearch.count > 0 ) {
         PacmanView *pacman = [pacmansSearch objectAtIndex:0];
-        [self.view showViewWithFadeAnimation:pacman duration:.8 option:nil];
+        [self.view showViewWithFadeAnimation:pacman duration:animationDuration option:nil];
         [self showPlayerChompingWith:player_id With:pacman];
-        [self updateCalorieLabel];
         [self showNameLabelWithPacmanView:pacman];
     }
+    
+    [playersAtPatch addObject:player_id];
+    [self updateCalorieLabel];
+
 }
 
 -(void)showNameLabelWithPacmanView:(PacmanView *)pacman {
@@ -162,7 +157,7 @@
     NSInteger *t = pacman.tag;
     UILabel *label = [playersToLabels objectForKey:[NSNumber numberWithInteger:t]];
 
-    [self.view hideViewWithFadeAnimation:label duration:.8 option:nil];
+    [self.view hideViewWithFadeAnimation:label duration:animationDuration option:nil];
 }
 
 -(void)showPlayerChompingWith:(NSString*)player_id With:(PacmanView*)pacman {
@@ -229,21 +224,12 @@
     if( pacmansSearch.count > 0) {
         [self hawkSound];
         PacmanView *pacmanView = [pacmansSearch objectAtIndex:0];
-        [playersAtPatch removeObject:player_id];
-        
-        
         [pacmanView die:YES];
-        
+        [playersAtPatch removeObject:player_id];
         [self updateCalorieLabel];
         
     }
     
-}
-
--(void)hawkPlayerDied:(NSTimer *)theTimer {
-    NSArray *param = [theTimer userInfo];
-    PacmanView *pm = [param objectAtIndex:0];
-    [pm resetPacmanView];
 }
 
 -(void)boutReset {
@@ -260,13 +246,10 @@
     
     [playersAtPatch removeAllObjects];
     [self updateCalorieLabel];
-    [self updateExtraPlayerLabel:0];
-   // [self showAcorns:YE];
 }
 
 -(void)boutStart {
     [self updateCalorieLabel];
-    [self updateExtraPlayerLabel:0];
     [self showAcorns:YES];
 }
 
@@ -349,13 +332,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    //self.title = @"News";
-    
-    // Change button color
-    //_sidebarButton.tintColor = [UIColor colorWithWhite:0.96f alpha:0.2f];
-    
-    // Set the side bar button action. When it's tapped, it'll show up the sidebar.
     
     [self.revealButtonItem setTarget: self.revealViewController];
     [self.revealButtonItem setAction: @selector( revealToggle: )];

@@ -607,14 +607,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
         
         if( event != nil) {
             if( [event isEqualToString:@"reset_bout"] ) {
-                _isGameRunning = NO;
-                
-                for (PlayerDataPoint *pdp in _playerDataPoints) {
-                    pdp.score = [NSNumber numberWithInt:0];
-                }
-                
-                [self.managedObjectContext save:nil];
-                
+                _isGameRunning = NO;                            
                 _hasReset = YES;
                 
                 [self resetGame];

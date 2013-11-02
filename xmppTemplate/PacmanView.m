@@ -7,6 +7,7 @@
 //
 
 #import "PacmanView.h"
+#import "UIView+Animation.h"
 
 #define ANIM_MOUTH_DURATION	0.2
 #define ANIM_KILL_DURATION	0.9
@@ -38,7 +39,6 @@
         self.backgroundColor = [UIColor clearColor];
         self.opaque = YES;
         animating = NO;
-        _isFinished = NO;
         
         PacmanLayer *pl = [[PacmanLayer alloc] init];
         pl.needsDisplayOnBoundsChange = YES;
@@ -61,8 +61,6 @@
         self.backgroundColor = [UIColor clearColor];
         self.opaque = YES;
         animating = NO;
-        _isFinished = NO;
-        
         _pacmanLayer = [[PacmanLayer alloc] init];
         _pacmanLayer.pacColor = [UIColor clearColor];
         _pacmanLayer.needsDisplayOnBoundsChange = YES;
@@ -72,8 +70,6 @@
         
         
         [self.layer addSublayer:_pacmanLayer];
-        //[self die:YES];
-        //[self setNeedsDisplay];
         
     }
     return self;
@@ -217,12 +213,8 @@
 
 - (void) collapseLeave {
 	
-	
-	animating = NO;
-	_isFinished = NO;
-	
 	[CATransaction begin];
-	[CATransaction setAnimationDuration:.8];
+	[CATransaction setAnimationDuration:.3];
 	[CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
 	[CATransaction setCompletionBlock:^{
 		
@@ -230,7 +222,7 @@
       
         
 	}];
-	[self _animateToAngle:PAC_KILL];
+	//[self _animateToAngle:PAC_KILL];
 	[CATransaction commit];
 }
 
@@ -241,7 +233,7 @@
 	
 	
 	[CATransaction begin];
-	[CATransaction setAnimationDuration:1.5];
+	[CATransaction setAnimationDuration:.3];
 	[CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
 	[CATransaction setCompletionBlock:^{
 		
@@ -255,28 +247,22 @@
 
 -(void) afterCollapseLeave {
     
-    // pl.startAngle = PAC_OPEN;
-    //pl.endAngle = 360.0 - PAC_OPEN;
     
-    [_pacmanLayer setValue:[NSNumber numberWithFloat:0] forKey:@"startAngle"];
-    [_pacmanLayer setValue:[NSNumber numberWithFloat:360] forKey:@"endAngle"];
+    animating = NO;
+
+    _pacmanLayer.startAngle = PAC_OPEN;
+    _pacmanLayer.endAngle = 360.0 - PAC_OPEN;
     
     [self resetPacmanView];
-       _isFinished = YES;
+    
 
 }
 
 -(void)resetPacmanView {
     
-    [self animate:NO];
-    self.pacmanLayer.isSMILE = NO;
-    self.pacmanLayer.isFILLED = NO;
-    self.pacmanLayer.isSMILE = NO;
-    self.pacmanLayer.isHAPPY = NO;
-    self.pacmanLayer.isON = NO;
     self.player_id = nil;
-    self.alpha = 0;
-    self.hidden = NO;
+    [self hideViewWithFadeAnimation:self duration:.4 option:nil];
+
  
 }
 
