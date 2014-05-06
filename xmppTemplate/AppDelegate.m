@@ -20,6 +20,7 @@
 #import "SidebarViewController.h"
 #import "BotInfo.h"
 #import "Reachability.h"
+#import "AppDelegate.h"
 
 // Log levels: off, error, warn, info, verbose
 #if DEBUG
@@ -34,9 +35,6 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     NSOperationQueue *operationQueue;
     NSTimer *timer;
     NSMutableDictionary *patchPlayerMap;
-    
-
-
 }
 
 @end
@@ -49,13 +47,13 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 -(void)customizeGlobalAppearance {
     //[[UINavigationBar appearance] setValue:helveticaNeueMedium forKey:UITextAttributeFont];
     //[[UINavigationBar appearance] setValue:[UIColor blackColor] forKey:NSForegroundColorAttributeName];
-
 }
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     //[self setupInterface];
+    
+
     [self clearUserDefaults];
     
     //[self pullConfigurationData];
@@ -103,9 +101,14 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     [self.fileLogger setLogFormatter:[[DDLogFileFormatterDefault alloc]init]];
     
     [DDLog addLogger:_fileLogger];
-
     
-
+    
+    
+    //ESTIMOTES
+    NSLog(@"Estimote Beacon sighting in Patch received");
+    _estDelegate = [[EstimoteDelegate alloc] init];
+    [_estDelegate initEstimoteManager];
+    
     return YES;
 }
 
@@ -783,6 +786,19 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 
 #pragma mark - CONFIGURATION SETUP
 
+-(void)iBeaconDelegate {
+    
+    //NSTRING B_ID
+    
+//     NSArray *searches = [_playerDataPoints filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"rfid_tag == %@", [B_ID uppercaseString] ] ];
+    
+    //get 1s element searches
+    
+    //create json message
+    //send processMessage
+    
+}
+
 -(void)setupConfigurationAndRosterWithRunId:(NSString *)run_id WithPatchId: (NSString*)currentPatchId {
     
     _configurationInfo = [self getConfigurationInfoWithRunId:run_id];
@@ -819,6 +835,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     }
 
     [_playerDataDelegate initConnection];
+    _estDelegate.readEstimoteBeacons = true;
 }
 
 -(void)setupPlayerMap {
