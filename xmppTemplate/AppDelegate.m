@@ -61,7 +61,6 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     //[self setupConfigurationAndRosterWithRunId:@"5ag"];
     //[self customizeGlobalAppearance];
     
-    
     isMultiUserChat = YES;
     //setup test data
     
@@ -835,7 +834,9 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     }
 
     [_playerDataDelegate initConnection];
+    _isGameRunning = YES;
     _estDelegate.readEstimoteBeacons = true;
+
 }
 
 -(void)setupPlayerMap {
