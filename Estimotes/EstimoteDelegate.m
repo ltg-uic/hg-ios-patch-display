@@ -144,7 +144,7 @@
 
 - (BOOL)isBeaconAgedOut:(Beacon *)beacon {
     NSNumber *now = [NSNumber numberWithLong:(long)[NSDate timeIntervalSinceReferenceDate]*1000];
-    NSNumber *ageOutPeriod = [NSNumber numberWithLong:1300];
+    NSNumber *ageOutPeriod = [NSNumber numberWithLong:2000];
     if (now.longLongValue-beacon.lastSighted.longLongValue > ageOutPeriod.longLongValue) {
         return YES;
     }
