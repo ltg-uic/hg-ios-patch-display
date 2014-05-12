@@ -10,8 +10,6 @@
 #import "WizardReviewPageViewController.h"
 #import "PlayerDataPoint.h"
 #import "WizardPatchCell.h"
-#import "AFNetworking.h"
-#import "UIColor-Expanded.h"
 #import "BotInfo.h"
 
 @interface WizardPatchPageViewController () {

@@ -7,7 +7,7 @@
 //
 
 #import "PacmanLayer.h"
-#import "UIColor-Expanded.h"
+#import "UIColor+Expanded.h"
 
 static inline double radians (double degrees) {return degrees * M_PI/180;}
 

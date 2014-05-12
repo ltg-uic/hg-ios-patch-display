@@ -14,5 +14,6 @@
 
 
 @property (nonatomic, strong) NSMutableDictionary *controllerMap;
+- (IBAction)sliderUpdated:(UISlider *)sender;
 
 @end

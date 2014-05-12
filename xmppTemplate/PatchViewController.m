@@ -8,10 +8,10 @@
 
 #import "PatchViewController.h"
 #import "PatchInfo.h"
-#import "UIColor-Expanded.h"
 #import "SWRevealViewController.h"
 #import "PacmanView.h"
 #import "PinPoint.h"
+#import "UIColor+Expanded.h"
 #import <AudioToolbox/AudioToolbox.h>
 
 @interface PatchViewController () {

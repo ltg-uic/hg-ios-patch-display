@@ -7,7 +7,7 @@
 //
 
 #import "PinPoint.h"
-#import "UIColor-Expanded.h"
+#import "UIColor+Expanded.h"
 
 @implementation PinPoint
 

@@ -14,12 +14,12 @@
 #import "EventInfo.h"
 #import "WizardClassPageViewController.h"
 #import <AudioToolbox/AudioToolbox.h>
-#import "SBJsonParser.h"
-#import "AFNetworking.h"
-#import "UIColor-Expanded.h"
 #import "SidebarViewController.h"
 #import "BotInfo.h"
 #import "Reachability.h"
+#import "AFHTTPRequestOperation.h"
+#import "SBJson4Parser.h"
+#import "UIColor+Expanded.h"
 
 // Log levels: off, error, warn, info, verbose
 #if DEBUG
@@ -595,76 +595,98 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 	}
 }
 -(void)processXmppMessage: (NSString *)msg {
-    SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
-    
-    NSDictionary *jsonObjects = [jsonParser objectWithString:msg];
-    
-    if( jsonObjects != nil){
-        
-        
-        NSString *event = [jsonObjects objectForKey:@"event"];
-        
-        
-        if( event != nil) {
-            if( [event isEqualToString:@"reset_bout"] ) {
-                _isGameRunning = NO;                            
-                _hasReset = YES;
-                
-                [self resetGame];
-            } else if([event isEqualToString:@"start_bout"] ) {
-                _isGameRunning = YES;
-                _hasReset = NO;
-                [_playerDataDelegate boutStart];
-            } else if( [event isEqualToString:@"stop_bout"] ) {
-                _isGameRunning = NO;
-                _hasReset = NO;
-                [_playerDataDelegate boutStop];
-            } else if( [event isEqualToString:@"resurrect_tag"]) {
-                NSDictionary *payload = [jsonObjects objectForKey:@"payload"];
-                NSString *player_id = [[payload objectForKey:@"id"] uppercaseString];              
-                [_playerDataDelegate playerDidGetResurrected:player_id];
-            } else if( [event isEqualToString:@"kill_tag"] && (_isGameRunning == YES) ) {
-       
-                NSDictionary *payload = [jsonObjects objectForKey:@"payload"];
-                
-                NSString *player_id = [[payload objectForKey:@"id"] uppercaseString];
-                [_killList addObject:player_id];
-                [_playerDataDelegate playerDidGetKilled:player_id];
-                
-                
-                
 
-            } else if( [event isEqualToString:@"rfid_update"] && (_isGameRunning == YES) ){
-                
-                
-                NSDictionary *payload = [jsonObjects objectForKey:@"payload"];
-                NSString *player_id = [payload objectForKey:@"id"];
-                NSString *arrival_patch_id = [payload objectForKey:@"arrival"];
-                NSString *departure_patch_id = [payload objectForKey:@"departure"];
-                
-                
-                if( ![[NSNull null] isEqual: arrival_patch_id ] && ![[NSNull null] isEqual: departure_patch_id ] ) {
-                    if( [arrival_patch_id isEqual: departure_patch_id ] ) {
-                        return;
+
+    NSData* data = [msg dataUsingEncoding:NSUTF8StringEncoding];
+
+
+    SBJson4Parser *parser = [SBJson4Parser parserWithBlock:^(id item, BOOL *stop) {
+        NSObject *itemObject = item;
+
+        if ([item isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *jsonObjects = (NSDictionary*)itemObject;
+
+
+            if( jsonObjects != nil){
+
+
+                NSString *event = [jsonObjects objectForKey:@"event"];
+
+
+                if( event != nil) {
+                    if( [event isEqualToString:@"reset_bout"] ) {
+                        _isGameRunning = NO;
+                        _hasReset = YES;
+
+                        [self resetGame];
+                    } else if([event isEqualToString:@"start_bout"] ) {
+                        _isGameRunning = YES;
+                        _hasReset = NO;
+                        [_playerDataDelegate boutStart];
+                    } else if( [event isEqualToString:@"stop_bout"] ) {
+                        _isGameRunning = NO;
+                        _hasReset = NO;
+                        [_playerDataDelegate boutStop];
+                    } else if( [event isEqualToString:@"resurrect_tag"]) {
+                        NSDictionary *payload = [jsonObjects objectForKey:@"payload"];
+                        NSString *player_id = [[payload objectForKey:@"id"] uppercaseString];
+                        [_playerDataDelegate playerDidGetResurrected:player_id];
+                    } else if( [event isEqualToString:@"kill_tag"] && (_isGameRunning == YES) ) {
+
+                        NSDictionary *payload = [jsonObjects objectForKey:@"payload"];
+
+                        NSString *player_id = [[payload objectForKey:@"id"] uppercaseString];
+                        [_killList addObject:player_id];
+                        [_playerDataDelegate playerDidGetKilled:player_id];
+
+
+
+
+                    } else if( [event isEqualToString:@"rfid_update"] && (_isGameRunning == YES) ){
+
+
+                        NSDictionary *payload = [jsonObjects objectForKey:@"payload"];
+                        NSString *player_id = [payload objectForKey:@"id"];
+                        NSString *arrival_patch_id = [payload objectForKey:@"arrival"];
+                        NSString *departure_patch_id = [payload objectForKey:@"departure"];
+
+
+                        if( ![[NSNull null] isEqual: arrival_patch_id ] && ![[NSNull null] isEqual: departure_patch_id ] ) {
+                            if( [arrival_patch_id isEqual: departure_patch_id ] ) {
+                                return;
+                            }
+                        }
+
+
+                        if( ![[NSNull null] isEqual: arrival_patch_id ] && [[arrival_patch_id uppercaseString] isEqualToString:_currentPatchInfo.patch_id]) {
+
+                            [_playerDataDelegate playerDidArrive:[player_id uppercaseString]];
+                        }
+
+                        if( ![[NSNull null] isEqual: departure_patch_id ] &&[[departure_patch_id uppercaseString] isEqual:_currentPatchInfo.patch_id] ) {
+                            [_playerDataDelegate playerDidLeave:[player_id uppercaseString]];
+                        }
+
+
                     }
-                }
-                
-                
-                if( ![[NSNull null] isEqual: arrival_patch_id ] && [[arrival_patch_id uppercaseString] isEqualToString:_currentPatchInfo.patch_id]) {
 
-                    [_playerDataDelegate playerDidArrive:[player_id uppercaseString]];
+
                 }
-                
-                if( ![[NSNull null] isEqual: departure_patch_id ] &&[[departure_patch_id uppercaseString] isEqual:_currentPatchInfo.patch_id] ) {
-                    [_playerDataDelegate playerDidLeave:[player_id uppercaseString]];
-                }
-                
-                
             }
-            
-            
+
+
         }
     }
+                                            allowMultiRoot:NO
+                                           unwrapRootArray:NO
+                                              errorHandler:^(NSError *error) {
+                                                  NSLog(@"%@", error);
+                                              }];
+    [parser parse:data];
+
+
+
+
     
     NSLog(@"message %@", msg);
     
@@ -877,10 +899,11 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     operationQueue = [[NSOperationQueue alloc] init];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     //AFNetworking asynchronous url request
-    AFJSONRequestOperation *operation1 = [AFJSONRequestOperation
-                                         JSONRequestOperationWithRequest:request
-                                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, id responseObject)
-                                         {
+
+    AFHTTPRequestOperation *operation1 = [[AFHTTPRequestOperation alloc]
+            initWithRequest:request];
+    operation1.responseSerializer = [AFJSONResponseSerializer serializer];
+    [operation1 setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject){
                                              NSLog(@"JSON RESULT %@", responseObject);
                                              // NSArray *configurations = [responseObject objectForKey:@"data"];
                                              
@@ -951,7 +974,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
                                              }];
                                          }
                                          
-                                         failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id responseObject)
+                                         failure:^(AFHTTPRequestOperation *operation, NSError *error)
                                          {
                                              NSLog(@"Request Failed: %@, %@", error, error.userInfo);
                                          }];
@@ -968,9 +991,12 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     //AFNetworking asynchronous url request
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation
-                                         JSONRequestOperationWithRequest:request
-                                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, id responseObject)
+
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc]
+            initWithRequest:request];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
                                          {
                                              NSLog(@"JSON RESULT %@", responseObject);
                                              
@@ -990,7 +1016,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
                                              [self.managedObjectContext save:nil];
                                              
                                          }
-                                         failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id responseObject)
+                                         failure:^(AFHTTPRequestOperation *operation, NSError *error)
                                          {
                                              NSLog(@"Request Failed: %@, %@", error, error.userInfo);
                                          }];

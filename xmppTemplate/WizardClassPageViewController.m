@@ -9,7 +9,6 @@
 #import "WizardClassPageViewController.h"
 #import "WizardPatchPageViewController.h"
 #import "WizardClassCell.h"
-#import "AFNetworking.h"
 
 
 @interface WizardClassPageViewController ()

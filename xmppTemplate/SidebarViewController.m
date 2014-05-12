@@ -43,7 +43,7 @@
 {
     [super viewDidLoad];
     
-    _menuItems = @[@"viz_item", @"map_item",  @"settings_title_item", @"login_item", @"blank_item"];
+    _menuItems = @[@"viz_item", @"map_item",  @"settings_title_item", @"login_item", @"progress_item"];
     self.clearsSelectionOnViewWillAppear = NO;
 }
 
@@ -119,33 +119,33 @@
     return [_menuItems count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSString *cellIdentifier = [self.menuItems objectAtIndex:indexPath.row];
-    
-    if( cellIdentifier == nil ) {
-        cellIdentifier = @"blank_item";
-    }
-    
-    int loginIndex = [_menuItems indexOfObject:@"login_item"];
-    if( loginIndex == indexPath.row ) {
-        SideBarCell *loginCell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-        if( isOnline ) {            
-            loginCell.label.text = xmppUsername;
-            [loginCell.leftImageView setImage:onlineImage];
-            
-        } else {
-            loginCell.label.text = xmppUsername;
-            [loginCell.leftImageView setImage:offlineImage];
-
-        }
-        return loginCell;
-    } else {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-        return cell;
-    }
-    
-}
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    NSString *cellIdentifier = [self.menuItems objectAtIndex:indexPath.row];
+//    
+//    if( cellIdentifier == nil ) {
+//        cellIdentifier = @"blank_item";
+//    }
+//    
+//    int loginIndex = [_menuItems indexOfObject:@"login_item"];
+//    if( loginIndex == indexPath.row ) {
+//        SideBarCell *loginCell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+//        if( isOnline ) {            
+//            loginCell.label.text = xmppUsername;
+//            [loginCell.leftImageView setImage:onlineImage];
+//            
+//        } else {
+//            loginCell.label.text = xmppUsername;
+//            [loginCell.leftImageView setImage:offlineImage];
+//
+//        }
+//        return loginCell;
+//    } else {
+//        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+//        return cell;
+//    }
+//    
+//}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
@@ -213,4 +213,7 @@
 	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
+- (IBAction)sliderUpdated:(UISlider *)sender {
+      NSLog(@"slider value = %f", sender.value);
+}
 @end
