@@ -71,12 +71,11 @@
                     beacon.type = @"ESTIMOTE";
                     
                     //generate arrival message
-                    if([beacon.identifier isEqualToString:@"7003"]){
                         [self addBeacon:beacon];
                         NSString *lower = [_appDelegate.currentPatchInfo.patch_id lowercaseString];
-                        NSString *msg = [NSString stringWithFormat:@"{\"event\":\"rfid_update\",\"payload\":{\"id\":\"%@\",\"arrival\":\"%@\",\"departure\":\"\"}}", @"est1", lower];
+                        NSString *msg = [NSString stringWithFormat:@"{\"event\":\"rfid_update\",\"payload\":{\"id\":\"%@\",\"arrival\":\"%@\",\"departure\":\"\"}}", beacon.name, lower];
                         [_appDelegate processXmppMessage:msg];
-                    }
+                    //}
                 }
                 else{
                     NSLog(@"update last sighted");
