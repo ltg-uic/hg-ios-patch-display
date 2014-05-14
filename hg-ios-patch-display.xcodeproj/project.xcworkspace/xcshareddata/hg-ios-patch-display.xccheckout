@@ -5,19 +5,31 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
+<<<<<<< HEAD
 	<string>33073BF4-54C5-434F-B557-3ED76473FD31</string>
+=======
+	<string>5D4C2E73-9E98-4A41-A0FC-E75B3A6F2007</string>
+>>>>>>> FETCH_HEAD
 	<key>IDESourceControlProjectName</key>
 	<string>hg-ios-patch-display</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+<<<<<<< HEAD
 		<key>B90A3352-FB33-4132-A939-B71AC35C52B7</key>
+=======
+		<key>A5BF9A7D-554B-4828-A333-BDF8540C5FAC</key>
+>>>>>>> FETCH_HEAD
 		<string>https://github.com/ltg-uic/hg-ios-patch-display.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>hg-ios-patch-display.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
+<<<<<<< HEAD
 		<key>B90A3352-FB33-4132-A939-B71AC35C52B7</key>
+=======
+		<key>A5BF9A7D-554B-4828-A333-BDF8540C5FAC</key>
+>>>>>>> FETCH_HEAD
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
@@ -25,14 +37,22 @@
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
+<<<<<<< HEAD
 	<string>B90A3352-FB33-4132-A939-B71AC35C52B7</string>
+=======
+	<string>A5BF9A7D-554B-4828-A333-BDF8540C5FAC</string>
+>>>>>>> FETCH_HEAD
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
+<<<<<<< HEAD
 			<string>B90A3352-FB33-4132-A939-B71AC35C52B7</string>
+=======
+			<string>A5BF9A7D-554B-4828-A333-BDF8540C5FAC</string>
+>>>>>>> FETCH_HEAD
 			<key>IDESourceControlWCCName</key>
 			<string>hg-ios-patch-display</string>
 		</dict>

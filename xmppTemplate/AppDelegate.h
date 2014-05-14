@@ -11,6 +11,7 @@
 #import "XMPPFramework.h"
 #import "DDFileLogger.h"
 #import "DDASLLogger.h"
+#import "EstimoteDelegate.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, XMPPRoomStorage> {
     NSString *password;
@@ -33,7 +34,7 @@
 @property (nonatomic, strong) XMPPReconnect *xmppReconnect;
 @property (nonatomic, strong) XMPPRoom *xmppRoom;
 @property (strong, nonatomic) SWRevealViewController *viewController;
-
+@property (nonatomic, strong) EstimoteDelegate *estDelegate;
 
 
 @property (nonatomic, weak) id <XMPPBaseNewMessageDelegate> xmppBaseNewMessageDelegate;
@@ -70,6 +71,8 @@
 - (void)goOffline;
 
 -(void)setupConfigurationAndRosterWithRunId:(NSString *)run_id WithPatchId:(NSString*)current_patchId;
+
+- (void)processXmppMessage: (NSString *)msg;
 
 
 @end

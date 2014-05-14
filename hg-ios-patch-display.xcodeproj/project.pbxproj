@@ -57,6 +57,11 @@
 		70FFD20F1821DFAF002354CE /* UIView+Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 70FFD20E1821DFAF002354CE /* UIView+Animation.m */; };
 		70FFD21218220BE0002354CE /* HG_appIcon_leaf.png in Resources */ = {isa = PBXBuildFile; fileRef = 70FFD21018220BE0002354CE /* HG_appIcon_leaf.png */; };
 		70FFD21318220BE0002354CE /* HG_appIcon_leaf@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70FFD21118220BE0002354CE /* HG_appIcon_leaf@2x.png */; };
+		778ED61618FC52D2003EF858 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 778ED61518FC52D2003EF858 /* CoreBluetooth.framework */; };
+		778ED61818FC52E4003EF858 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 778ED61718FC52E4003EF858 /* CoreLocation.framework */; };
+		778ED61A18FC54AA003EF858 /* libEstimoteSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 778ED61918FC54AA003EF858 /* libEstimoteSDK.a */; };
+		778ED62118FC5AB7003EF858 /* Beacon.m in Sources */ = {isa = PBXBuildFile; fileRef = 778ED62018FC5AB7003EF858 /* Beacon.m */; };
+		778ED62418FC75CE003EF858 /* EstimoteDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 778ED62318FC75CE003EF858 /* EstimoteDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -147,6 +152,13 @@
 		70FFD20E1821DFAF002354CE /* UIView+Animation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Animation.m"; sourceTree = "<group>"; };
 		70FFD21018220BE0002354CE /* HG_appIcon_leaf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HG_appIcon_leaf.png; sourceTree = "<group>"; };
 		70FFD21118220BE0002354CE /* HG_appIcon_leaf@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HG_appIcon_leaf@2x.png"; sourceTree = "<group>"; };
+		778ED61518FC52D2003EF858 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		778ED61718FC52E4003EF858 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		778ED61918FC54AA003EF858 /* libEstimoteSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libEstimoteSDK.a; path = EstimoteSDK/libEstimoteSDK.a; sourceTree = "<group>"; };
+		778ED61F18FC5AB7003EF858 /* Beacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Beacon.h; path = Estimotes/Beacon.h; sourceTree = SOURCE_ROOT; };
+		778ED62018FC5AB7003EF858 /* Beacon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Beacon.m; path = Estimotes/Beacon.m; sourceTree = SOURCE_ROOT; };
+		778ED62218FC75CE003EF858 /* EstimoteDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstimoteDelegate.h; path = Estimotes/EstimoteDelegate.h; sourceTree = SOURCE_ROOT; };
+		778ED62318FC75CE003EF858 /* EstimoteDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstimoteDelegate.m; path = Estimotes/EstimoteDelegate.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,9 +166,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+<<<<<<< HEAD
 				708DAEE21921416400E747A9 /* libiconv.2.4.0.dylib in Frameworks */,
 				708DAEE11921415100E747A9 /* libxml2.2.dylib in Frameworks */,
 				708DAEE01921414200E747A9 /* libresolv.dylib in Frameworks */,
+=======
+				778ED61A18FC54AA003EF858 /* libEstimoteSDK.a in Frameworks */,
+				778ED61818FC52E4003EF858 /* CoreLocation.framework in Frameworks */,
+				778ED61618FC52D2003EF858 /* CoreBluetooth.framework in Frameworks */,
+				705FC26317CC156D009D42B6 /* libCorePlot-CocoaTouch.a in Frameworks */,
+				70EDB4D017B475960005E144 /* libresolv.9.dylib in Frameworks */,
+				70B4119017B4600900F61347 /* libxml2.2.dylib in Frameworks */,
+>>>>>>> FETCH_HEAD
 				706857EA17C51A7400BF8AAF /* MobileCoreServices.framework in Frameworks */,
 				7056212417C9DBB3007D117B /* QuartzCore.framework in Frameworks */,
 				70CD9B3417B4988E008625BF /* AudioToolbox.framework in Frameworks */,
@@ -212,9 +233,15 @@
 		700C3A50160427DA005A9E34 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				708DAEDE1921410F00E747A9 /* libiconv.dylib */,
 				708DAEDA19213F0A00E747A9 /* libxml2.dylib */,
 				700F5CB1191C180F00E39517 /* libresolv.dylib */,
+=======
+				778ED61918FC54AA003EF858 /* libEstimoteSDK.a */,
+				778ED61718FC52E4003EF858 /* CoreLocation.framework */,
+				778ED61518FC52D2003EF858 /* CoreBluetooth.framework */,
+>>>>>>> FETCH_HEAD
 				7056212117C9D9C3007D117B /* QuartzCore.framework */,
 				706857E917C51A7400BF8AAF /* MobileCoreServices.framework */,
 				70CD9B3317B4988E008625BF /* AudioToolbox.framework */,
@@ -236,6 +263,7 @@
 		700C3A57160427DA005A9E34 /* Display */ = {
 			isa = PBXGroup;
 			children = (
+				778ED61B18FC569A003EF858 /* Estimotes */,
 				700C3A60160427DA005A9E34 /* AppDelegate.h */,
 				700C3A61160427DA005A9E34 /* AppDelegate.m */,
 				703D86FA17D91E0500523417 /* PatchViewController.h */,
@@ -353,6 +381,29 @@
 			name = PatchAnimation;
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
+=======
+		70EC27D617E2288E00077DF4 /* Nib */ = {
+			isa = PBXGroup;
+			children = (
+				70EC27D317E2287200077DF4 /* UIView+NibLoading.h */,
+				70EC27D417E2287200077DF4 /* UIView+NibLoading.m */,
+			);
+			name = Nib;
+			sourceTree = "<group>";
+		};
+		778ED61B18FC569A003EF858 /* Estimotes */ = {
+			isa = PBXGroup;
+			children = (
+				778ED61F18FC5AB7003EF858 /* Beacon.h */,
+				778ED62018FC5AB7003EF858 /* Beacon.m */,
+				778ED62218FC75CE003EF858 /* EstimoteDelegate.h */,
+				778ED62318FC75CE003EF858 /* EstimoteDelegate.m */,
+			);
+			name = Estimotes;
+			sourceTree = "<group>";
+		};
+>>>>>>> FETCH_HEAD
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -477,6 +528,11 @@
 				7013B01117E4CF9C00194BA5 /* SWRevealViewController.m in Sources */,
 				70DD405817EE475200F1FB18 /* PacmanView.m in Sources */,
 				70CEF76717C8474E00ED0CBE /* SideBarCell.m in Sources */,
+<<<<<<< HEAD
+=======
+				705BED0117EA64000042D313 /* XMPPIQ.m in Sources */,
+				778ED62118FC5AB7003EF858 /* Beacon.m in Sources */,
+>>>>>>> FETCH_HEAD
 				700C3A5E160427DA005A9E34 /* main.m in Sources */,
 				700C3A62160427DA005A9E34 /* AppDelegate.m in Sources */,
 				70CF3D7017C5570D006F363C /* WizardReviewPageViewController.m in Sources */,
@@ -489,6 +545,26 @@
 				705AE0BE17D5949A005F69B7 /* EventInfo.m in Sources */,
 				7012E55A17EA9A51004433BC /* PatchInfo.m in Sources */,
 				7025949B17C3FFE7006E596B /* WizardPatchPageViewController.m in Sources */,
+<<<<<<< HEAD
+=======
+				706857E817C51A2600BF8AAF /* UIImageView+AFNetworking.m in Sources */,
+				705BEE5F17EA643A0042D313 /* XMPPMessageArchiving.xcdatamodeld in Sources */,
+				705BEE6717EA643A0042D313 /* XMPPMessage+XEP_0184.m in Sources */,
+				705BEE6117EA643A0042D313 /* XMPPMessageArchiving_Message_CoreDataObject.m in Sources */,
+				705BEE3A17EA643A0042D313 /* XMPPRoomOccupantHybridMemoryStorageObject.m in Sources */,
+				705BEE3B17EA643A0042D313 /* XMPPRoomMemoryStorage.m in Sources */,
+				705BEE3517EA643A0042D313 /* XMPPRoomMessageCoreDataStorageObject.m in Sources */,
+				705BED0C17EA64000042D313 /* XMPPSRVResolver.m in Sources */,
+				705AE0D617D595CC005F69B7 /* SBJsonStreamParser.m in Sources */,
+				706857E317C51A2600BF8AAF /* AFJSONRequestOperation.m in Sources */,
+				705BEE6017EA643A0042D313 /* XMPPMessageArchiving_Contact_CoreDataObject.m in Sources */,
+				705BEE6517EA643A0042D313 /* XMPPMessage+XEP_0172.m in Sources */,
+				705BEE3717EA643A0042D313 /* XMPPRoomHybrid.xcdatamodeld in Sources */,
+				705BECD417EA63EF0042D313 /* XMPPXFacebookPlatformAuthentication.m in Sources */,
+				705BED0A17EA64000042D313 /* RFImageToDataTransformer.m in Sources */,
+				778ED62418FC75CE003EF858 /* EstimoteDelegate.m in Sources */,
+				706857E617C51A2600BF8AAF /* AFURLConnectionOperation.m in Sources */,
+>>>>>>> FETCH_HEAD
 				70E866F417C66E8F003C5BD2 /* QuietAssertMacros.c in Sources */,
 				7077DB06180855CE00B46828 /* DataPointModel.xcdatamodeld in Sources */,
 				70A3E7BA1814AAAA006F718C /* ConfigurationInfo.m in Sources */,
@@ -539,6 +615,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/EstimoteSDK";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-lxml2";
 				SDKROOT = iphoneos;
@@ -565,6 +642,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/EstimoteSDK";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "-lxml2";
@@ -584,9 +662,22 @@
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "xmppTemplate/hg-ios-patch-display-Prefix.pch";
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				HEADER_SEARCH_PATHS = (
+					/usr/include/libxml2,
+					"$(PROJECT_DIR)/EstimoteSDK/Headers",
+				);
 				INFOPLIST_FILE = "xmppTemplate/hg-ios-patch-display-Info.plist";
+<<<<<<< HEAD
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+=======
+				LIBRARY_SEARCH_PATHS = (
+					XMPPFramework/Vendor/libidn,
+					"$(inherited)",
+					xmppTemplate,
+					Vendor/libidn,
+					"$(PROJECT_DIR)/EstimoteSDK",
+				);
+>>>>>>> FETCH_HEAD
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-objc",
@@ -610,9 +701,22 @@
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "xmppTemplate/hg-ios-patch-display-Prefix.pch";
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				HEADER_SEARCH_PATHS = (
+					/usr/include/libxml2,
+					"$(PROJECT_DIR)/EstimoteSDK/Headers",
+				);
 				INFOPLIST_FILE = "xmppTemplate/hg-ios-patch-display-Info.plist";
+<<<<<<< HEAD
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+=======
+				LIBRARY_SEARCH_PATHS = (
+					../XMPPFramework/Vendor/libidn,
+					"$(inherited)",
+					../xmppTemplate,
+					../Vendor/libidn,
+					"$(PROJECT_DIR)/EstimoteSDK",
+				);
+>>>>>>> FETCH_HEAD
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-objc",
