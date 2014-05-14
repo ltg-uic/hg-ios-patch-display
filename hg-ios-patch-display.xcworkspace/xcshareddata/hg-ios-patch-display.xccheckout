@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>7C6B05E0-3E60-48BE-8B7E-BD97A9553433</string>
+	<key>IDESourceControlProjectName</key>
+	<string>hg-ios-patch-display</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>61E3DED1-8A97-4BE6-B02B-B77163722B1A</key>
+		<string>https://github.com/ltg-uic/hg-ios-patch-display.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>hg-ios-patch-display.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>61E3DED1-8A97-4BE6-B02B-B77163722B1A</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/ltg-uic/hg-ios-patch-display.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>61E3DED1-8A97-4BE6-B02B-B77163722B1A</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>61E3DED1-8A97-4BE6-B02B-B77163722B1A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>hg-ios-patch-display</string>
+		</dict>
+	</array>
+</dict>
+</plist>

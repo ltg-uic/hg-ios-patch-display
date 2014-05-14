@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4BDE048AE0FC46CEA307C1E8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56CE2AC1567440F09CC7265C /* libPods.a */; };
+		700C18BA1923F917007F8F87 /* libidn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 700C18B91923F917007F8F87 /* libidn.a */; };
 		700C3A52160427DA005A9E34 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700C3A51160427DA005A9E34 /* UIKit.framework */; };
 		700C3A56160427DA005A9E34 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700C3A55160427DA005A9E34 /* CoreGraphics.framework */; };
 		700C3A5E160427DA005A9E34 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 700C3A5D160427DA005A9E34 /* main.m */; };
@@ -63,6 +64,7 @@
 		4F653001A24F42D089C70658 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		56CE2AC1567440F09CC7265C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		700B8B2C17DBD885001E1C0A /* PlayerDataDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerDataDelegate.h; sourceTree = "<group>"; };
+		700C18B91923F917007F8F87 /* libidn.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libidn.a; path = Pods/XMPPFramework/Vendor/libidn/libidn.a; sourceTree = "<group>"; };
 		700C3A4D160427DA005A9E34 /* hg-ios-patch-display.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "hg-ios-patch-display.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		700C3A51160427DA005A9E34 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		700C3A53160427DA005A9E34 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -157,6 +159,7 @@
 				708DAEE21921416400E747A9 /* libiconv.2.4.0.dylib in Frameworks */,
 				708DAEE11921415100E747A9 /* libxml2.2.dylib in Frameworks */,
 				708DAEE01921414200E747A9 /* libresolv.dylib in Frameworks */,
+				700C18BA1923F917007F8F87 /* libidn.a in Frameworks */,
 				706857EA17C51A7400BF8AAF /* MobileCoreServices.framework in Frameworks */,
 				7056212417C9DBB3007D117B /* QuartzCore.framework in Frameworks */,
 				70CD9B3417B4988E008625BF /* AudioToolbox.framework in Frameworks */,
@@ -212,6 +215,7 @@
 		700C3A50160427DA005A9E34 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				700C18B91923F917007F8F87 /* libidn.a */,
 				708DAEDE1921410F00E747A9 /* libiconv.dylib */,
 				708DAEDA19213F0A00E747A9 /* libxml2.dylib */,
 				700F5CB1191C180F00E39517 /* libresolv.dylib */,
@@ -586,7 +590,10 @@
 				GCC_PREFIX_HEADER = "xmppTemplate/hg-ios-patch-display-Prefix.pch";
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = "xmppTemplate/hg-ios-patch-display-Info.plist";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/XMPPFramework/Vendor/libidn",
+				);
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-objc",
@@ -612,7 +619,10 @@
 				GCC_PREFIX_HEADER = "xmppTemplate/hg-ios-patch-display-Prefix.pch";
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = "xmppTemplate/hg-ios-patch-display-Info.plist";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/XMPPFramework/Vendor/libidn",
+				);
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-objc",
