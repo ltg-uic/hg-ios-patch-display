@@ -1123,8 +1123,6 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     return pdp;
 }
 
-
-
 -(void)createEventInfoWithRFID: (NSString *)rfid WithEventType: (NSString *)eventType WithScore: (NSNumber *) score {
     EventInfo *ei = [NSEntityDescription insertNewObjectForEntityForName:@"EventInfo"
                                                   inManagedObjectContext:self.managedObjectContext];
