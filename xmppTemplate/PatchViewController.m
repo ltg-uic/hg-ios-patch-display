@@ -105,8 +105,6 @@ float animationDuration = .4f;
     }
 }
 
-
-
 -(void)playerDidArrive: (NSString *)player_id {
     
     if( [[self killList] containsObject:player_id]  ) {
