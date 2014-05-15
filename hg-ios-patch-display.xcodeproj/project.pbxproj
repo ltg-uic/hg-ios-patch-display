@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4BDE048AE0FC46CEA307C1E8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56CE2AC1567440F09CC7265C /* libPods.a */; };
 		700C18BA1923F917007F8F87 /* libidn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 700C18B91923F917007F8F87 /* libidn.a */; };
+		700C18C01924323A007F8F87 /* Beacon.m in Sources */ = {isa = PBXBuildFile; fileRef = 700C18BD1924323A007F8F87 /* Beacon.m */; };
+		700C18C11924323A007F8F87 /* EstimoteDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 700C18BF1924323A007F8F87 /* EstimoteDelegate.m */; };
 		700C3A52160427DA005A9E34 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700C3A51160427DA005A9E34 /* UIKit.framework */; };
 		700C3A56160427DA005A9E34 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700C3A55160427DA005A9E34 /* CoreGraphics.framework */; };
 		700C3A5E160427DA005A9E34 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 700C3A5D160427DA005A9E34 /* main.m */; };
@@ -26,7 +28,6 @@
 		703D870017D938C900523417 /* awareness.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 703D86FF17D938C900523417 /* awareness.xcassets */; };
 		7056212417C9DBB3007D117B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7056212117C9D9C3007D117B /* QuartzCore.framework */; };
 		705AE0BE17D5949A005F69B7 /* EventInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 705AE0BD17D5949A005F69B7 /* EventInfo.m */; };
-		706857EA17C51A7400BF8AAF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 706857E917C51A7400BF8AAF /* MobileCoreServices.framework */; };
 		7077DB06180855CE00B46828 /* DataPointModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7077DB02180855CE00B46828 /* DataPointModel.xcdatamodeld */; };
 		7077DB091808561500B46828 /* PlayerDataPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 7077DB081808561500B46828 /* PlayerDataPoint.m */; };
 		70879019160BB0A50099DD5D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70879018160BB0A50099DD5D /* CoreData.framework */; };
@@ -65,6 +66,12 @@
 		56CE2AC1567440F09CC7265C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		700B8B2C17DBD885001E1C0A /* PlayerDataDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerDataDelegate.h; sourceTree = "<group>"; };
 		700C18B91923F917007F8F87 /* libidn.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libidn.a; path = Pods/XMPPFramework/Vendor/libidn/libidn.a; sourceTree = "<group>"; };
+		700C18BC1924323A007F8F87 /* Beacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Beacon.h; sourceTree = "<group>"; };
+		700C18BD1924323A007F8F87 /* Beacon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Beacon.m; sourceTree = "<group>"; };
+		700C18BE1924323A007F8F87 /* EstimoteDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EstimoteDelegate.h; sourceTree = "<group>"; };
+		700C18BF1924323A007F8F87 /* EstimoteDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EstimoteDelegate.m; sourceTree = "<group>"; };
+		700C18C219245163007F8F87 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		700C18C419245172007F8F87 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		700C3A4D160427DA005A9E34 /* hg-ios-patch-display.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "hg-ios-patch-display.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		700C3A51160427DA005A9E34 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		700C3A53160427DA005A9E34 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -160,12 +167,11 @@
 				708DAEE11921415100E747A9 /* libxml2.2.dylib in Frameworks */,
 				708DAEE01921414200E747A9 /* libresolv.dylib in Frameworks */,
 				700C18BA1923F917007F8F87 /* libidn.a in Frameworks */,
-				706857EA17C51A7400BF8AAF /* MobileCoreServices.framework in Frameworks */,
+				700C3A56160427DA005A9E34 /* CoreGraphics.framework in Frameworks */,
+				70879019160BB0A50099DD5D /* CoreData.framework in Frameworks */,
 				7056212417C9DBB3007D117B /* QuartzCore.framework in Frameworks */,
 				70CD9B3417B4988E008625BF /* AudioToolbox.framework in Frameworks */,
 				700C3A9E16042944005A9E34 /* CFNetwork.framework in Frameworks */,
-				700C3A56160427DA005A9E34 /* CoreGraphics.framework in Frameworks */,
-				70879019160BB0A50099DD5D /* CoreData.framework in Frameworks */,
 				700C3B3A160430DA005A9E34 /* SystemConfiguration.framework in Frameworks */,
 				700C3B2E16042BBD005A9E34 /* Security.framework in Frameworks */,
 				700C3A52160427DA005A9E34 /* UIKit.framework in Frameworks */,
@@ -194,9 +200,21 @@
 			name = Entity;
 			sourceTree = "<group>";
 		};
+		700C18BB1924323A007F8F87 /* Estimotes */ = {
+			isa = PBXGroup;
+			children = (
+				700C18BC1924323A007F8F87 /* Beacon.h */,
+				700C18BD1924323A007F8F87 /* Beacon.m */,
+				700C18BE1924323A007F8F87 /* EstimoteDelegate.h */,
+				700C18BF1924323A007F8F87 /* EstimoteDelegate.m */,
+			);
+			path = Estimotes;
+			sourceTree = "<group>";
+		};
 		700C3A42160427DA005A9E34 = {
 			isa = PBXGroup;
 			children = (
+				700C18BB1924323A007F8F87 /* Estimotes */,
 				700C3A57160427DA005A9E34 /* Display */,
 				700C3A50160427DA005A9E34 /* Frameworks */,
 				700C3A4E160427DA005A9E34 /* Products */,
@@ -215,6 +233,8 @@
 		700C3A50160427DA005A9E34 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				700C18C419245172007F8F87 /* CoreLocation.framework */,
+				700C18C219245163007F8F87 /* CoreBluetooth.framework */,
 				700C18B91923F917007F8F87 /* libidn.a */,
 				708DAEDE1921410F00E747A9 /* libiconv.dylib */,
 				708DAEDA19213F0A00E747A9 /* libxml2.dylib */,
@@ -482,6 +502,7 @@
 				70DD405817EE475200F1FB18 /* PacmanView.m in Sources */,
 				70CEF76717C8474E00ED0CBE /* SideBarCell.m in Sources */,
 				700C3A5E160427DA005A9E34 /* main.m in Sources */,
+				700C18C01924323A007F8F87 /* Beacon.m in Sources */,
 				700C3A62160427DA005A9E34 /* AppDelegate.m in Sources */,
 				70CF3D7017C5570D006F363C /* WizardReviewPageViewController.m in Sources */,
 				70E866F217C66E76003C5BD2 /* fishhook.c in Sources */,
@@ -498,6 +519,7 @@
 				70A3E7BA1814AAAA006F718C /* ConfigurationInfo.m in Sources */,
 				7025949E17C40065006E596B /* WizardPatchCell.m in Sources */,
 				70FFD20F1821DFAF002354CE /* UIView+Animation.m in Sources */,
+				700C18C11924323A007F8F87 /* EstimoteDelegate.m in Sources */,
 				7077DB091808561500B46828 /* PlayerDataPoint.m in Sources */,
 				70CF3D6D17C55296006F363C /* WizardClassCell.m in Sources */,
 			);
@@ -595,10 +617,6 @@
 					"$(PROJECT_DIR)/Pods/XMPPFramework/Vendor/libidn",
 				);
 				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = (
-					"-objc",
-					"-all_load",
-				);
 				PRODUCT_NAME = "hg-ios-patch-display";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
@@ -624,10 +642,6 @@
 					"$(PROJECT_DIR)/Pods/XMPPFramework/Vendor/libidn",
 				);
 				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = (
-					"-objc",
-					"-all_load",
-				);
 				PRODUCT_NAME = "hg-ios-patch-display";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;

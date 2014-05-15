@@ -8,7 +8,8 @@
 
 #import "EstimoteDelegate.h"
 #import "Beacon.h"
-#import <ESTBeaconManager.h>
+#import "ESTBeaconManager.h"
+#import "ESTBeaconRegion.h"
 #import "AppDelegate.h"
 #import "PatchInfo.h"
 
@@ -94,7 +95,7 @@
     @synchronized(self.appDelegate){
         NSLog(@"adding beacon");
         [self.beaconsInPatch addObject:beacon];
-        NSLog([NSString stringWithFormat:@"%d",[_beaconsInPatch count]]);
+        NSLog([NSString stringWithFormat:@"%lu",(unsigned long)[_beaconsInPatch count]]);
     }
 }
 
