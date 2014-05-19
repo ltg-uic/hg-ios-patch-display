@@ -34,6 +34,9 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     NSOperationQueue *operationQueue;
     NSTimer *timer;
     NSMutableDictionary *patchPlayerMap;
+    
+
+
 }
 
 @end
@@ -67,12 +70,18 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     [self deleteAllObjects:@"ConfigurationInfo"];
     [self deleteAllObjects:@"PlayerDataPoint"];
     [self deleteAllObjects:@"PatchInfo"];
+   
+    
     
     [self pullConfigurationData];
     
     //[self importTestData];
+  
+    
     //setup test user
     //[self setupTestUser];
+    
+   
     
     //set reachability
     [self setReachability];
@@ -95,8 +104,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     
     [DDLog addLogger:_fileLogger];
 
-    _estDelegate = [[EstimoteDelegate alloc] init];
-    [_estDelegate initEstimoteManager];
+    
 
     return YES;
 }
@@ -162,6 +170,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 	
 	SWRevealViewController *revealController = [[SWRevealViewController alloc] initWithRearViewController:rearNavigationController frontViewController:frontNavigationController];
     revealController.delegate = self;
+    
     
     
     //revealController.bounceBackOnOverdraw=NO;
@@ -832,9 +841,6 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     }
 
     [_playerDataDelegate initConnection];
-    _isGameRunning = YES;
-    _estDelegate.readEstimoteBeacons = true;
-
 }
 
 -(void)setupPlayerMap {
@@ -1061,6 +1067,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     
     return pi;
 }
+
 
 
 -(ConfigurationInfo *)insertConfigurationWithRunId: (NSString *)run_id withHarvestCalculatorBoutLengthInMinutes:(float)harvest_calculator_bout_length_in_minutes WithMaximumHarvest:(float)maximum_harvest WithPredationPenalty: (float)predation_penalty_length_in_seconds WithProperingThreshold: (float)prospering_threshold WithStravingThreshold: (float)starving_threshold {
