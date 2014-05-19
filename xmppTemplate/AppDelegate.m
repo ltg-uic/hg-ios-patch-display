@@ -55,11 +55,17 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    
+    //ESTIMOTES
+    NSLog(@"Estimote Beacon sighting in Patch received");
+    _estDelegate = [[EstimoteDelegate alloc] init];
+    [_estDelegate initEstimoteManager];
+    
+    
     //[self setupInterface];
     [self clearUserDefaults];
-    
     //[self pullConfigurationData];
- 
     //[self setupConfigurationAndRosterWithRunId:@"5ag"];
     //[self customizeGlobalAppearance];
     
@@ -67,17 +73,17 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     isMultiUserChat = YES;
     //setup test data
     
+    //----
+    
     [self deleteAllObjects:@"ConfigurationInfo"];
     [self deleteAllObjects:@"PlayerDataPoint"];
     [self deleteAllObjects:@"PatchInfo"];
-   
-    
-    
     [self pullConfigurationData];
     
-    //[self importTestData];
-  
     
+    //---
+    
+    //[self importTestData];
     //setup test user
     //[self setupTestUser];
     
@@ -104,6 +110,8 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     
     [DDLog addLogger:_fileLogger];
 
+    
+    
     
 
     return YES;
@@ -840,8 +848,10 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
         
     }
 
+    _isGameRunning = YES;
+    _estDelegate.readEstimoteBeacons = true;
     [_playerDataDelegate initConnection];
-}
+   }
 
 -(void)setupPlayerMap {
     if ( patchPlayerMap == nil ) {

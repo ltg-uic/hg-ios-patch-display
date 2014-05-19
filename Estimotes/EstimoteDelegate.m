@@ -44,6 +44,10 @@
     // start looking for estimote beacons in region
     // when beacon ranged beaconManager:didRangeBeacons:inRegion: is invoked
     [self.beaconManager startRangingBeaconsInRegion:region];
+    NSString *s = [NSString stringWithFormat:@"%@", ESTIMOTE_PROXIMITY_UUID];
+
+    NSLog(s);
+
 }
 
 //beaconManager:didRangeBeacons:inRegion gets invoke whenever a beacon is in range
@@ -51,7 +55,8 @@
      didRangeBeacons:(NSArray *)beacons
             inRegion:(ESTBeaconRegion *)region
 {
-    if(_readEstimoteBeacons){
+    NSLog(@"blba");
+    //if(_readEstimoteBeacons){
         //count number of beacons in patch range
         for (ESTBeacon* cBeacon in beacons)
         {
@@ -59,7 +64,7 @@
             self.selectedBeacon = cBeacon;
             float distFactor = ((float)self.selectedBeacon.rssi + 30) / -70;
             if( distFactor < .50 ) {
-//                NSLog(@"Estimote Beacon sighting in Patch received %@ . RSSI: %ld Time: %@", self.selectedBeacon.minor.stringValue, (long)self.selectedBeacon.rssi, [NSDate dateWithTimeIntervalSince1970:0]);
+                //                NSLog(@"Estimote Beacon sighting in Patch received %@ . RSSI: %ld Time: %@", self.selectedBeacon.minor.stringValue, (long)self.selectedBeacon.rssi, [NSDate dateWithTimeIntervalSince1970:0]);
                 //Generate beacon from ID and check if exists already
                 Beacon *beacon = [self beaconForID: self.selectedBeacon.minor.stringValue];
                 if (!beacon) {
@@ -72,10 +77,10 @@
                     beacon.type = @"ESTIMOTE";
                     
                     //generate arrival message
-                        [self addBeacon:beacon];
-                        NSString *lower = [_appDelegate.currentPatchInfo.patch_id lowercaseString];
-                        NSString *msg = [NSString stringWithFormat:@"{\"event\":\"rfid_update\",\"payload\":{\"id\":\"%@\",\"arrival\":\"%@\",\"departure\":\"\"}}", beacon.name, lower];
-                        [_appDelegate processXmppMessage:msg];
+                    [self addBeacon:beacon];
+                    NSString *lower = [_appDelegate.currentPatchInfo.patch_id lowercaseString];
+                    NSString *msg = [NSString stringWithFormat:@"{\"event\":\"rfid_update\",\"payload\":{\"id\":\"%@\",\"arrival\":\"%@\",\"departure\":\"\"}}", @"est3", lower];
+                    [_appDelegate processXmppMessage:msg];
                     //}
                 }
                 else{
@@ -87,7 +92,7 @@
         }// end for
         //update label
         [self checkBeaconsAges];
-    }
+    //}
 }
 
 #pragma mark - beaconsArray manipulation
@@ -100,15 +105,15 @@
 }
 
 - (Beacon *)beaconForID:(NSString *)ID {
-     @synchronized(self.appDelegate){
+    @synchronized(self.appDelegate){
         for (Beacon *beacon in self.beaconsInPatch) {
             if ([beacon.identifier isEqualToString:ID]) {
                 NSLog(@"Beacon found");
                 return beacon;
             }
         }
-         return nil;
-     }
+        return nil;
+    }
 }
 
 - (void)initializeTransmitters {
@@ -127,15 +132,15 @@
 
 - (void)removeBeacons: (Beacon*)beacon {
     NSInteger count = 0;
-//    if([beacon.identifier isEqualToString:@"7003"]){
-        NSLog(@"Removing beacon");
-        [self addBeacon:beacon];
-        NSString *lower = [_appDelegate.currentPatchInfo.patch_id lowercaseString];
-        NSString *msg = [NSString stringWithFormat:@"{\"event\":\"rfid_update\",\"payload\":{\"id\":\"%@\",\"arrival\":\"\",\"departure\":\"%@\"}}", @"est1", lower];
-        [_appDelegate processXmppMessage:msg];
-        NSLog(msg);
-//    }
-
+    //    if([beacon.identifier isEqualToString:@"7003"]){
+    NSLog(@"Removing beacon");
+    [self addBeacon:beacon];
+    NSString *lower = [_appDelegate.currentPatchInfo.patch_id lowercaseString];
+    NSString *msg = [NSString stringWithFormat:@"{\"event\":\"rfid_update\",\"payload\":{\"id\":\"%@\",\"arrival\":\"\",\"departure\":\"%@\"}}", @"est1", lower];
+    [_appDelegate processXmppMessage:msg];
+    NSLog(msg);
+    //    }
+    
     @synchronized(self.appDelegate){
         [self.beaconsInPatch removeObject:beacon];
         count =[self.beaconsInPatch count];

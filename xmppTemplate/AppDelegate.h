@@ -55,9 +55,6 @@
 @property (nonatomic) DDFileLogger *fileLogger;
 
 
-
-
-
 - (NSURL *)applicationDocumentsDirectory;
 - (void)saveContext;
 
