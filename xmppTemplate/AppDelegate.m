@@ -818,6 +818,12 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
         [self setupStream];
         [self connect];
         
+        NSLog(@"init");
+        
+        [_playerDataDelegate initConnection];
+        _isGameRunning = YES;
+        _estDelegate.readEstimoteBeacons = true;
+        
     } else {
         [_xmppRoom leaveRoom];
         [_xmppRoom deactivate];
@@ -831,9 +837,6 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
         
     }
 
-    [_playerDataDelegate initConnection];
-    _isGameRunning = YES;
-    _estDelegate.readEstimoteBeacons = true;
 
 }
 
