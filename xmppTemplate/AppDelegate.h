@@ -70,10 +70,9 @@
 - (void)goOnline;
 - (void)goOffline;
 
-- (void)setupConfigurationAndRosterWithRunId:(NSString *)run_id WithPatchId:(NSString*)current_patchId;
+-(void)setupConfigurationAndRosterWithRunId:(NSString *)run_id WithPatchId:(NSString*)current_patchId;
 
 - (void)processXmppMessage: (NSString *)msg;
-- (PlayerDataPoint *)getPlayerDataPointWithRFID: (NSString *)rfid;
 
 
 @end

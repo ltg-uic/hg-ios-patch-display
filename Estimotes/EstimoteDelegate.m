@@ -50,10 +50,7 @@
      didRangeBeacons:(NSArray *)beacons
             inRegion:(ESTBeaconRegion *)region
 {
-    NSLog(@"reading estimotes");
-
     if(_readEstimoteBeacons){
-        NSLog(@"reading estimotes");
         //count number of beacons in patch range
         for (ESTBeacon* cBeacon in beacons)
         {
@@ -72,7 +69,6 @@
                     beacon.lastSighted = [NSNumber numberWithLong:(long)[NSDate timeIntervalSinceReferenceDate]*1000];
                     beacon.rssi = [NSNumber numberWithInteger:self.selectedBeacon.rssi];
                     beacon.type = @"ESTIMOTE";
-                    
                     
                     //generate arrival message
                     if([beacon.identifier isEqualToString:@"7001"]){
