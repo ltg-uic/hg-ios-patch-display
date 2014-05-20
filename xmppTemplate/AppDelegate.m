@@ -852,6 +852,10 @@ int ddLogLevel = LOG_LEVEL_INFO;
     _isGameRunning = YES;
     _estDelegate.readEstimoteBeacons = true;
     [_playerDataDelegate initConnection];
+    PlayerDataPoint *pdp = [self getPlayerDataPointWithRFID:@"1623641"];
+
+    NSString *s = pdp.player_id;
+    NSLog(s);
    }
 
 -(void)setupPlayerMap {
