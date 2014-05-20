@@ -845,6 +845,11 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     _isGameRunning = YES;
     _estDelegate.readEstimoteBeacons = true;
     [_playerDataDelegate initConnection];
+    
+    PlayerDataPoint *pdp = [self getPlayerDataPointWithRFID:@"1623641"];
+    
+    NSString *s = pdp.player_id;
+    NSLog(s);
    }
 
 -(void)setupPlayerMap {
@@ -1142,7 +1147,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 
 -(PlayerDataPoint *)getPlayerDataPointWithRFID: (NSString *)rfid {
     NSManagedObjectModel* model = [[self.managedObjectContext persistentStoreCoordinator] managedObjectModel];
-    NSFetchRequest* request = [model fetchRequestFromTemplateWithName:@"playerDataPointWithRFID" substitutionVariables:@{@"RFID_TAG":rfid}];
+    NSFetchRequest* request = [model fetchRequestFromTemplateWithName:@"playerDataPointWithRFID" substitutionVariables:@{@"RFID":rfid}];
     NSError* error = nil;
     NSArray* results = [self.managedObjectContext executeFetchRequest:request error:&error];
     

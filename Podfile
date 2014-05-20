@@ -8,4 +8,3 @@ pod 'UIColor-Utilities', '~> 1.0'
 pod 'Reachability', '~> 3.1'
 pod 'EstimoteSDK'
 
-

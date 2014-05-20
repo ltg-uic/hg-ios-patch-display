@@ -73,16 +73,14 @@
                     beacon.rssi = [NSNumber numberWithInteger:self.selectedBeacon.rssi];
                     beacon.type = @"ESTIMOTE";
                     
-                    PlayerDataPoint *pdp = [_appDelegate getPlayerDataPointWithRFID:@"1623641"];
-                    
-                    
+                    PlayerDataPoint *pdp = [_appDelegate getPlayerDataPointWithRFID:beacon.identifier];
                     NSString *s = pdp.player_id;
                     NSLog(s);
                     
                     //generate arrival message
                     [self addBeacon:beacon];
                     NSString *lower = [_appDelegate.currentPatchInfo.patch_id lowercaseString];
-                    NSString *msg = [NSString stringWithFormat:@"{\"event\":\"rfid_update\",\"payload\":{\"id\":\"%@\",\"arrival\":\"%@\",\"departure\":\"\"}}", @"est3", lower];
+                    NSString *msg = [NSString stringWithFormat:@"{\"event\":\"rfid_update\",\"payload\":{\"id\":\"%@\",\"arrival\":\"%@\",\"departure\":\"\"}}", s, lower];
                     [_appDelegate processXmppMessage:msg];
                     //}
                 }
@@ -103,7 +101,6 @@
     @synchronized(self.appDelegate){
         NSLog(@"adding beacon");
         [self.beaconsInPatch addObject:beacon];
-        NSLog([NSString stringWithFormat:@"%lu",(unsigned long)[_beaconsInPatch count]]);
     }
 }
 
@@ -111,7 +108,6 @@
     @synchronized(self.appDelegate){
         for (Beacon *beacon in self.beaconsInPatch) {
             if ([beacon.identifier isEqualToString:ID]) {
-                NSLog(@"Beacon found");
                 return beacon;
             }
         }
@@ -135,14 +131,14 @@
 
 - (void)removeBeacons: (Beacon*)beacon {
     NSInteger count = 0;
-    //    if([beacon.identifier isEqualToString:@"7003"]){
     NSLog(@"Removing beacon");
     [self addBeacon:beacon];
     NSString *lower = [_appDelegate.currentPatchInfo.patch_id lowercaseString];
-    NSString *msg = [NSString stringWithFormat:@"{\"event\":\"rfid_update\",\"payload\":{\"id\":\"%@\",\"arrival\":\"\",\"departure\":\"%@\"}}", @"est1", lower];
+    PlayerDataPoint *pdp = [_appDelegate getPlayerDataPointWithRFID:beacon.identifier];
+    NSString *s = pdp.player_id;
+    NSString *msg = [NSString stringWithFormat:@"{\"event\":\"rfid_update\",\"payload\":{\"id\":\"%@\",\"arrival\":\"\",\"departure\":\"%@\"}}", s, lower];
     [_appDelegate processXmppMessage:msg];
     NSLog(msg);
-    //    }
     
     @synchronized(self.appDelegate){
         [self.beaconsInPatch removeObject:beacon];
