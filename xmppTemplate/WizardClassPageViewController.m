@@ -95,9 +95,15 @@
 
 - (void)setupFetchedResultsController
 {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"ConfigurationInfo"];
-    request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"run_id" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
-    [self setFetchedResultsController: [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.appDelegate.managedObjectContext sectionNameKeyPath:nil cacheName:nil]];
+
+          // After 20 are faulted
+
+    NSFetchedResultsController *theFetchedResultsController = [ConfigurationInfo MR_fetchAllSortedBy:@"run_id" ascending:NO withPredicate:nil groupBy:nil delegate:self];
+    self.fetchedResultsController = theFetchedResultsController;
+    self.fetchedResultsController.delegate = self;
+
+
+
     
 }
 

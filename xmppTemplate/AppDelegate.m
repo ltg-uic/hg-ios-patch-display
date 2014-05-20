@@ -20,12 +20,14 @@
 #import "AFHTTPRequestOperation.h"
 #import "SBJson4Parser.h"
 #import "UIColor+Expanded.h"
+#import "MagicalRecord.h"
+#import "MagicalRecord+Setup.h"
 
 // Log levels: off, error, warn, info, verbose
 #if DEBUG
-static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+int ddLogLevel = LOG_LEVEL_VERBOSE;
 #else
-static const int ddLogLevel = LOG_LEVEL_INFO;
+int ddLogLevel = LOG_LEVEL_INFO;
 #endif
 
 @interface AppDelegate()<SWRevealViewControllerDelegate>{
@@ -53,7 +55,10 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
+
+    //[MagicalRecord setupCoreDataStackWithStoreNamed:@"DataPointModelQuality"];
+    [MagicalRecord setupCoreDataStack];
+    [MagicalRecord currentStack];
     //[self setupInterface];
     [self clearUserDefaults];
     //[self pullConfigurationData];
@@ -105,6 +110,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     NSLog(@"Estimote Beacon sighting in Patch received");
     _estDelegate = [[EstimoteDelegate alloc] init];
     [_estDelegate initEstimoteManager];
+
 
 
 
@@ -247,6 +253,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    [MagicalRecord cleanUp];
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
@@ -1035,22 +1042,12 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 #pragma mark CORE DATA DELETES
 
 - (void) deleteAllObjects: (NSString *) entityDescription  {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:entityDescription inManagedObjectContext: [self managedObjectContext]];
-    [fetchRequest setEntity:entity];
-    
-    NSError *error;
-    NSArray *items = [[self managedObjectContext ] executeFetchRequest:fetchRequest error:&error];
-    
-    
-    for (NSManagedObject *managedObject in items) {
-    	[[self managedObjectContext ] deleteObject:managedObject];
-    	NSLog(@"%@ object deleted",entityDescription);
-    }
-    if (![[self managedObjectContext ] save:&error]) {
-    	NSLog(@"Error deleting %@ - error:%@",entityDescription,error);
-    }
-    
+
+    [ConfigurationInfo  MR_truncateAll];
+    [PatchInfo  MR_truncateAll];
+    [BotInfo MR_truncateAll];
+    [PlayerDataPoint MR_truncateAll];
+    //[MagicalRecord cleanUp];
 }
 
 
@@ -1058,8 +1055,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 
 -(PatchInfo *)insertPatchInfoWithPatchId: (NSString *)patch_id WithPatchLabel:(NSString *)patch_label WithReaderId:(float)reader_id withQuality:(NSString*)quality withQualityPerSecond: (float)quality_per_second withQualityPerMinute:(float)quality_per_minute WithRiskLabel:(NSString*)risk_label WithRiskPercentPerSecond:(float)risk_percent_per_second {
     
-    PatchInfo *pi = [NSEntityDescription insertNewObjectForEntityForName:@"PatchInfo"
-                                                  inManagedObjectContext:self.managedObjectContext];
+    PatchInfo *pi = [PatchInfo MR_createEntity];
     
     pi.patch_id = [patch_id uppercaseString];
     pi.reader_id = reader_id;
@@ -1076,28 +1072,28 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 
 -(ConfigurationInfo *)insertConfigurationWithRunId: (NSString *)run_id withHarvestCalculatorBoutLengthInMinutes:(float)harvest_calculator_bout_length_in_minutes WithMaximumHarvest:(float)maximum_harvest WithPredationPenalty: (float)predation_penalty_length_in_seconds WithProperingThreshold: (float)prospering_threshold WithStravingThreshold: (float)starving_threshold {
 
-    
-    ConfigurationInfo *ci = [NSEntityDescription insertNewObjectForEntityForName:@"ConfigurationInfo"
-                                                  inManagedObjectContext:self.managedObjectContext];
-    
-    ci.run_id = [run_id uppercaseString];
-    ci.harvest_calculator_bout_length_in_minutes = harvest_calculator_bout_length_in_minutes;
-    ci.maximum_harvest = maximum_harvest;
-    //ci.maximum_harvest = 3000;
-    //ci.prospering_threshold = 270;
-    //ci.starving_threshold = 240;
-    ci.predation_penalty_length_in_seconds = predation_penalty_length_in_seconds;
-    ci.prospering_threshold = prospering_threshold;
-    ci.starving_threshold = starving_threshold;
-    ci.players = nil;
+    ConfigurationInfo *ci = [ConfigurationInfo MR_createEntity];
+
+        ci.run_id = [run_id uppercaseString];
+        ci.harvest_calculator_bout_length_in_minutes = harvest_calculator_bout_length_in_minutes;
+        ci.maximum_harvest = maximum_harvest;
+        //ci.maximum_harvest = 3000;
+        //ci.prospering_threshold = 270;
+        //ci.starving_threshold = 240;
+        ci.predation_penalty_length_in_seconds = predation_penalty_length_in_seconds;
+        ci.prospering_threshold = prospering_threshold;
+        ci.starving_threshold = starving_threshold;
+        ci.players = nil;
+
+
+
 
     return ci;
 }
 
 
 -(BotInfo *)insertBotWithName:(NSString *)name WithXMPPName:(NSString *)xmppName {
-    BotInfo *bi = [NSEntityDescription insertNewObjectForEntityForName:@"BotInfo"
-                                                         inManagedObjectContext:self.managedObjectContext];
+    BotInfo *bi = [BotInfo MR_createEntity];
     
     bi.name = name;
     bi.xmpp = xmppName;
@@ -1107,8 +1103,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 }
 
 -(PlayerDataPoint *)insertPlayerDataPointWithColor:(NSString *)color WithLabel:(NSString *)label WithPatch:(NSString *)patch WithRfid:(NSString *)rfid_tag WithScore:(NSNumber *)score WithId: (NSString *)player_id {
-    PlayerDataPoint *pdp = [NSEntityDescription insertNewObjectForEntityForName:@"PlayerDataPoint"
-                                                         inManagedObjectContext:self.managedObjectContext];
+    PlayerDataPoint *pdp = [PlayerDataPoint MR_createEntity];
     pdp.color = color;
     pdp.currentPatch = patch;
     pdp.rfid_tag = rfid_tag;
@@ -1128,8 +1123,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 }
 
 -(void)createEventInfoWithRFID: (NSString *)rfid WithEventType: (NSString *)eventType WithScore: (NSNumber *) score {
-    EventInfo *ei = [NSEntityDescription insertNewObjectForEntityForName:@"EventInfo"
-                                                  inManagedObjectContext:self.managedObjectContext];
+    EventInfo *ei = [EventInfo MR_createEntity];
     ei.rfid = rfid;
     ei.event_type = eventType;
     ei.score = score;
@@ -1140,12 +1134,10 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 
 #pragma mark CORE DATA FETCHES
 
--(PlayerDataPoint *)getPlayerDataPointWithRFID: (NSString *)rfid {
-    NSManagedObjectModel* model = [[self.managedObjectContext persistentStoreCoordinator] managedObjectModel];
-    NSFetchRequest* request = [model fetchRequestFromTemplateWithName:@"playerDataPointWithRFID" substitutionVariables:@{@"RFID_TAG":rfid}];
-    NSError* error = nil;
-    NSArray* results = [self.managedObjectContext executeFetchRequest:request error:&error];
-    
+-(PlayerDataPoint *)getPlayerDataPointWithRFID: (NSString *)rfid_tag {
+
+    NSArray* results = [PlayerDataPoint findByAttribute:@"rfid_tag" withValue:rfid_tag];
+
     if( results.count == 0 ) {
         return nil;
     }
@@ -1154,28 +1146,18 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 }
 
 -(NSArray *)getAllPatchInfos {
-    NSManagedObjectModel* model = [[self.managedObjectContext persistentStoreCoordinator] managedObjectModel];
-    NSFetchRequest* request = [model fetchRequestFromTemplateWithName:@"allPatchInfos" substitutionVariables:nil];
-    NSError* error = nil;
-    NSArray* results = [self.managedObjectContext executeFetchRequest:request error:&error];
+    NSArray* results = [PatchInfo findAll];
     return results;
-    
 }
 
 -(NSArray *)getAllPlayerDataPoints {
-    NSManagedObjectModel* model = [[self.managedObjectContext persistentStoreCoordinator] managedObjectModel];
-    NSFetchRequest* request = [model fetchRequestFromTemplateWithName:@"allPlayerDataPoints" substitutionVariables:nil];
-    NSError* error = nil;
-    NSArray* results = [self.managedObjectContext executeFetchRequest:request error:&error];
+    NSArray *results = [PlayerDataPoint findAll];
     return results;
     
 }
 
 -(NSArray *)getAllConfigurationsInfos {
-    NSManagedObjectModel* model = [[self.managedObjectContext persistentStoreCoordinator] managedObjectModel];
-    NSFetchRequest* request = [model fetchRequestTemplateForName:@"allConfigurationInfos"];
-    NSError* error = nil;
-    NSArray* results = [self.managedObjectContext executeFetchRequest:request error:&error];
+    NSArray* results = [ConfigurationInfo findAll];
     
     if( results.count == 0 ) {
         return nil;
@@ -1186,26 +1168,14 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 }
 
 -(ConfigurationInfo *)getConfigurationInfoWithRunId: (NSString *)run_id {
-    NSManagedObjectModel* model = [[self.managedObjectContext persistentStoreCoordinator] managedObjectModel];
-    NSFetchRequest* request = [model fetchRequestFromTemplateWithName:@"configurationInfoWithRunId"
-                                                substitutionVariables:@{@"RUN_ID" : run_id}];
-    NSError* error = nil;
-    NSArray* results = [self.managedObjectContext executeFetchRequest:request error:&error];
+
+    NSArray* results = [ConfigurationInfo MR_findByAttribute:@"run_id" withValue:run_id];
     
     if( results.count == 0 ) {
         return nil;
     }
     
     return [results objectAtIndex:0];
-}
-
-
-
-- (void)importCoreDataDefaultGraphWithConfigurationInfo:(ConfigurationInfo *)configurationInfo {
-    
-    NSLog(@"Importing Core Data Default Values for Graph.......");
-
-    NSLog(@"Importing Core Data Default Values for Graph Completed!");
 }
 
 
@@ -1217,9 +1187,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     //[self createConfigurationWithRunId:@"test-run" withHarvestCalculatorBoutLengthInMinutes:5.0];
     
     ConfigurationInfo *ci = [self getConfigurationInfoWithRunId:@"test-run"];
-    
-    [self importCoreDataDefaultGraphWithConfigurationInfo:ci];
-    
+
     //[self setupConfigurationAndRosterWithRunId:@"test-run"];
     
     
@@ -1262,8 +1230,6 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 	return YES;
 }
 
-#pragma mark CoreDataManagement PROTOCOL
-
 /**
  Returns the URL to the application's Documents directory.
  */
@@ -1272,86 +1238,17 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
-- (void)saveContext
-{
-    
-    NSError *error = nil;
-    NSManagedObjectContext *objectContext = self.managedObjectContext;
-    if (objectContext != nil)
-    {
-        if ([objectContext hasChanges] && ![objectContext save:&error])
-        {
-            // add error handling here
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
+#pragma mark COREDATA PROTOCOL
+
+- (void)saveContext {
+    // Save ManagedObjectContext using MagicalRecord
+    [[NSManagedObjectContext defaultContext] saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+        if (success) {
+            NSLog(@"You successfully saved your context.");
+        } else if (error) {
+            NSLog(@"Error saving context: %@", error.description);
         }
-    }
-}
-
-/**
- Returns the managed object context for the application.
- If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
- */
-- (NSManagedObjectContext *)managedObjectContext
-{
-    
-    if (managedObjectContext != nil)
-    {
-        return managedObjectContext;
-    }
-    
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (coordinator != nil)
-    {
-        managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [managedObjectContext setPersistentStoreCoordinator:coordinator];
-    }
-    return managedObjectContext;
-}
-
-/**
- Returns the managed object model for the application.
- If the model doesn't already exist, it is created from the application's model.
- */
-- (NSManagedObjectModel *)managedObjectModel
-{
-    if (managedObjectModel != nil)
-    {
-        return managedObjectModel;
-    }
-    managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
-    
-    return managedObjectModel;
-}
-
-/**
- Returns the persistent store coordinator for the application.
- If the coordinator doesn't already exist, it is created and the application's store added to it.
- */
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
-{
-    
-    if (persistentStoreCoordinator != nil)
-    {
-        return persistentStoreCoordinator;
-    }
-    
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"localdb.sqlite"];
-    
-    NSError *error = nil;
-    
-    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
-                             [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
-    
-    persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error])
-    {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-    
-    return persistentStoreCoordinator;
+    }];
 }
 
 @end

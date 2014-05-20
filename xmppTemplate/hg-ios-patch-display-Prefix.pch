@@ -9,15 +9,22 @@
 #endif
 
 #ifdef __OBJC__
+
+     #import <coredata/coredata.h>
+
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import <SystemConfiguration/SystemConfiguration.h>
     #import <MobileCoreServices/MobileCoreServices.h>
-    #import <coredata/coredata.h>
+
     #import "Constants.h"
     #import "SWRevealViewController.h"
     #import "XMPPBaseNewMessageDelegate.h"
     #import "XMPPBaseOnlineDelegate.h"
     #import "AppDelegate.h"
+
+    #define MR_SHORTHAND
+    #define MR_ENABLE_ACTIVE_RECORD_LOGGING 1
+    #import "CoreData+MagicalRecord.h"
 #endif
 
