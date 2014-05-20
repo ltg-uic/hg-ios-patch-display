@@ -2,8 +2,8 @@
 //  PlayerDataPoint.h
 //  hg-ios-patch-display
 //
-//  Created by Anthony Perritano on 10/11/13.
-//  Copyright (c) 2013 Learning Technologies Group. All rights reserved.
+//  Created by PauloGF on 5/20/14.
+//  Copyright (c) 2014 Learning Technologies Group. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

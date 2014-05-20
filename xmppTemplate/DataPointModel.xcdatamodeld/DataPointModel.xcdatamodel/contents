@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3396" systemVersion="12F37" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13C1021" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="ConfigurationInfo" representedClassName="ConfigurationInfo" syncable="YES">
         <attribute name="harvest_calculator_bout_length_in_minutes" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="run_id" optional="YES" attributeType="String" syncable="YES"/>
@@ -32,11 +32,11 @@
     <fetchRequest name="allPatchInfos" entity="PatchInfo"/>
     <fetchRequest name="allPlayerDataPoints" entity="PlayerDataPoint"/>
     <fetchRequest name="configurationInfoWithRunId" entity="ConfigurationInfo" predicateString="run_id == run_id"/>
-    <fetchRequest name="playerDataPointWithRFID" entity="PlayerDataPoint" predicateString="rfid == rfid"/>
+    <fetchRequest name="playerDataPointWithRFID" entity="PlayerDataPoint" predicateString="rfid_tag == &quot;rfid&quot;"/>
     <elements>
-        <element name="ConfigurationInfo" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="EventInfo" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="PatchInfo" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="PlayerDataPoint" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="ConfigurationInfo" positionX="0" positionY="0" width="128" height="105"/>
+        <element name="EventInfo" positionX="0" positionY="0" width="128" height="105"/>
+        <element name="PatchInfo" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="PlayerDataPoint" positionX="0" positionY="0" width="128" height="150"/>
     </elements>
 </model>

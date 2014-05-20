@@ -34,8 +34,6 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     NSOperationQueue *operationQueue;
     NSTimer *timer;
     NSMutableDictionary *patchPlayerMap;
-    
-
 
 }
 
@@ -55,13 +53,6 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
-    
-    //ESTIMOTES
-    NSLog(@"Estimote Beacon sighting in Patch received");
-    _estDelegate = [[EstimoteDelegate alloc] init];
-    [_estDelegate initEstimoteManager];
-    
     
     //[self setupInterface];
     [self clearUserDefaults];
@@ -110,9 +101,12 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     
     [DDLog addLogger:_fileLogger];
 
-    
-    
-    
+    //ESTIMOTES
+    NSLog(@"Estimote Beacon sighting in Patch received");
+    _estDelegate = [[EstimoteDelegate alloc] init];
+    [_estDelegate initEstimoteManager];
+
+
 
     return YES;
 }
@@ -1148,7 +1142,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 
 -(PlayerDataPoint *)getPlayerDataPointWithRFID: (NSString *)rfid {
     NSManagedObjectModel* model = [[self.managedObjectContext persistentStoreCoordinator] managedObjectModel];
-    NSFetchRequest* request = [model fetchRequestFromTemplateWithName:@"playerDataPointWithRFID" substitutionVariables:@{@"RFID" : rfid}];
+    NSFetchRequest* request = [model fetchRequestFromTemplateWithName:@"playerDataPointWithRFID" substitutionVariables:@{@"RFID_TAG":rfid}];
     NSError* error = nil;
     NSArray* results = [self.managedObjectContext executeFetchRequest:request error:&error];
     

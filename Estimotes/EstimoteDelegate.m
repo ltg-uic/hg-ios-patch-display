@@ -37,7 +37,7 @@
     // craete manager instance
     self.beaconManager = [[ESTBeaconManager alloc] init];
     self.beaconManager.delegate = self;
-    
+
     // create sample region object (you can additionaly pass major / minor values)
     ESTBeaconRegion* region = [[ESTBeaconRegion alloc] initWithProximityUUID:ESTIMOTE_PROXIMITY_UUID                                                             identifier:@"EstimoteSampleRegion"];
     
@@ -46,8 +46,6 @@
     [self.beaconManager startRangingBeaconsInRegion:region];
     NSString *s = [NSString stringWithFormat:@"%@", ESTIMOTE_PROXIMITY_UUID];
 
-    NSLog(s);
-
 }
 
 //beaconManager:didRangeBeacons:inRegion gets invoke whenever a beacon is in range
@@ -55,8 +53,7 @@
      didRangeBeacons:(NSArray *)beacons
             inRegion:(ESTBeaconRegion *)region
 {
-    NSLog(@"blba");
-    //if(_readEstimoteBeacons){
+    if(_readEstimoteBeacons){
         //count number of beacons in patch range
         for (ESTBeacon* cBeacon in beacons)
         {
@@ -76,6 +73,12 @@
                     beacon.rssi = [NSNumber numberWithInteger:self.selectedBeacon.rssi];
                     beacon.type = @"ESTIMOTE";
                     
+                    PlayerDataPoint *pdp = [_appDelegate getPlayerDataPointWithRFID:@"1623641"];
+                    
+                    
+                    NSString *s = pdp.player_id;
+                    NSLog(s);
+                    
                     //generate arrival message
                     [self addBeacon:beacon];
                     NSString *lower = [_appDelegate.currentPatchInfo.patch_id lowercaseString];
@@ -92,7 +95,7 @@
         }// end for
         //update label
         [self checkBeaconsAges];
-    //}
+    }
 }
 
 #pragma mark - beaconsArray manipulation
