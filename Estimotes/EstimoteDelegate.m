@@ -44,7 +44,6 @@
     // start looking for estimote beacons in region
     // when beacon ranged beaconManager:didRangeBeacons:inRegion: is invoked
     [self.beaconManager startRangingBeaconsInRegion:region];
-    NSString *s = [NSString stringWithFormat:@"%@", ESTIMOTE_PROXIMITY_UUID];
 
 }
 
@@ -148,7 +147,7 @@
 
 - (BOOL)isBeaconAgedOut:(Beacon *)beacon {
     NSNumber *now = [NSNumber numberWithLong:(long)[NSDate timeIntervalSinceReferenceDate]*1000];
-    NSNumber *ageOutPeriod = [NSNumber numberWithLong:2000];
+    NSNumber *ageOutPeriod = [NSNumber numberWithLong:1500];
     if (now.longLongValue-beacon.lastSighted.longLongValue > ageOutPeriod.longLongValue) {
         return YES;
     }

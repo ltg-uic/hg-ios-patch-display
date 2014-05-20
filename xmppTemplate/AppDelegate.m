@@ -1140,7 +1140,7 @@ int ddLogLevel = LOG_LEVEL_INFO;
 
 -(PlayerDataPoint *)getPlayerDataPointWithRFID: (NSString *)rfid_tag {
 
-    NSArray* results = [PlayerDataPoint findByAttribute:@"rfid_tag" withValue:rfid_tag];
+    NSArray* results = [PlayerDataPoint MR_findByAttribute:@"rfid_tag" withValue:rfid_tag];
 
     if( results.count == 0 ) {
         return nil;
@@ -1150,18 +1150,18 @@ int ddLogLevel = LOG_LEVEL_INFO;
 }
 
 -(NSArray *)getAllPatchInfos {
-    NSArray* results = [PatchInfo findAll];
+    NSArray* results = [PatchInfo MR_findAll];
     return results;
 }
 
 -(NSArray *)getAllPlayerDataPoints {
-    NSArray *results = [PlayerDataPoint findAll];
+    NSArray *results = [PlayerDataPoint MR_findAll];
     return results;
     
 }
 
 -(NSArray *)getAllConfigurationsInfos {
-    NSArray* results = [ConfigurationInfo findAll];
+    NSArray* results = [ConfigurationInfo MR_findAll];
     
     if( results.count == 0 ) {
         return nil;
