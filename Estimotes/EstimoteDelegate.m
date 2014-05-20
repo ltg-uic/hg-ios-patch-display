@@ -29,6 +29,7 @@
     /////////////////////////////////////////////////////////////
     // setup Estimote beacons manager
     NSLog(@"Setting up estimote manager");
+    _rangeThreshold = 0.8;
     
     self.beaconsInPatch = [NSMutableArray array];
     
@@ -59,8 +60,11 @@
             
             self.selectedBeacon = cBeacon;
             float distFactor = ((float)self.selectedBeacon.rssi + 30) / -70;
-            if( distFactor < .50 ) {
-                //                NSLog(@"Estimote Beacon sighting in Patch received %@ . RSSI: %ld Time: %@", self.selectedBeacon.minor.stringValue, (long)self.selectedBeacon.rssi, [NSDate dateWithTimeIntervalSince1970:0]);
+            NSString *s = [ NSString stringWithFormat:@"%f", distFactor];
+        
+            NSLog(@"%f", distFactor);
+            if( distFactor < self.rangeThreshold && distFactor > 0.0 ) {
+            
                 //Generate beacon from ID and check if exists already
                 Beacon *beacon = [self beaconForID: self.selectedBeacon.minor.stringValue];
                 if (!beacon) {
@@ -147,7 +151,7 @@
 
 - (BOOL)isBeaconAgedOut:(Beacon *)beacon {
     NSNumber *now = [NSNumber numberWithLong:(long)[NSDate timeIntervalSinceReferenceDate]*1000];
-    NSNumber *ageOutPeriod = [NSNumber numberWithLong:1500];
+    NSNumber *ageOutPeriod = [NSNumber numberWithLong:200];
     if (now.longLongValue-beacon.lastSighted.longLongValue > ageOutPeriod.longLongValue) {
         return YES;
     }
@@ -155,7 +159,6 @@
 }
 
 - (void)checkBeaconsAges {
-    NSLog(@"Checking Beacon Ages");
     for(Beacon *beacon in self.beaconsInPatch){
         if([self isBeaconAgedOut:beacon]){
             [self removeBeacons:beacon];

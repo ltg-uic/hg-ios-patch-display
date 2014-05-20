@@ -13,6 +13,7 @@
 @interface EstimoteDelegate : NSObject
 
 @property (nonatomic, assign) BOOL readEstimoteBeacons;
+@property (nonatomic, assign) float rangeThreshold;
 @property (strong, nonatomic) NSMutableArray *beaconsInPatch;
 
 - (void)initEstimoteManager;

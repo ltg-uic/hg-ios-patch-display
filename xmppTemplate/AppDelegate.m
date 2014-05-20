@@ -858,6 +858,11 @@ int ddLogLevel = LOG_LEVEL_INFO;
     NSLog(s);
    }
 
+-(void) adjustBeaconRange:(float)newBeaconRange {
+    
+    _estDelegate.rangeThreshold = newBeaconRange;
+}
+
 -(void)setupPlayerMap {
     if ( patchPlayerMap == nil ) {
         

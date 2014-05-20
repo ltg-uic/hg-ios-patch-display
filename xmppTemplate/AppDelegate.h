@@ -73,5 +73,7 @@
 
 - (PlayerDataPoint *)getPlayerDataPointWithRFID: (NSString *)rfid;
 
+-(void) adjustBeaconRange:(float)newBeaconRange;
+
 
 @end

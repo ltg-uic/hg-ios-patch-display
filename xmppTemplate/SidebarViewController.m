@@ -214,6 +214,9 @@
 }
 
 - (IBAction)sliderUpdated:(UISlider *)sender {
-      NSLog(@"slider value = %f", sender.value);
+    
+     NSLog(@"slider value = %f", sender.value);
+    [self.appDelegate adjustBeaconRange: sender.value];
+    
 }
 @end
