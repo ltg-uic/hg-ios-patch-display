@@ -45,7 +45,7 @@
     <fetchRequest name="allPatchInfos" entity="PatchInfo"/>
     <fetchRequest name="allPlayerDataPoints" entity="PlayerDataPoint"/>
     <fetchRequest name="configurationInfoWithRunId" entity="ConfigurationInfo" predicateString="run_id == run_id"/>
-    <fetchRequest name="playerDataPointWithRFID" entity="PlayerDataPoint" predicateString="rfid_tag == rfid_tag"/>
+    <fetchRequest name="playerDataPointWithRFID" entity="PlayerDataPoint" predicateString="rfid_tag == $RFID"/>
     <elements>
         <element name="BotInfo" positionX="0" positionY="0" width="128" height="75"/>
         <element name="ConfigurationInfo" positionX="0" positionY="0" width="128" height="180"/>
